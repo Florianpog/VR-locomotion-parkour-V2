@@ -21960,6 +21960,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestCoin (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7289187803586605874, guid: 6b3c85587dc0a514bbf5da8ff3106582, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
