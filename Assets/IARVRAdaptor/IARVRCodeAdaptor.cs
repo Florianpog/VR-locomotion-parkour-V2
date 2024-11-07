@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR;
 
-public class IARVRFixAdapter
+public class IARVRCodeAdaptor
 {
     public static float GetTriggerValue(GameObject controller)
     {

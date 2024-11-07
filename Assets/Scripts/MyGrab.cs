@@ -11,7 +11,7 @@ public class MyGrab : MonoBehaviour
 
     void Update()
     {
-        triggerValue = IARVRFixAdapter.GetTriggerValue(controller);
+        triggerValue = IARVRCodeAdaptor.GetTriggerValue(controller);
 
         if (isInCollider)
         {
