@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MyGrab : MonoBehaviour
 {
-    public OVRInput.Controller controller;
+    public GameObject controller;
     private float triggerValue;
     private bool isInCollider;
     private bool isSelected;
@@ -11,7 +11,7 @@ public class MyGrab : MonoBehaviour
 
     void Update()
     {
-        triggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, controller);
+        triggerValue = IARVRFixAdapter.GetTriggerValue(controller);
 
         if (isInCollider)
         {

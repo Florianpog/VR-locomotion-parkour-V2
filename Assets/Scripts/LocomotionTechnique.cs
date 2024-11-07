@@ -3,8 +3,8 @@
 public class LocomotionTechnique : MonoBehaviour
 {
     // Please implement your locomotion technique in this script. 
-    public OVRInput.Controller leftController;
-    public OVRInput.Controller rightController;
+    public GameObject leftController;
+    public GameObject rightController;
     [Range(0, 10)] public float translationGain = 0.5f;
     public GameObject hmd;
     [SerializeField] private float leftTriggerValue;    
@@ -29,19 +29,19 @@ public class LocomotionTechnique : MonoBehaviour
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Please implement your LOCOMOTION TECHNIQUE in this script :D.
-        leftTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController); 
-        rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController); 
+        leftTriggerValue = IARVRFixAdapter.GetTriggerValue(leftController);
+        rightTriggerValue = IARVRFixAdapter.GetTriggerValue(rightController); 
 
         if (leftTriggerValue > 0.95f && rightTriggerValue > 0.95f)
         {
             if (!isIndexTriggerDown)
             {
                 isIndexTriggerDown = true;
-                startPos = (OVRInput.GetLocalControllerPosition(leftController) + OVRInput.GetLocalControllerPosition(rightController)) / 2;
+                startPos = (IARVRFixAdapter.GetLocalControllerPosition(leftController) + IARVRFixAdapter.GetLocalControllerPosition(rightController)) / 2;
             }
             offset = hmd.transform.forward.normalized *
-                    (OVRInput.GetLocalControllerPosition(leftController) - startPos +
-                    (OVRInput.GetLocalControllerPosition(rightController) - startPos)).magnitude;
+                    (IARVRFixAdapter.GetLocalControllerPosition(leftController) - startPos +
+                    (IARVRFixAdapter.GetLocalControllerPosition(rightController) - startPos)).magnitude;
             Debug.DrawRay(startPos, offset, Color.red, 0.2f);
         }
         else if (leftTriggerValue > 0.95f && rightTriggerValue < 0.95f)
@@ -49,10 +49,10 @@ public class LocomotionTechnique : MonoBehaviour
             if (!isIndexTriggerDown)
             {
                 isIndexTriggerDown = true;
-                startPos = OVRInput.GetLocalControllerPosition(leftController);
+                startPos = IARVRFixAdapter.GetLocalControllerPosition(leftController);
             }
             offset = hmd.transform.forward.normalized *
-                     (OVRInput.GetLocalControllerPosition(leftController) - startPos).magnitude;
+                     (IARVRFixAdapter.GetLocalControllerPosition(leftController) - startPos).magnitude;
             Debug.DrawRay(startPos, offset, Color.red, 0.2f);
         }
         else if (leftTriggerValue < 0.95f && rightTriggerValue > 0.95f)
@@ -60,10 +60,10 @@ public class LocomotionTechnique : MonoBehaviour
             if (!isIndexTriggerDown)
             {
                 isIndexTriggerDown = true;
-                startPos = OVRInput.GetLocalControllerPosition(rightController);
+                startPos = IARVRFixAdapter.GetLocalControllerPosition(rightController);
             }
            offset = hmd.transform.forward.normalized *
-                    (OVRInput.GetLocalControllerPosition(rightController) - startPos).magnitude;
+                    (IARVRFixAdapter.GetLocalControllerPosition(rightController) - startPos).magnitude;
             Debug.DrawRay(startPos, offset, Color.red, 0.2f);
         }
         else
@@ -79,7 +79,7 @@ public class LocomotionTechnique : MonoBehaviour
 
         ////////////////////////////////////////////////////////////////////////////////
         // These are for the game mechanism.
-        if (OVRInput.Get(OVRInput.Button.Two) || OVRInput.Get(OVRInput.Button.Four))
+        if (IARVRFixAdapter.IsRespawnButtonPressed(leftController))
         {
             if (parkourCounter.parkourStart)
             {
