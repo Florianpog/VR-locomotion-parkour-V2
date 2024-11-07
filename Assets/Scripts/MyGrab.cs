@@ -1,8 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class MyGrab : MonoBehaviour
 {
-    public GameObject controller;
+    public IARVRCodeAdaptor.ControlerType controllerType;
     private float triggerValue;
     private bool isInCollider;
     private bool isSelected;
@@ -11,7 +12,7 @@ public class MyGrab : MonoBehaviour
 
     void Update()
     {
-        triggerValue = IARVRCodeAdaptor.GetTriggerValue(controller);
+        triggerValue = IARVRCodeAdaptor.GetTriggerValue(controllerType);
 
         if (isInCollider)
         {

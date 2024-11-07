@@ -38,10 +38,8 @@ public class ParkourCounter : MonoBehaviour
     public TMP_Text timeText;
     public TMP_Text coinText;
     public TMP_Text recordText;
-    public GameObject timeTextGO;
-    public GameObject coinTextGO;
-    public GameObject recordTextGO;
-    public GameObject endTextGO;
+    public TMP_Text endText;
+
     public AudioSource backgroundMusic;
     public AudioSource endSoundEffect;
     public SelectionTaskMeasure selectionTaskMeasure;
@@ -60,7 +58,7 @@ public class ParkourCounter : MonoBehaviour
         objIX3.SetActive(false);
         objIX1.SetActive(false);
         parkourStart = false;
-        endTextGO.SetActive(false);
+        endText?.gameObject.SetActive(false);
         selectionTaskMeasure = GetComponent<SelectionTaskMeasure>();
     }
 
@@ -115,13 +113,13 @@ public class ParkourCounter : MonoBehaviour
                 part3Time = timeCounter - (part1Time + part2Time);
                 part3Count = coinCount - (part1Count + part2Count);
                 UpdateRecordText(3, part3Time, part3Count, 23);
-                timeTextGO.SetActive(false);
-                coinTextGO.SetActive(false);
-                recordTextGO.SetActive(false);
-                endTextGO.SetActive(true);
-                endTextGO.GetComponent<TMP_Text>().text = "Parkour Finished!\n" + recordText.text +
+                timeText?.gameObject.SetActive(false);
+                coinText?.gameObject.SetActive(false);
+                recordText?.gameObject.SetActive(false);
+                endText?.gameObject.SetActive(true);
+                endText.text = "Parkour Finished!\n" + recordText.text +
                     "\ntotal: " + timeCounter.ToString("F1") + ", " + coinCount.ToString() + "/69";
-                Debug.Log(endTextGO.GetComponent<TMP_Text>().text);
+                Debug.Log(endText.text);
                 endSoundEffect.Play();
             }
         }

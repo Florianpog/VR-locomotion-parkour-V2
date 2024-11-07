@@ -7,6 +7,8 @@ public class LocomotionTechnique : MonoBehaviour
     public GameObject rightController;
     [Range(0, 10)] public float translationGain = 0.5f;
     public GameObject hmd;
+    public GameObject vrOrigin;
+    public AudioSource coinAudioSource;
     [SerializeField] private float leftTriggerValue;    
     [SerializeField] private float rightTriggerValue;
     [SerializeField] private Vector3 startPos;
@@ -29,8 +31,8 @@ public class LocomotionTechnique : MonoBehaviour
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Please implement your LOCOMOTION TECHNIQUE in this script :D.
-        leftTriggerValue = IARVRCodeAdaptor.GetTriggerValue(leftController);
-        rightTriggerValue = IARVRCodeAdaptor.GetTriggerValue(rightController); 
+        leftTriggerValue = IARVRCodeAdaptor.GetTriggerValue(IARVRCodeAdaptor.ControlerType.LeftControler);
+        rightTriggerValue = IARVRCodeAdaptor.GetTriggerValue(IARVRCodeAdaptor.ControlerType.RightControler); 
 
         if (leftTriggerValue > 0.95f && rightTriggerValue > 0.95f)
         {
@@ -74,7 +76,7 @@ public class LocomotionTechnique : MonoBehaviour
                 offset = Vector3.zero;
             }
         }
-        transform.position = transform.position + offset * translationGain;
+        vrOrigin.transform.position = vrOrigin.transform.position + offset * translationGain;
 
 
         ////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +85,7 @@ public class LocomotionTechnique : MonoBehaviour
         {
             if (parkourCounter.parkourStart)
             {
-                transform.position = parkourCounter.currentRespawnPos;
+                vrOrigin.transform.position = parkourCounter.currentRespawnPos;
             }
         }
     }
@@ -113,7 +115,7 @@ public class LocomotionTechnique : MonoBehaviour
         else if (other.CompareTag("coin"))
         {
             parkourCounter.coinCount += 1;
-            GetComponent<AudioSource>().Play();
+            coinAudioSource.Play();
             other.gameObject.SetActive(false);
         }
         // These are for the game mechanism.
