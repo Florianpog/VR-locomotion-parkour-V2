@@ -20452,7 +20452,6 @@ MonoBehaviour:
   scoreText: {fileID: 1449658377}
   completeCount: 0
   isTaskStart: 0
-  isTaskEnd: 0
   isCountdown: 0
   manipulationError: {x: 0, y: 0, z: 0}
   taskTime: 0

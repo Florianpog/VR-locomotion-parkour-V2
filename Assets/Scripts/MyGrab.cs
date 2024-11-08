@@ -40,13 +40,11 @@ public class MyGrab : MonoBehaviour
         {
             if (!selectionTaskMeasure.isCountdown)
             {
-                selectionTaskMeasure.isTaskStart = true;
                 selectionTaskMeasure.StartOneTask();
             }
         }
         else if (other.gameObject.CompareTag("done"))
         {
-            selectionTaskMeasure.isTaskStart = false;
             selectionTaskMeasure.EndOneTask();
         }
     }

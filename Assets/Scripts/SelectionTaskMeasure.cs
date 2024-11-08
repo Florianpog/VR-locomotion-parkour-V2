@@ -16,7 +16,6 @@ public class SelectionTaskMeasure : MonoBehaviour
     public TMP_Text scoreText;
     public int completeCount;
     public bool isTaskStart;
-    public bool isTaskEnd;
     public bool isCountdown;
     public Vector3 manipulationError;
     public float taskTime;
@@ -57,6 +56,8 @@ public class SelectionTaskMeasure : MonoBehaviour
 
     public void StartOneTask()
     {
+        isTaskStart = true;
+
         taskTime = 0f;
         taskStartPanel.SetActive(false);
         donePanel.SetActive(true);
@@ -68,11 +69,10 @@ public class SelectionTaskMeasure : MonoBehaviour
 
     public void EndOneTask()
     {
-        donePanel.SetActive(false);
-        
         // release
-        isTaskEnd = true;
         isTaskStart = false;
+
+        donePanel.SetActive(false);
         
         // distance error
         manipulationError = Vector3.zero;
