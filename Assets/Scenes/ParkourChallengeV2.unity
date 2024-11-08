@@ -2178,17 +2178,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4683433997013962218, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
   m_PrefabInstance: {fileID: 1424176238261323032}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &140907031 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-  m_PrefabInstance: {fileID: 1424176238261323032}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b1aab3debee6d846bbfa7ea3d48cdce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &141303565 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010915038424, guid: 6b9fef59fa39f0744ab9d260ec6266d0, type: 3}
@@ -5207,6 +5196,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4755125321900414, guid: ad9d3c1bf87264ed8a89c188f2c1018c, type: 3}
   m_PrefabInstance: {fileID: 1212517896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &353642494 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6981642495833523204, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 604769482}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &357265192
 PrefabInstance:
@@ -9043,7 +9037,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 58445280694286476, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_Name
@@ -9091,11 +9085,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2190828208922718286, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2626757739553014894, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3533369827395663398, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9112,6 +9110,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1670256625, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 861723861}
+    - targetCorrespondingSourceObject: {fileID: 6981642495833523204, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 644974364}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1767192433, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
@@ -9770,6 +9771,61 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbf1ae7dc3b764534ba7bd04f1d903c7, type: 3}
+--- !u!1 &644974363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 644974364}
+  - component: {fileID: 644974365}
+  m_Layer: 2
+  m_Name: Custom Locomotion Technique
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &644974364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644974363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 353642494}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &644974365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644974363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1aab3debee6d846bbfa7ea3d48cdce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftController: {fileID: 604769487}
+  rightController: {fileID: 604769486}
+  translationGain: 0.5
+  hmd: {fileID: 604769484}
+  vrOrigin: {fileID: 604769488}
+  leftTriggerValue: 0
+  rightTriggerValue: 0
+  startPos: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  isIndexTriggerDown: 0
+  parkourCounter: {fileID: 1487194127}
 --- !u!1001 &646773033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10119,7 +10175,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 496705c6eb69a1146b18cb7aeb1a33d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: 
+  text: 'This scene tries to stay as close to the original scene as possible while
+    using OpenXR
+
+
+    ParkourChallengeV2 uses XR interaction Toolkit properly and
+    does not use any custom movement scripts, as XR interaction Toolkit locomotions
+    work quite differently'
 --- !u!4 &663303267
 Transform:
   m_ObjectHideFlags: 0
@@ -13630,6 +13692,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4755125321900414, guid: ad9d3c1bf87264ed8a89c188f2c1018c, type: 3}
   m_PrefabInstance: {fileID: 1914935685}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &904623120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -7513023709455292347, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
+  m_PrefabInstance: {fileID: 1424176238261323032}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3a4b004dd169e4290c1a08be7940ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &904690846 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3024506239922688544, guid: 9245f366f8d6061478e49fcc0348f693, type: 3}
@@ -21621,7 +21694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90b35ff978b384489586b480a6ccd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locomotionTech: {fileID: 140907031}
+  prkourMovementDetector: {fileID: 904623120}
   isStageChange: 0
   startBanner: {fileID: 1916314528}
   firstBanner: {fileID: 100572341}
@@ -30279,9 +30352,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 604769483}
     m_Modifications:
+    - target: {fileID: -7513023709455292347, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
+      propertyPath: hmd
+      value: 
+      objectReference: {fileID: 604769484}
+    - target: {fileID: -7513023709455292347, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
+      propertyPath: parkourCounter
+      value: 
+      objectReference: {fileID: 1487194127}
+    - target: {fileID: -7513023709455292347, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
+      propertyPath: coinAudioSource
+      value: 
+      objectReference: {fileID: 604769489}
+    - target: {fileID: -7513023709455292347, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
+      propertyPath: selectionTaskMeasure
+      value: 
+      objectReference: {fileID: 1487194128}
     - target: {fileID: 2236218509027113280, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
       propertyPath: m_Name
-      value: LocomotionTechnique
+      value: ParkourMovementDetector
       objectReference: {fileID: 0}
     - target: {fileID: 4683433997013962218, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30323,34 +30412,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-      propertyPath: hmd
-      value: 
-      objectReference: {fileID: 604769484}
-    - target: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-      propertyPath: vrOrigin
-      value: 
-      objectReference: {fileID: 604769488}
-    - target: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-      propertyPath: leftController
-      value: 
-      objectReference: {fileID: 604769487}
-    - target: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-      propertyPath: parkourCounter
-      value: 
-      objectReference: {fileID: 1487194127}
-    - target: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-      propertyPath: coinAudioSource
-      value: 
-      objectReference: {fileID: 604769489}
-    - target: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-      propertyPath: rightController
-      value: 
-      objectReference: {fileID: 604769486}
-    - target: {fileID: 6049697267348228187, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
-      propertyPath: selectionTaskMeasure
-      value: 
-      objectReference: {fileID: 1487194128}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
