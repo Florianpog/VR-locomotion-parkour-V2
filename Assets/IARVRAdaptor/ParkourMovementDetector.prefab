@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4683433997013962218}
-  - component: {fileID: 6049697267348228187}
+  - component: {fileID: -7513023709455292347}
   - component: {fileID: 2092826700007495325}
   - component: {fileID: 7735841633774077018}
   m_Layer: 0
-  m_Name: LocomotionTechnique
+  m_Name: ParkourMovementDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6049697267348228187
+--- !u!114 &-7513023709455292347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,23 +43,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2236218509027113280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b1aab3debee6d846bbfa7ea3d48cdce, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b3a4b004dd169e4290c1a08be7940ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftController: {fileID: 0}
-  rightController: {fileID: 0}
-  translationGain: 0.5
-  hmd: {fileID: 0}
-  vrOrigin: {fileID: 0}
   coinAudioSource: {fileID: 0}
-  leftTriggerValue: 0
-  rightTriggerValue: 0
-  startPos: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  isIndexTriggerDown: 0
   parkourCounter: {fileID: 0}
   stage: 
   selectionTaskMeasure: {fileID: 0}
+  hmd: {fileID: 0}
 --- !u!54 &2092826700007495325
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -83,7 +83,7 @@ public class SelectionTaskMeasure : MonoBehaviour
         scoreText.text = scoreText.text + "Time: " + taskTime.ToString("F1") + ", offset: " + manipulationError.magnitude.ToString("F2") + "\n";
         partSumErr += manipulationError.magnitude;
         partSumTime += taskTime;
-        dataRecording.AddOneData(parkourCounter.locomotionTech.stage.ToString(), completeCount, taskTime, manipulationError);
+        dataRecording.AddOneData(parkourCounter.prkourMovementDetector.stage.ToString(), completeCount, taskTime, manipulationError);
 
         // Debug.Log("Time: " + taskTime.ToString("F1") + "\nPrecision: " + manipulationError.magnitude.ToString("F1"));
         Destroy(objectT);
