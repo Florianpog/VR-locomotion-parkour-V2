@@ -10119,13 +10119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 496705c6eb69a1146b18cb7aeb1a33d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: 'This scene tries to stay as close to the original scene as possible while
-    using OpenXR
-
-
-    ParkourChallengeV2 uses XR interaction Toolkit properly and
-    does not use any custom movement scripts, as XR interaction Toolkit locomotions
-    work quite differently'
+  text: 
 --- !u!4 &663303267
 Transform:
   m_ObjectHideFlags: 0
