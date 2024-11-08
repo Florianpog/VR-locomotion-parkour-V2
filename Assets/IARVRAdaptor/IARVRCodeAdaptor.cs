@@ -9,27 +9,37 @@ public class IARVRCodeAdaptor : MonoBehaviour
         LeftControler,
         RightControler
     }
+    public enum TriggerType
+    {
+        IndexFinger,
+        MiddleFinger
+    }
 
     public static IARVRCodeAdaptor instance;
 
-    public InputActionReference leftTriggerAction;
-    public InputActionReference rightTriggerAction;
+    public InputActionReference leftIndexTriggerAction;
+    public InputActionReference righIndextTriggerAction;
+    public InputActionReference leftMiddleTriggerAction;
+    public InputActionReference righMiddleTriggerAction;
 
     public void Awake()
     {
         instance = this;
     }
 
-    public static float GetTriggerValue(ControlerType controlerType)
+    public static float GetTriggerValue(ControlerType controlerType, TriggerType triggerType)
     {
 #if USING_OVR
         OVRInput.Controller controller = isRightController? OVRInput.Controller.RHand :  OVRInput.Controller.LHand;
         
-        return OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, controller);
+        if(triggerType == TriggerType.IndexFinger)
+            return OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller);
+        else
+            return OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, controller);
 
 #else
         //using XR Toolkit verion
-        InputActionReference triggerAction = (controlerType == ControlerType.RightControler)? instance.rightTriggerAction : instance.leftTriggerAction;
+        InputActionReference triggerAction = (triggerType == TriggerType.IndexFinger)? ((controlerType == ControlerType.RightControler)? instance.righIndextTriggerAction : instance.leftIndexTriggerAction) : ((controlerType == ControlerType.RightControler) ? instance.righMiddleTriggerAction : instance.leftMiddleTriggerAction);
         return triggerAction.action.ReadValue<float>();
 #endif
     }

@@ -12,7 +12,7 @@ public class MyGrab : MonoBehaviour
 
     void Update()
     {
-        triggerValue = IARVRCodeAdaptor.GetTriggerValue(controllerType);
+        triggerValue = IARVRCodeAdaptor.GetTriggerValue(controllerType, IARVRCodeAdaptor.TriggerType.MiddleFinger);
 
         if (isInCollider)
         {

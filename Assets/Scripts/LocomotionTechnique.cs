@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class LocomotionTechnique : MonoBehaviour
 {
     // Please implement your locomotion technique in this script. 
@@ -31,8 +32,8 @@ public class LocomotionTechnique : MonoBehaviour
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // Please implement your LOCOMOTION TECHNIQUE in this script :D.
-        leftTriggerValue = IARVRCodeAdaptor.GetTriggerValue(IARVRCodeAdaptor.ControlerType.LeftControler);
-        rightTriggerValue = IARVRCodeAdaptor.GetTriggerValue(IARVRCodeAdaptor.ControlerType.RightControler); 
+        leftTriggerValue = IARVRCodeAdaptor.GetTriggerValue(IARVRCodeAdaptor.ControlerType.LeftControler, IARVRCodeAdaptor.TriggerType.IndexFinger);
+        rightTriggerValue = IARVRCodeAdaptor.GetTriggerValue(IARVRCodeAdaptor.ControlerType.RightControler, IARVRCodeAdaptor.TriggerType.IndexFinger); 
 
         if (leftTriggerValue > 0.95f && rightTriggerValue > 0.95f)
         {
