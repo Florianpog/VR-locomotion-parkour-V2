@@ -33,36 +33,46 @@ public class ScaleUpMovement : MonoBehaviour
 
     public void ScalePlayerUp()
     {
-        ScalePlayerUpActive = true;
+        if (!ScalePlayerUpActive)
+        {
+            ScalePlayerUpActive = true;
 
-        Vector3 cameraPosBeforeChange = XRCamera.transform.position;
-        XROrigin.transform.localScale *= ScaleFactor;
-        XROrigin.transform.position += cameraPosBeforeChange - XRCamera.transform.position;
+            Vector3 cameraPosBeforeChange = XRCamera.transform.position;
+            XROrigin.transform.localScale *= ScaleFactor;
+            XROrigin.transform.position += cameraPosBeforeChange - XRCamera.transform.position;
 
-        if(ScaleSpeedUpActive)
-            UndoScaleSpeedUp();
+                UndoScaleSpeedUp();
+        }
     }
 
     public void UndoScalePlayerUp()
     {
-        ScalePlayerUpActive = false;
+        if (ScalePlayerUpActive)
+        {
+            ScalePlayerUpActive = false;
 
-        Vector3 cameraPosBeforeChange = XRCamera.transform.position;
-        XROrigin.transform.localScale *= 1f / ScaleFactor;
-        XROrigin.transform.position += cameraPosBeforeChange - XRCamera.transform.position;
+            Vector3 cameraPosBeforeChange = XRCamera.transform.position;
+            XROrigin.transform.localScale *= 1f / ScaleFactor;
+            XROrigin.transform.position += cameraPosBeforeChange - XRCamera.transform.position;
+        }
     }
 
     public void ScaleSpeedUp()
     {
-        ScaleSpeedUpActive = true;
+        if (!ScaleSpeedUpActive)
+        {
+            ScaleSpeedUpActive = true;
 
-        if(ScalePlayerUpActive)
             UndoScalePlayerUp();
+        }
     }
 
     public void UndoScaleSpeedUp() 
     {
-        ScaleSpeedUpActive = false;
+        if (ScaleSpeedUpActive)
+        {
+            ScaleSpeedUpActive = false;
+        }
     }
 
     private void LateUpdate()
@@ -71,7 +81,8 @@ public class ScaleUpMovement : MonoBehaviour
         {
             if (lastLocalCameraPos.HasValue)
             {
-                XROrigin.transform.position += (CalcualteLocalCameraPos() - lastLocalCameraPos.Value) * (ScaleFactor - 1); //!!missing transformation back to the localXROriginTransfrom
+                XROrigin.transform.position += XROrigin.transform.TransformVector((CalcualteLocalCameraPos() - lastLocalCameraPos.Value) * (ScaleFactor - 1));
+                //(CalcualteLocalCameraPos() - lastLocalCameraPos.Value) * (ScaleFactor - 1); //!!missing transformation back to the localXROriginTransfrom
             }
         }
 
