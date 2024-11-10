@@ -12380,7 +12380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 341643739658639137, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4318264803488994013, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
       propertyPath: m_Pivot.x
@@ -12465,22 +12465,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5690275729505056387, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8037149006550184552, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2031514146513536388, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2568379845483384561, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6819910809487574631, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
 --- !u!224 &835858723 stripped
 RectTransform:
@@ -23221,8 +23206,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandDirectionTransform: {fileID: 1423547849}
+  XREyes: {fileID: 0}
   InteractionArea: {fileID: 2039664003}
   RayDistance: 50
+  useEyeOferHand: 1
 --- !u!4 &1736455145
 Transform:
   m_ObjectHideFlags: 0
