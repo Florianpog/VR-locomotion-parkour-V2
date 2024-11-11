@@ -69,10 +69,11 @@ public class ForceInteraction : MonoBehaviour
                 float windStrength = targetMovement.magnitude * accelerationMovementSpeedFactor * PushStrength_vs_angle.Evaluate(handMovementDirAngle);
 
                 float maxTargetDistance = 1f;
-                int numberOfSubsteps = (int) Mathf.Floor(targetMovement.magnitude / maxTargetDistance);
+                int maxSubsteps = 5;
+                int numberOfSubsteps = Mathf.Min((int) Mathf.Floor(targetMovement.magnitude / maxTargetDistance), maxSubsteps);
                 for (int i = 0; i < numberOfSubsteps; i++) //!! danger high number when distance chanegs
                 {
-                    Vector3 windZoneSpawnPos = lastTargetPosition + targetMovement.normalized * maxTargetDistance * i;
+                    Vector3 windZoneSpawnPos = lastTargetPosition + targetMovement.normalized * (targetMovement.magnitude / numberOfSubsteps + 1) * i;
                     SetupWindZone(windZoneSpawnPos, Quaternion.LookRotation(targetMovement), scale, windStrength);
                 }
                 SetupWindZone(hit.point, Quaternion.LookRotation(targetMovement), scale, windStrength);
