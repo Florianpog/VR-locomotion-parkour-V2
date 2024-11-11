@@ -6,15 +6,9 @@ using UnityEngine;
 public class LocalWindZone : TriggerManager
 {
     public float WindStrength = 10f;
-    [Tooltip("Wind direction as a vector (does not need to be normalized)")]
-    /// <summary>
-    /// Wind direction as a vector (does not need to be normalized)
-    /// </summary>
-    public Vector3 WindDirection;
 
     [Tooltip("in kg/m^2. on earth its 1.225 at sea level")]
     public float airDensity = 1.225f;
-
 
     private void OnValidate()
     {
@@ -25,7 +19,6 @@ public class LocalWindZone : TriggerManager
         }
         catch (System.Exception)
         {
-
             throw;
         }
     }
@@ -42,7 +35,7 @@ public class LocalWindZone : TriggerManager
         if (objectRigidbody == null)
             return;
 
-        Vector3 windVelocity = WindDirection.normalized * WindStrength;
+        Vector3 windVelocity = transform.forward.normalized * WindStrength;
         Vector3 objectVelocity = objectRigidbody.linearVelocity;
         Vector3 relativeVelocity = objectVelocity - windVelocity;
         float exposedArea = ApproximateExposedArea(objectCollider);
@@ -60,7 +53,7 @@ public class LocalWindZone : TriggerManager
     private float ApproximateExposedArea(Collider collider)
     {
         Bounds bounds = collider.bounds;
-        Vector3 windDir = WindDirection.normalized;
+        Vector3 windDir = transform.forward.normalized;
 
         // Simplified approach: use cross-sectional area perpendicular to the wind direction
         float projectedArea = Mathf.Abs(Vector3.Dot(bounds.size, windDir));
