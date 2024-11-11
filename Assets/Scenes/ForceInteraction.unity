@@ -24335,6 +24335,14 @@ MonoBehaviour:
   MaxRayDistance: 1000
   useEyeOverHand: 1
   InteractionAreaDistanceScaleFactor: 0.1
+  PushStrength_vs_angle:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  accelerationMovementSpeedFactor: 5
+  InteractionAreaPrefab: {fileID: 0}
 --- !u!4 &1736455145
 Transform:
   m_ObjectHideFlags: 0
@@ -28291,6 +28299,7 @@ GameObject:
   - component: {fileID: 2039664006}
   - component: {fileID: 2039664005}
   - component: {fileID: 2039664004}
+  - component: {fileID: 2039664009}
   m_Layer: 0
   m_Name: Force Interaction Area
   m_TagString: Untagged
@@ -28414,6 +28423,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2039664009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039664003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b504259787a6e45a2bb90e5bb30fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnColliderFixedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OnColliderEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnColliderExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2041906267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010053083938, guid: 3ba8722acc6ed407ba69d7d7d4d5f832, type: 3}
