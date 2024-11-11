@@ -14,6 +14,12 @@ public class ForceInteraction : MonoBehaviour
     public bool useEyeOverHand = true;
     public float InteractionAreaDistanceScaleFactor = 0.1f;
 
+    [Space(10)]
+    [Tooltip("The percentage of push force strength in the movement direction dependent on the angle between the movement direction and the HandDirection (in percent from 0 to 180°)")]
+    public AnimationCurve PushStrength_vs_angle;
+    public float accelerationMovementSpeedFactor = 5f;
+    public GameObject InteractionAreaPrefab;
+
     private float logBase = 10f;
 
     public void Update()
@@ -48,5 +54,9 @@ public class ForceInteraction : MonoBehaviour
             InteractionArea.transform.localScale = Vector3.one * scale;
         }
 
+    }
+
+    private void InteractionAreaEnter(TriggerManager triggerManager, Collider collider)
+    {
     }
 }
