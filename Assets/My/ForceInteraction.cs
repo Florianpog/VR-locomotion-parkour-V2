@@ -51,11 +51,11 @@ public class ForceInteraction : MonoBehaviour
         bool hasHit = Physics.Raycast(combinedRay, out hit, MaxRayDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
         if (hasHit)
         {
-            InteractionArea.transform.position = hit.point;
+            Vector3 targetPos = hit.point;
 
-            float distance = (hit.point - XREyes.transform.position).magnitude;
-            float scale = distance * InteractionAreaDistanceScaleFactor;
-            InteractionArea.transform.localScale = Vector3.one * scale;
+            InteractionArea.transform.position = targetPos;
+
+            InteractionArea.transform.localScale = Vector3.one * CalculateZoneScale(targetPos);
 
             if(lastTargetPosition != null)
             {
@@ -64,25 +64,37 @@ public class ForceInteraction : MonoBehaviour
                 float handMovementDirAngle = Vector3.Angle(handDir, handMovement);
 
 
-                Vector3 targetMovement = hit.point - lastTargetPosition;
+                Vector3 targetMovement = targetPos - lastTargetPosition;
 
                 float windStrength = targetMovement.magnitude * accelerationMovementSpeedFactor * PushStrength_vs_angle.Evaluate(handMovementDirAngle);
+
+                float handToEyeDistance = (HandDirectionTransform.position - XREyes.transform.position).magnitude;
+                float TargetToEyeDistance = (targetPos - XREyes.transform.position).magnitude;
+                //Vector3 windDirectionVector = targetMovement;
+                Vector3 windDirectionVector = handMovement / handToEyeDistance * TargetToEyeDistance;
+                Quaternion windDirection = Quaternion.LookRotation(windDirectionVector);
 
                 float maxTargetDistance = 1f;
                 int maxSubsteps = 5;
                 int numberOfSubsteps = Mathf.Min((int) Mathf.Floor(targetMovement.magnitude / maxTargetDistance), maxSubsteps);
-                for (int i = 0; i < numberOfSubsteps; i++) //!! danger high number when distance chanegs
+                for (int i = 0; i < numberOfSubsteps; i++)
                 {
                     Vector3 windZoneSpawnPos = lastTargetPosition + targetMovement.normalized * (targetMovement.magnitude / numberOfSubsteps + 1) * i;
-                    SetupWindZone(windZoneSpawnPos, Quaternion.LookRotation(targetMovement), scale, windStrength);
+                    SetupWindZone(windZoneSpawnPos, windDirection, CalculateZoneScale(windZoneSpawnPos), windStrength);
                 }
-                SetupWindZone(hit.point, Quaternion.LookRotation(targetMovement), scale, windStrength);
+                SetupWindZone(targetPos, windDirection, CalculateZoneScale(targetPos), windStrength);
             }
 
-            lastTargetPosition = hit.point;
+            lastTargetPosition = targetPos;
         }
 
         lastHandPosition = HandDirectionTransform.position;
+    }
+
+    private float CalculateZoneScale(Vector3 targetPos)
+    {
+        float distance = (targetPos - XREyes.transform.position).magnitude;
+        return distance * InteractionAreaDistanceScaleFactor;
     }
 
     private void SetupWindZone(Vector3 position, Quaternion rotation, float scale, float windStrength)
