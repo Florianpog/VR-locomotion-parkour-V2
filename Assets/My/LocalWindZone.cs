@@ -37,7 +37,7 @@ public class LocalWindZone : TriggerManager
 
     private void ApplyForce(Collider objectCollider)
     {
-        Rigidbody objectRigidbody = objectCollider.attachedRigidbody; //!!problem with multiple Colliders sharing the same Ridgedbody
+        Rigidbody objectRigidbody = objectCollider.gameObject.GetComponent<Rigidbody>(); //!!problem with multiple Colliders sharing the same Ridgedbody
 
         if (objectRigidbody == null)
             return;
@@ -62,16 +62,9 @@ public class LocalWindZone : TriggerManager
         Bounds bounds = collider.bounds;
         Vector3 windDir = WindDirection.normalized;
 
-        // Calculate the projected area based on the bounds and wind direction
-        float projectedWidth = Vector3.Dot(bounds.size, new Vector3(Mathf.Abs(windDir.x), 0, 0));
-        float projectedHeight = Vector3.Dot(bounds.size, new Vector3(0, Mathf.Abs(windDir.y), 0));
-        float projectedDepth = Vector3.Dot(bounds.size, new Vector3(0, 0, Mathf.Abs(windDir.z)));
-
-        // Approximate the exposed area as the maximum projection (facing the wind)
-        float exposedAreaMaximumProjection = Mathf.Max(projectedWidth * projectedHeight, projectedWidth * projectedDepth, projectedHeight * projectedDepth);
-
-        // Approximating by using the allways overestimating maximum projection and multiplying with 50%
-        return exposedAreaMaximumProjection * 0.5f;
+        // Simplified approach: use cross-sectional area perpendicular to the wind direction
+        float projectedArea = Mathf.Abs(Vector3.Dot(bounds.size, windDir));
+        return projectedArea;
     }
 
     private float ApproximateDragCoefficient(Collider collider)
