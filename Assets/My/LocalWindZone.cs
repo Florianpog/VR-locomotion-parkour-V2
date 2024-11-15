@@ -44,6 +44,8 @@ public class LocalWindZone : TriggerManager
         // Drag Force Formula
         Vector3 dragForce = -0.5f * airDensity * relativeVelocity.sqrMagnitude * dragCoefficient * exposedArea * relativeVelocity.normalized;
 
+        Debug.Log($"dragForce: {dragForce.magnitude.ToReadableFormat()}");
+
         objectRigidbody.AddForce(dragForce);
     }
 

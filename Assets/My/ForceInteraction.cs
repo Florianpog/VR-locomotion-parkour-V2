@@ -38,11 +38,11 @@ public class ForceInteraction : MonoBehaviour
         bool hasAverageRayHit = Physics.Raycast(averageRay, out averageRayHit, fullyTransitionedDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
 
         float averageRayDistance = hasAverageRayHit? (averageRayHit.point - XREyes.transform.position).magnitude : fullyTransitionedDistance;
-        Debug.Log("averageRayDistance: " + averageRayDistance);
+        //Debug.Log("averageRayDistance: " + averageRayDistance);
         float logAverageRayDistance = Mathf.Log(averageRayDistance, logBase);
-        Debug.Log("logAverageRayDistance: " + logAverageRayDistance);
+        //Debug.Log("logAverageRayDistance: " + logAverageRayDistance);
         float combineValue = HandRayTransition_vs_distance.Evaluate(logAverageRayDistance);
-        Debug.Log("combineValue: " + combineValue);
+        //Debug.Log("combineValue: " + combineValue);
 
         Vector3 combinedDirection = (eyeOverHand * combineValue + handDir * (1 - combineValue)).normalized;
         Ray combinedRay = new Ray(HandDirectionTransform.position, combinedDirection);
@@ -72,7 +72,7 @@ public class ForceInteraction : MonoBehaviour
                 float TargetToEyeDistance = (targetPos - XREyes.transform.position).magnitude;
                 //Vector3 windDirectionVector = targetMovement;
                 Vector3 windDirectionVector = handMovement / handToEyeDistance * TargetToEyeDistance;
-                Quaternion windDirection = Quaternion.LookRotation(windDirectionVector);
+                Quaternion windDirection = windDirectionVector != Vector3.zero? Quaternion.LookRotation(windDirectionVector) : Quaternion.identity;
 
                 float maxTargetDistance = 1f;
                 int maxSubsteps = 5;
@@ -99,7 +99,8 @@ public class ForceInteraction : MonoBehaviour
 
     private void SetupWindZone(Vector3 position, Quaternion rotation, float scale, float windStrength)
     {
-
+        //Debug.Log($"windStrength: {windStrength.ToReadableFormat()}");
+        //Debug.Log("windStrength: " + windStrength);
 
         GameObject newlySpawnedWindZone = Instantiate(InteractionAreaPrefab);
         newlySpawnedWindZone.transform.position = position;
