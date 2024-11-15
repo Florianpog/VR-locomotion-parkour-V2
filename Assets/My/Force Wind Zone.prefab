@@ -159,4 +159,4 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   WindStrength: 40
-  airDensity: 500
+  airDensity: 2000

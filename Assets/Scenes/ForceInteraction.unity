@@ -23940,6 +23940,9 @@ PrefabInstance:
       addedObject: {fileID: 1462881681}
     - targetCorrespondingSourceObject: {fileID: 5690275729505056387, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1462881684}
+    - targetCorrespondingSourceObject: {fileID: 5690275729505056387, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
 --- !u!224 &1443367591 stripped
@@ -24249,8 +24252,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleOutput: {fileID: 1462881679}
-  maxTotalLines: 20
+  maxTotalLines: 10
   maxLogEntryLength: 50
+--- !u!114 &1462881684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462881677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c5cb0ab0c51fb4e89cec7e7c33e12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1464911060 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1962112057092706, guid: 10559c3c45c9e4714b032dc317910152, type: 3}
@@ -28061,6 +28076,7 @@ MonoBehaviour:
   accelerationMovementSpeedFactor: 1
   InteractionAreaPrefab: {fileID: 808433283114098728, guid: 2085770281471c94985fbcc7c26a9167, type: 3}
   WindDuration: 0.3
+  maxSubsteps: 5
 --- !u!4 &1736455145
 Transform:
   m_ObjectHideFlags: 0

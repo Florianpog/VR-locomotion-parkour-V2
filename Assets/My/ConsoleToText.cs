@@ -42,7 +42,7 @@ public class ConsoleToText : MonoBehaviour
         {
             lastLogMessage = message;
             lastLogCount = 1;
-            consoleOutput.text += message + "\n";
+            consoleOutput.text += "\n" + message;
         }
 
         // Optional: limit text length to avoid performance issues by restricting the number of lines

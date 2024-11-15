@@ -21,6 +21,7 @@ public class ForceInteraction : MonoBehaviour
     public float accelerationMovementSpeedFactor = 5f;
     public GameObject InteractionAreaPrefab;
     public float WindDuration = 0.5f;
+    public int maxSubsteps = 5;
 
     private float logBase = 10f;
     private Vector3 lastHandPosition;
@@ -61,28 +62,19 @@ public class ForceInteraction : MonoBehaviour
             {
                 Vector3 handMovement = HandDirectionTransform.position - lastHandPosition;
 
+                Quaternion windDirection = handMovement != Vector3.zero ? Quaternion.LookRotation(handMovement) : Quaternion.identity;
+
                 float handMovementDirAngle = Vector3.Angle(handDir, handMovement);
 
-
                 Vector3 targetMovement = targetPos - lastTargetPosition;
-
-                float windStrength = targetMovement.magnitude * accelerationMovementSpeedFactor * PushStrength_vs_angle.Evaluate(handMovementDirAngle);
-
-                float handToEyeDistance = (HandDirectionTransform.position - XREyes.transform.position).magnitude;
-                float TargetToEyeDistance = (targetPos - XREyes.transform.position).magnitude;
-                //Vector3 windDirectionVector = targetMovement;
-                Vector3 windDirectionVector = handMovement / handToEyeDistance * TargetToEyeDistance;
-                Quaternion windDirection = windDirectionVector != Vector3.zero? Quaternion.LookRotation(windDirectionVector) : Quaternion.identity;
-
                 float maxTargetDistance = 1f;
-                int maxSubsteps = 5;
                 int numberOfSubsteps = Mathf.Min((int) Mathf.Floor(targetMovement.magnitude / maxTargetDistance), maxSubsteps);
                 for (int i = 0; i < numberOfSubsteps; i++)
                 {
                     Vector3 windZoneSpawnPos = lastTargetPosition + targetMovement.normalized * (targetMovement.magnitude / numberOfSubsteps + 1) * i;
-                    SetupWindZone(windZoneSpawnPos, windDirection, CalculateZoneScale(windZoneSpawnPos), windStrength);
+                    SetupWindZone(windZoneSpawnPos, windDirection, CalculateWindStrength(handMovement.magnitude, windZoneSpawnPos, PushStrength_vs_angle.Evaluate(handMovementDirAngle)));
                 }
-                SetupWindZone(targetPos, windDirection, CalculateZoneScale(targetPos), windStrength);
+                SetupWindZone(targetPos, windDirection, CalculateWindStrength(handMovement.magnitude, targetPos, PushStrength_vs_angle.Evaluate(handMovementDirAngle)));
             }
 
             lastTargetPosition = targetPos;
@@ -91,16 +83,12 @@ public class ForceInteraction : MonoBehaviour
         lastHandPosition = HandDirectionTransform.position;
     }
 
-    private float CalculateZoneScale(Vector3 targetPos)
-    {
-        float distance = (targetPos - XREyes.transform.position).magnitude;
-        return distance * InteractionAreaDistanceScaleFactor;
-    }
-
-    private void SetupWindZone(Vector3 position, Quaternion rotation, float scale, float windStrength)
+    private void SetupWindZone(Vector3 position, Quaternion rotation, float windStrength)
     {
         //Debug.Log($"windStrength: {windStrength.ToReadableFormat()}");
         //Debug.Log("windStrength: " + windStrength);
+
+        float scale = CalculateZoneScale(position);
 
         GameObject newlySpawnedWindZone = Instantiate(InteractionAreaPrefab);
         newlySpawnedWindZone.transform.position = position;
@@ -111,5 +99,18 @@ public class ForceInteraction : MonoBehaviour
 
         localWindZone.WindStrength = windStrength;
         Destroy(newlySpawnedWindZone, WindDuration);
+    }
+
+    private float CalculateWindStrength(float handMovementMagnitude, Vector3 targetPos, float pushStrengthFromAngle)
+    {
+        float handToEyeDistance = (HandDirectionTransform.position - XREyes.transform.position).magnitude;
+        float targetToEyeDistance = (targetPos - XREyes.transform.position).magnitude;
+        return handMovementMagnitude / handToEyeDistance * targetToEyeDistance * accelerationMovementSpeedFactor * pushStrengthFromAngle;
+    }
+
+    private float CalculateZoneScale(Vector3 targetPos)
+    {
+        float distance = (targetPos - XREyes.transform.position).magnitude;
+        return distance * InteractionAreaDistanceScaleFactor;
     }
 }
