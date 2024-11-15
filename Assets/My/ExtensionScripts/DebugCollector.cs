@@ -40,4 +40,13 @@ public class DebugCollector<IdentifierType, ValueType>
             collectedValues[identifier].Clear();
         }
     }
+
+    public void SendDebug(Func<List<ValueType>, ValueType> aggregateFunction)
+    {
+        foreach (var identifier in collectedValues.Keys)
+        {
+            if (collectedValues[identifier] != null && collectedValues[identifier].Count != 0)
+                SendDebug(identifier, aggregateFunction);
+        }
+    }
 }

@@ -24266,6 +24266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c5cb0ab0c51fb4e89cec7e7c33e12b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugInterval: 0.5
 --- !u!1 &1464911060 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1962112057092706, guid: 10559c3c45c9e4714b032dc317910152, type: 3}
@@ -28076,7 +28077,7 @@ MonoBehaviour:
   accelerationMovementSpeedFactor: 1
   InteractionAreaPrefab: {fileID: 808433283114098728, guid: 2085770281471c94985fbcc7c26a9167, type: 3}
   WindDuration: 0.3
-  maxSubsteps: 5
+  maxSubsteps: 15
 --- !u!4 &1736455145
 Transform:
   m_ObjectHideFlags: 0

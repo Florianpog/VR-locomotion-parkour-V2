@@ -36,7 +36,8 @@ public class LocalWindZone : TriggerManager
             return;
 
         Vector3 windVelocity = transform.forward.normalized * WindStrength;
-        Vector3 objectVelocity = objectRigidbody.linearVelocity;
+        //Vector3 objectVelocity = objectRigidbody.linearVelocity; //!!causes unknown extrem values and is disabled for now
+        Vector3 objectVelocity = Vector3.zero; 
         Vector3 relativeVelocity = objectVelocity - windVelocity;
         float exposedArea = ApproximateExposedArea(objectCollider);
         float dragCoefficient = ApproximateDragCoefficient(objectCollider);
@@ -45,7 +46,11 @@ public class LocalWindZone : TriggerManager
         Vector3 dragForce = -0.5f * airDensity * relativeVelocity.sqrMagnitude * dragCoefficient * exposedArea * relativeVelocity.normalized;
 
         //Debug.Log($"dragForce: {dragForce.magnitude.ToReadableFormat()}");
-        DebugTester.DebugCollector.CollectLog("dragForce: ", dragForce.magnitude.ToReadableFloat());
+        DebugTester.stringFloatLogger.CollectLog("dragForce: ", dragForce.magnitude.ToReadableFloat());
+        if(dragForce.magnitude > 400000)
+        {
+            DebugTester.stringFloatLogger.CollectLog("!!!Warning High Value!!!!: ", dragForce.magnitude.ToReadableFloat());
+        }
 
         objectRigidbody.AddForce(dragForce);
     }

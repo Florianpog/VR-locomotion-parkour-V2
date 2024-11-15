@@ -3,7 +3,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class DebugTester : MonoBehaviour
 {
-    public static DebugCollector<string, float> DebugCollector = new DebugCollector<string, float>();
+    public static DebugCollector<string, float> stringFloatLogger = new DebugCollector<string, float>();
     public float debugInterval = 0.5f; // Set the interval time in seconds
 
     private void Start()
@@ -15,7 +15,7 @@ public class DebugTester : MonoBehaviour
     {
         while (true)
         {
-            DebugCollector.SendDebug("dragForce: ", values => Mathf.Max(values.ToArray()));
+            stringFloatLogger.SendDebug(values => Mathf.Max(values.ToArray()));
             yield return new WaitForSeconds(debugInterval);
         }
     }
