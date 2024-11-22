@@ -36,7 +36,7 @@ public class LocalWindZone : TriggerManager
             return;
 
         Vector3 windVelocity = transform.forward.normalized * WindStrength;
-        //Vector3 objectVelocity = objectRigidbody.linearVelocity; //!!causes unknown extrem values and is disabled for now
+        //Vector3 objectVelocity = objectRigidbody.velocity ; //!!causes unknown extrem values and is disabled for now
         Vector3 objectVelocity = Vector3.zero; 
         Vector3 relativeVelocity = objectVelocity - windVelocity;
         float exposedArea = ApproximateExposedArea(objectCollider);
