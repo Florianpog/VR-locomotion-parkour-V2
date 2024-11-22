@@ -19,7 +19,8 @@ public class ForceInteractionV2 : MonoBehaviour
     public float minAcceleration = 0.01f;
     public float baseMaxForce = 1.0f;
 
-    public float fallOffDistance = 1.0f;//!!temporary string cutoff after distance
+    [Tooltip("basically the influence sphere radius per peter distance")]
+    public float fallOffDistance = 0.1f;//!!temporary string cutoff after distance
 
     Rigidbody[] allRigidbodies;
     Vector3? savedLastHandPos = null;
@@ -43,24 +44,26 @@ public class ForceInteractionV2 : MonoBehaviour
 
     public void AddForceInteractionForce(Rigidbody rigidbody, Vector3 handPos, Vector3 lastHandPos/*, Vector3 handDir*/, Vector3 eyePos/*, Vector3 eyeDir*/)
     {
-        Vector3 objectPos = rigidbody.centerOfMass;
+        Vector3 objectPos = rigidbody.position; //!! shoule use center of mass relative to position
 
         Vector3 eyeToHand = handPos - eyePos;
         Vector3 eyeTolastHand = lastHandPos - eyePos;
 
         Vector3 eyeToObject = eyePos - objectPos;
 
-        float handMovementScaleFactor = eyeToHand.magnitude / eyeToObject.magnitude;
+        float handMovementScaleFactor = eyeToObject.magnitude / eyeToHand.magnitude;
 
         Vector3 lastHandToHand = handPos - lastHandPos;
         Vector3 windVelocity = lastHandToHand * handMovementScaleFactor;
 
         Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
         Vector3 relativeVelocity = objectVelocity - windVelocity;
+        if (relativeVelocity.sqrMagnitude <= 0.001) return;
 
         float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, handPos, lastHandPos, eyePos);
-        float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance ? 1f : 0f; //!!temporary implementation
+        float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
         float focus = focusFromDistance;//!!missing other components like eyeDir
+        if (focus <= 0.001) return;
 
         float maxForce = baseMaxForce * focus;
 
@@ -75,8 +78,9 @@ public class ForceInteractionV2 : MonoBehaviour
         float volume = volumeX * volumeY * volumeZ;
 
         //the target velocity is fixed but we dont want unliimed forces applied which is why we decrease the density
-        //(velocity × volume) / (force × time)
-        float airDensity = (windVelocity.magnitude * volume) / (maxForce * Time.fixedDeltaTime); //not shure if Time.fixedDeltaTime shouldn't be removed
+        //Density = (Force × Time) / (Speed × Volume)
+        float airDensity =  (maxForce * Time.fixedDeltaTime) / (windVelocity.magnitude * volume); //not shure if Time.fixedDeltaTime shouldn't be removed
+        if (airDensity <= 0.001) return;
 
         float dragCoefficient = ApproximateDragCoefficient(rigidbody);
         float exposedArea = ApproximateExposedArea(rigidbody, windVelocity);
@@ -84,6 +88,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
         if (windDragForce.magnitude / rigidbody.mass >= minAcceleration)
         {
+            DebugTester.stringFloatLogger.CollectLog("dragForce: ", windDragForce.magnitude.ToReadableFloat());
             rigidbody.AddForce(windDragForce);
         }
     }

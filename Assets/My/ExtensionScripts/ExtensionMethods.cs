@@ -19,7 +19,7 @@ public static class ExtensionMethods
 
     public static float ToReadableFloat(this float value)
     {
-        if (Mathf.Abs(value) < 1) return 0f; // Ignore near-zero values
+        if (Mathf.Abs(value) < 1) return Mathf.Round(value * 10f) / 10f;
 
         if (Mathf.Abs(value) >= 1e12f) return Mathf.RoundToInt(value / 1e12f) * 1e12f;
         if (Mathf.Abs(value) >= 1e9f) return Mathf.RoundToInt(value / 1e9f) * 1e9f;
