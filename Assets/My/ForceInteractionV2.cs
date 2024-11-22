@@ -1,0 +1,141 @@
+using System.Drawing;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Rendering;
+
+/// <summary>
+/// Foce Interaction based on "the one formula to rule them all". Cutting out the middle man of Phsere trigger zones and instead applying force to ALL ridgidbodyies dependent on there relation to the rays
+/// </summary>
+public class ForceInteractionV2 : MonoBehaviour
+{
+    [Tooltip("This Transform should be a child of the force interaction hand. The forward direction should be the way the hand is facting and the position the hand center")]
+    /// <summary>
+    /// This Transform should be a child of the force interaction hand. The forward direction should be the way the hand is facting and the position the hand center
+    /// </summary>
+    public Transform HandForceInteractionTransform;
+    public Camera XREyes;
+
+    public float minAcceleration = 0.01f;
+    public float baseMaxForce = 1.0f;
+
+    public float fallOffDistance = 1.0f;//!!temporary string cutoff after distance
+
+    Rigidbody[] allRigidbodies;
+    Vector3? savedLastHandPos = null;
+
+    private void Start()
+    {
+        allRigidbodies = FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
+    }
+    private void FixedUpdate()
+    {
+        if (savedLastHandPos.HasValue && allRigidbodies != null)
+        {
+            foreach (Rigidbody rigidbody in allRigidbodies)
+            {
+                AddForceInteractionForce(rigidbody, HandForceInteractionTransform.position, savedLastHandPos.Value, XREyes.transform.position);
+            }
+        }
+
+        savedLastHandPos = HandForceInteractionTransform.position;
+    }
+
+    public void AddForceInteractionForce(Rigidbody rigidbody, Vector3 handPos, Vector3 lastHandPos/*, Vector3 handDir*/, Vector3 eyePos/*, Vector3 eyeDir*/)
+    {
+        Vector3 objectPos = rigidbody.centerOfMass;
+
+        Vector3 eyeToHand = handPos - eyePos;
+        Vector3 eyeTolastHand = lastHandPos - eyePos;
+
+        Vector3 eyeToObject = eyePos - objectPos;
+
+        float handMovementScaleFactor = eyeToHand.magnitude / eyeToObject.magnitude;
+
+        Vector3 lastHandToHand = handPos - lastHandPos;
+        Vector3 windVelocity = lastHandToHand * handMovementScaleFactor;
+
+        Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
+        Vector3 relativeVelocity = objectVelocity - windVelocity;
+
+        float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, handPos, lastHandPos, eyePos);
+        float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance ? 1f : 0f; //!!temporary implementation
+        float focus = focusFromDistance;//!!missing other components like eyeDir
+
+        float maxForce = baseMaxForce * focus;
+
+        float areaUnderDistanceCurve = fallOffDistance * 2f;//!!temporary
+        //volume dir towards Eye: is infitisimal small
+        float volumeX = 1f;
+        //volume dir in windDir: is 1 for the entire length
+        float volumeY = windVelocity.magnitude + areaUnderDistanceCurve * eyeToObject.magnitude;
+        //volume dir perpendicular: is soly defined usng the fallOff to the side (which scales with distance)
+        float volumeZ = areaUnderDistanceCurve * eyeToObject.magnitude;
+        //aproximating  and ignoring that at the corners we would have a curcular effect, !could be imporved relatively easially
+        float volume = volumeX * volumeY * volumeZ;
+
+        //the target velocity is fixed but we dont want unliimed forces applied which is why we decrease the density
+        //(velocity × volume) / (force × time)
+        float airDensity = (windVelocity.magnitude * volume) / (maxForce * Time.fixedDeltaTime); //not shure if Time.fixedDeltaTime shouldn't be removed
+
+        float dragCoefficient = ApproximateDragCoefficient(rigidbody);
+        float exposedArea = ApproximateExposedArea(rigidbody, windVelocity);
+        Vector3 windDragForce = -0.5f * airDensity * relativeVelocity.sqrMagnitude * dragCoefficient * exposedArea * relativeVelocity.normalized;
+
+        if (windDragForce.magnitude / rigidbody.mass >= minAcceleration)
+        {
+            rigidbody.AddForce(windDragForce);
+        }
+    }
+
+    private static float DistanceToEyeToHandTriangle(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos)
+    {
+        //cheapest implementeation I could think of.
+        float maxDistance = 1000f;
+
+        Vector3 eyeToHand = handPos - eyePos;
+        Vector3 eyeTolastHand = lastHandPos - eyePos;
+
+        return DistancePointToTriangle(objectPos, eyePos, eyePos + eyeToHand.normalized * maxDistance, eyePos + eyeTolastHand.normalized * maxDistance);
+    }
+
+    private static float DistancePointToTriangle(Vector3 point, Vector3 v0, Vector3 v1, Vector3 v2)
+    {
+        Vector3 edge0 = v1 - v0, edge1 = v2 - v0, v0ToPoint = point - v0;
+        float a = Vector3.Dot(edge0, edge0), b = Vector3.Dot(edge0, edge1);
+        float c = Vector3.Dot(edge1, edge1), d = Vector3.Dot(edge0, v0ToPoint);
+        float e = Vector3.Dot(edge1, v0ToPoint), det = a * c - b * b;
+
+        float s = Mathf.Clamp01((b * e - c * d) / det);
+        float t = Mathf.Clamp01((a * e - b * d) / det);
+
+        if (s + t > 1) { s = 1 - t; t = 1 - s; }
+        Vector3 projection = v0 + s * edge0 + t * edge1;
+        return Vector3.Distance(point, projection);
+    }
+
+    /// <param name="windDir">does not have to be normalied</param>
+    private static float ApproximateExposedArea(Rigidbody rigidbody, Vector3 windDir)
+    {
+        if (rigidbody.TryGetComponent<Collider>(out Collider collider))
+        {
+            windDir = windDir.normalized;
+
+            Bounds bounds = collider.bounds;
+
+            // Simplified approach: use cross-sectional area perpendicular to the wind direction
+            float projectedArea = Mathf.Abs(Vector3.Dot(bounds.size, windDir));
+            return projectedArea;
+        }
+        else
+        {
+            Debug.Log("!could Not calucate exposed area", rigidbody);
+            return 0f;
+        }
+    }
+
+    private static float ApproximateDragCoefficient(Rigidbody rigidbody)
+    {
+        return 1.0f; // A drag coefficient for typical non-streamlined objects (0.47 would be sphere - like)
+    }
+}
