@@ -1,8 +1,7 @@
+using System;
 using System.Drawing;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 /// <summary>
 /// Foce Interaction based on "the one formula to rule them all". Cutting out the middle man of Phsere trigger zones and instead applying force to ALL ridgidbodyies dependent on there relation to the rays
@@ -41,10 +40,20 @@ public class ForceInteractionV2 : MonoBehaviour
 
         savedLastHandPos = HandForceInteractionTransform.position;
     }
-
-    public void AddForceInteractionForce(Rigidbody rigidbody, Vector3 handPos, Vector3 lastHandPos/*, Vector3 handDir*/, Vector3 eyePos/*, Vector3 eyeDir*/)
+    public void AddForceInteractionForce(Rigidbody rigidbody, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos/*, Vector3 handDir*//*, Vector3 eyeDir*/)
     {
-        Vector3 objectPos = rigidbody.position; //!! shoule use center of mass relative to position
+        Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
+
+        Vector3 force = CaculateForceInteractionForce(objectPos, handPos, lastHandPos, eyePos, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir)/*, handDir*//*, eyeDir*/);
+
+        if (force.magnitude / rigidbody.mass >= minAcceleration)
+        {
+            DebugTester.stringFloatLogger.CollectLog("dragForce: ", force.magnitude.ToReadableFloat());
+            rigidbody.AddForce(force);
+        }
+    }
+    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea/*, Vector3 handDir*//*, Vector3 eyeDir*/)
+    {
 
         Vector3 eyeToHand = handPos - eyePos;
         Vector3 eyeTolastHand = lastHandPos - eyePos;
@@ -58,12 +67,12 @@ public class ForceInteractionV2 : MonoBehaviour
 
         Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
         Vector3 relativeVelocity = objectVelocity - windVelocity;
-        if (relativeVelocity.sqrMagnitude <= 0.001) return;
+        if (relativeVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
 
         float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, handPos, lastHandPos, eyePos);
         float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
         float focus = focusFromDistance;//!!missing other components like eyeDir
-        if (focus <= 0.001) return;
+        if (focus <= 0.001) return Vector3.zero;
 
         float maxForce = baseMaxForce * focus;
 
@@ -80,17 +89,13 @@ public class ForceInteractionV2 : MonoBehaviour
         //the target velocity is fixed but we dont want unliimed forces applied which is why we decrease the density
         //Density = (Force × Time) / (Speed × Volume)
         float airDensity =  (maxForce * Time.fixedDeltaTime) / (windVelocity.magnitude * volume); //not shure if Time.fixedDeltaTime shouldn't be removed
-        if (airDensity <= 0.001) return;
+        if (airDensity <= 0.001) return Vector3.zero;
 
-        float dragCoefficient = ApproximateDragCoefficient(rigidbody);
-        float exposedArea = ApproximateExposedArea(rigidbody, windVelocity);
+        float dragCoefficient = GetDragCoefficient(); ;
+        float exposedArea = GetExposedArea(windVelocity);
         Vector3 windDragForce = -0.5f * airDensity * relativeVelocity.sqrMagnitude * dragCoefficient * exposedArea * relativeVelocity.normalized;
 
-        if (windDragForce.magnitude / rigidbody.mass >= minAcceleration)
-        {
-            DebugTester.stringFloatLogger.CollectLog("dragForce: ", windDragForce.magnitude.ToReadableFloat());
-            rigidbody.AddForce(windDragForce);
-        }
+        return windDragForce;
     }
 
     private static float DistanceToEyeToHandTriangle(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos)
