@@ -11,7 +11,7 @@ public class MassCalculator : MonoBehaviour
         if (updateMass)
         {
             updateMass = false;
-            CalculateAndUpdateMass();
+            CalculateAndUpdateMass(); //!!! should use rigidbody.SetDensity. did not know this existed
         }
     }
 

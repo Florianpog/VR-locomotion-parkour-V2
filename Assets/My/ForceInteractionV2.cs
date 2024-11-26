@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,38 +23,50 @@ public class ForceInteractionV2 : MonoBehaviour
     [Tooltip("basically the influence sphere radius per peter distance")]
     public float fallOffDistance = 0.1f;//!!temporary string cutoff after distance
 
-    Rigidbody[] allRigidbodies;
+    List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
     Vector3? savedLastHandPos = null;
 
     private void Start()
     {
-        allRigidbodies = FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
+        Rigidbody[] allRigidbodies = FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
+        foreach (Rigidbody rigidbody in allRigidbodies)
+        {
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            RigidbodyVelocityStabilizer newHelper = (rigidbody.AddComponent<RigidbodyVelocityStabilizer>());
+            newHelper.historySize = 5;
+            allRigidbodyHelpers.Add(newHelper);
+        }
     }
     private void FixedUpdate()
     {
-        if (savedLastHandPos.HasValue && allRigidbodies != null)
+        if (savedLastHandPos.HasValue && allRigidbodyHelpers != null)
         {
-            foreach (Rigidbody rigidbody in allRigidbodies)
+            foreach (var rigidbodyHelper in allRigidbodyHelpers)
             {
-                AddForceInteractionForce(rigidbody, HandForceInteractionTransform.position, savedLastHandPos.Value, XREyes.transform.position);
+                AddForceInteractionForce(rigidbodyHelper, HandForceInteractionTransform.position, savedLastHandPos.Value, XREyes.transform.position);
             }
         }
 
         savedLastHandPos = HandForceInteractionTransform.position;
     }
-    public void AddForceInteractionForce(Rigidbody rigidbody, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos/*, Vector3 handDir*//*, Vector3 eyeDir*/)
+    public void AddForceInteractionForce(RigidbodyVelocityStabilizer rigidbodyHelper, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos/*, Vector3 handDir*//*, Vector3 eyeDir*/)
     {
+        Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
         Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
 
-        Vector3 force = CaculateForceInteractionForce(objectPos, handPos, lastHandPos, eyePos, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir)/*, handDir*//*, eyeDir*/);
+        DebugTester.stringFloatLogger.CollectLog("linearVelocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
+        if (rigidbodyHelper.linearVelocity.magnitude > 200f)
+            DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
+
+    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.linearVelocity, handPos, lastHandPos, eyePos, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
 
         if (force.magnitude / rigidbody.mass >= minAcceleration)
         {
-            DebugTester.stringFloatLogger.CollectLog("dragForce: ", force.magnitude.ToReadableFloat());
+            //DebugTester.stringFloatLogger.CollectLog("dragForce: ", force.magnitude.ToReadableFloat());
             rigidbody.AddForce(force);
         }
     }
-    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea/*, Vector3 handDir*//*, Vector3 eyeDir*/)
+    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 handDir*//*, Vector3 eyeDir*/)
     {
 
         Vector3 eyeToHand = handPos - eyePos;
@@ -63,14 +77,24 @@ public class ForceInteractionV2 : MonoBehaviour
         float handMovementScaleFactor = eyeToObject.magnitude / eyeToHand.magnitude;
 
         Vector3 lastHandToHand = handPos - lastHandPos;
-        Vector3 windVelocity = lastHandToHand * handMovementScaleFactor;
+        Vector3 windVelocity = lastHandToHand / Time.fixedDeltaTime * handMovementScaleFactor;
 
-        Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
+        //Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
         Vector3 relativeVelocity = objectVelocity - windVelocity;
         if (relativeVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
 
         float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, handPos, lastHandPos, eyePos);
         float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
+
+        if(focusFromDistance > 0.5)
+        {
+            debugGameObject.layer = 9;//debug Layer
+        }
+        else
+        {
+            debugGameObject.layer = 0;//default layer //!!! quick and dirty
+        }
+
         float focus = focusFromDistance;//!!missing other components like eyeDir
         if (focus <= 0.001) return Vector3.zero;
 
