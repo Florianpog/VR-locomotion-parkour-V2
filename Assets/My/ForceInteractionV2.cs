@@ -4,6 +4,7 @@ using System.Drawing;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Foce Interaction based on "the one formula to rule them all". Cutting out the middle man of Phsere trigger zones and instead applying force to ALL ridgidbodyies dependent on there relation to the rays
@@ -26,8 +27,13 @@ public class ForceInteractionV2 : MonoBehaviour
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
     Vector3? savedLastHandPos = null;
 
+    public InputActionReference ActivatDebug;
+    public GameObject debugLinePrefab;
+
     private void Start()
     {
+        ActivatDebug.action.started += (_) => DebugLines(XREyes.transform.position, HandForceInteractionTransform.position, savedLastHandPos.Value);
+
         Rigidbody[] allRigidbodies = FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
         foreach (Rigidbody rigidbody in allRigidbodies)
         {
@@ -122,30 +128,74 @@ public class ForceInteractionV2 : MonoBehaviour
         return windDragForce;
     }
 
-    private static float DistanceToEyeToHandTriangle(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos)
+    private float DistanceToEyeToHandTriangle(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos) //!!should be static
     {
         //cheapest implementeation I could think of.
-        float maxDistance = 1000f;
+        float maxDistance = 100f;
 
         Vector3 eyeToHand = handPos - eyePos;
         Vector3 eyeTolastHand = lastHandPos - eyePos;
+
+        /*if(Vector3.Angle(eyeToHand, eyeTolastHand) > 5f)
+        {
+            DebugLines(eyePos, handPos, lastHandPos);
+        }*/
 
         return DistancePointToTriangle(objectPos, eyePos, eyePos + eyeToHand.normalized * maxDistance, eyePos + eyeTolastHand.normalized * maxDistance);
     }
 
     private static float DistancePointToTriangle(Vector3 point, Vector3 v0, Vector3 v1, Vector3 v2)
     {
-        Vector3 edge0 = v1 - v0, edge1 = v2 - v0, v0ToPoint = point - v0;
-        float a = Vector3.Dot(edge0, edge0), b = Vector3.Dot(edge0, edge1);
-        float c = Vector3.Dot(edge1, edge1), d = Vector3.Dot(edge0, v0ToPoint);
-        float e = Vector3.Dot(edge1, v0ToPoint), det = a * c - b * b;
+        // Compute plane normal
+        Vector3 edge0 = v1 - v0;
+        Vector3 edge1 = v2 - v0;
+        Vector3 normal = Vector3.Cross(edge0, edge1);
+        float area2 = normal.magnitude;
 
-        float s = Mathf.Clamp01((b * e - c * d) / det);
-        float t = Mathf.Clamp01((a * e - b * d) / det);
+        // Check for degenerate triangle
+        if (area2 == 0f)
+            return (point - v0).magnitude;
 
-        if (s + t > 1) { s = 1 - t; t = 1 - s; }
-        Vector3 projection = v0 + s * edge0 + t * edge1;
-        return Vector3.Distance(point, projection);
+        normal /= area2; // Normalize the normal
+
+        // Compute distance from point to triangle plane
+        float distanceToPlane = Vector3.Dot(normal, point - v0);
+        Vector3 projection = point - distanceToPlane * normal;
+
+        // Compute barycentric coordinates
+        Vector3 vp0 = projection - v0;
+        float d00 = Vector3.Dot(edge0, edge0);
+        float d01 = Vector3.Dot(edge0, edge1);
+        float d11 = Vector3.Dot(edge1, edge1);
+        float d20 = Vector3.Dot(vp0, edge0);
+        float d21 = Vector3.Dot(vp0, edge1);
+        float denom = d00 * d11 - d01 * d01;
+
+        float v = (d11 * d20 - d01 * d21) / denom;
+        float w = (d00 * d21 - d01 * d20) / denom;
+        float u = 1f - v - w;
+
+        // Check if projection is inside triangle
+        if (u >= 0f && v >= 0f && w >= 0f)
+        {
+            return Mathf.Abs(distanceToPlane);
+        }
+        else
+        {
+            // Compute distances to triangle edges
+            float dist0 = DistancePointToSegment(point, v0, v1);
+            float dist1 = DistancePointToSegment(point, v1, v2);
+            float dist2 = DistancePointToSegment(point, v2, v0);
+            return Mathf.Min(dist0, dist1, dist2);
+        }
+    }
+
+    private static float DistancePointToSegment(Vector3 point, Vector3 a, Vector3 b)
+    {
+        Vector3 ab = b - a;
+        float t = Mathf.Clamp01(Vector3.Dot(point - a, ab) / Vector3.Dot(ab, ab));
+        Vector3 closestPoint = a + t * ab;
+        return (closestPoint - point).magnitude;
     }
 
     /// <param name="windDir">does not have to be normalied</param>
@@ -171,5 +221,17 @@ public class ForceInteractionV2 : MonoBehaviour
     private static float ApproximateDragCoefficient(Rigidbody rigidbody)
     {
         return 1.0f; // A drag coefficient for typical non-streamlined objects (0.47 would be sphere - like)
+    }
+
+    private void DebugLines(Vector3 eyePos, Vector3 handPos, Vector3 lastHandPos)
+    {
+        Vector3 eyeToHand = handPos - eyePos;
+        Vector3 eyeTolastHand = lastHandPos - eyePos;
+
+        var o1 = Instantiate(debugLinePrefab, eyePos, Quaternion.LookRotation(eyeToHand));
+        o1.transform.LookAt(handPos);
+        //o1.transform.localScale = new Vector3(o1.transform.localScale.x, o1.transform.localScale.y, o1.transform.localScale.z);
+        var o2 = Instantiate(debugLinePrefab, eyePos, Quaternion.LookRotation(eyeTolastHand));
+        o1.transform.LookAt(lastHandPos);
     }
 }
