@@ -104,7 +104,7 @@ public class ForceInteractionV2 : MonoBehaviour
         float focus = focusFromDistance;//!!missing other components like eyeDir
         if (focus <= 0.001) return Vector3.zero;
 
-        float maxForce = baseMaxForce * focus;
+        float maxForce = baseMaxForce * focus * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
 
         float areaUnderDistanceCurve = fallOffDistance * 2f;//!!temporary
         //volume dir towards Eye: is infitisimal small

@@ -18044,7 +18044,7 @@ MonoBehaviour:
   HandForceInteractionTransform: {fileID: 1423547849}
   XREyes: {fileID: 604769493}
   minAcceleration: 0.01
-  baseMaxForce: 1000000
+  baseMaxForce: 300000
   fallOffDistance: 0.2
   ActivatDebug: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   debugLinePrefab: {fileID: 8855542028366715798, guid: 75515d61f9a23504b9b33c83cec6944d, type: 3}
