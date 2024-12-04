@@ -67,7 +67,7 @@ public class ForceInteractionV2 : MonoBehaviour
         if (rigidbodyHelper.linearVelocity.magnitude > 200f)
             DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
 
-    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
 
         if (force.magnitude / rigidbody.mass >= minAcceleration)
         {
@@ -75,7 +75,7 @@ public class ForceInteractionV2 : MonoBehaviour
             rigidbody.AddForce(force);
         }
     }
-    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)
+    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectSphericalSize, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)
     {
 
         Vector3 eyeToHand = handPos - eyePos;
@@ -92,7 +92,7 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 relativeVelocity = objectVelocity - windVelocity;
         if (relativeVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
 
-        float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, handPos, lastHandPos, eyePos);
+        float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, objectSphericalSize, handPos, lastHandPos, eyePos);
         float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
 
         if(focusFromDistance > 0.5)
@@ -135,7 +135,7 @@ public class ForceInteractionV2 : MonoBehaviour
         return Vector3.ClampMagnitude(windDragForce, maxForceForOneFixedFrame);
     }
 
-    private float DistanceToEyeToHandTriangle(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos) //!!should be static
+    private float DistanceToEyeToHandTriangle(Vector3 objectPos, float objectSphericalSize, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos) //!!should be static
     {
         //cheapest implementeation I could think of.
         float maxDistance = 100f;
@@ -148,7 +148,9 @@ public class ForceInteractionV2 : MonoBehaviour
             DebugLines(eyePos, handPos, lastHandPos);
         }*/
 
-        return DistancePointToTriangle(objectPos, eyePos, eyePos + eyeToHand.normalized * maxDistance, eyePos + eyeTolastHand.normalized * maxDistance);
+        float pointDistance = DistancePointToTriangle(objectPos, eyePos, eyePos + eyeToHand.normalized * maxDistance, eyePos + eyeTolastHand.normalized * maxDistance);
+
+        return Mathf.Max(0, pointDistance - objectSphericalSize);
     }
 
     private static float DistancePointToTriangle(Vector3 point, Vector3 v0, Vector3 v1, Vector3 v2)
@@ -250,6 +252,24 @@ public class ForceInteractionV2 : MonoBehaviour
         else
         {
             Debug.Log("!could Not calucate exposed area", rigidbody);
+            return 0f;
+        }
+    }
+
+    private static float ApproximateObjectSphericalSize(Rigidbody rigidbody)
+    {
+        if (rigidbody.TryGetComponent<Collider>(out Collider collider))
+        {
+            Bounds bounds = collider.bounds;
+
+            // Apply a scaling factor for more accurate spherical approximation
+            float scalingFactor = 0.75f;
+            float sphericalSize = bounds.extents.magnitude * scalingFactor;
+            return sphericalSize;
+        }
+        else
+        {
+            Debug.Log("!Could not calculate spherical size", rigidbody);
             return 0f;
         }
     }
