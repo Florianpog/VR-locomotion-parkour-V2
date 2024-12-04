@@ -24,6 +24,9 @@ public class ForceInteractionV2 : MonoBehaviour
     [Tooltip("basically the influence sphere radius per peter distance")]
     public float fallOffDistance = 0.1f;//!!temporary string cutoff after distance
 
+    [Tooltip("The percentage of push force strength in the movement direction dependent on the angle between the movement direction and the HandDirection (from 0 to 180°)")]
+    public AnimationCurve PushStrength_vs_angle;
+
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
     Vector3? savedLastHandPos = null;
 
@@ -49,13 +52,13 @@ public class ForceInteractionV2 : MonoBehaviour
         {
             foreach (var rigidbodyHelper in allRigidbodyHelpers)
             {
-                AddForceInteractionForce(rigidbodyHelper, HandForceInteractionTransform.position, savedLastHandPos.Value, XREyes.transform.position);
+                AddForceInteractionForce(rigidbodyHelper, HandForceInteractionTransform.position, savedLastHandPos.Value, XREyes.transform.position, HandForceInteractionTransform.forward);
             }
         }
 
         savedLastHandPos = HandForceInteractionTransform.position;
     }
-    public void AddForceInteractionForce(RigidbodyVelocityStabilizer rigidbodyHelper, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos/*, Vector3 handDir*//*, Vector3 eyeDir*/)
+    public void AddForceInteractionForce(RigidbodyVelocityStabilizer rigidbodyHelper, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir/*, Vector3 eyeDir*/)
     {
         Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
         Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
@@ -64,7 +67,7 @@ public class ForceInteractionV2 : MonoBehaviour
         if (rigidbodyHelper.linearVelocity.magnitude > 200f)
             DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
 
-    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
 
         if (force.magnitude / rigidbody.mass >= minAcceleration)
         {
@@ -72,7 +75,7 @@ public class ForceInteractionV2 : MonoBehaviour
             rigidbody.AddForce(force);
         }
     }
-    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 handDir*//*, Vector3 eyeDir*/)
+    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)
     {
 
         Vector3 eyeToHand = handPos - eyePos;
@@ -104,7 +107,9 @@ public class ForceInteractionV2 : MonoBehaviour
         float focus = focusFromDistance;//!!missing other components like eyeDir
         if (focus <= 0.001) return Vector3.zero;
 
-        float maxForce = baseMaxForce * focus * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
+        float handMovementDirAngle = Vector3.Angle(handDir, lastHandToHand);
+
+        float maxForce = baseMaxForce * focus * PushStrength_vs_angle.Evaluate(handMovementDirAngle) * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
 
         float areaUnderDistanceCurve = fallOffDistance * 2f;//!!temporary
         //volume dir towards Eye: is infitisimal small
