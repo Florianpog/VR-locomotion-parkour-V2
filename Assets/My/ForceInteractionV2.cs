@@ -64,7 +64,7 @@ public class ForceInteractionV2 : MonoBehaviour
         if (rigidbodyHelper.linearVelocity.magnitude > 200f)
             DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
 
-    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
 
         if (force.magnitude / rigidbody.mass >= minAcceleration)
         {
@@ -72,7 +72,7 @@ public class ForceInteractionV2 : MonoBehaviour
             rigidbody.AddForce(force);
         }
     }
-    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 handDir*//*, Vector3 eyeDir*/)
+    public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 handDir*//*, Vector3 eyeDir*/)
     {
 
         Vector3 eyeToHand = handPos - eyePos;
@@ -125,7 +125,9 @@ public class ForceInteractionV2 : MonoBehaviour
         float exposedArea = GetExposedArea(windVelocity);
         Vector3 windDragForce = -0.5f * airDensity * relativeVelocity.sqrMagnitude * dragCoefficient * exposedArea * relativeVelocity.normalized;
 
-        return windDragForce;
+        float maxForceForOneFixedFrame = relativeVelocity.magnitude * objectMass / Time.fixedDeltaTime;
+
+        return Vector3.ClampMagnitude(windDragForce, maxForceForOneFixedFrame);
     }
 
     private float DistanceToEyeToHandTriangle(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos) //!!should be static
