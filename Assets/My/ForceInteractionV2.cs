@@ -107,9 +107,9 @@ public class ForceInteractionV2 : MonoBehaviour
         float focus = focusFromDistance;//!!missing other components like eyeDir
         if (focus <= 0.001) return Vector3.zero;
 
-        float handMovementDirAngle = Vector3.Angle(handDir, lastHandToHand);
+        float handForceDirAngle = Vector3.Angle(handDir, -relativeVelocity);
 
-        float maxForce = baseMaxForce * focus * PushStrength_vs_angle.Evaluate(handMovementDirAngle) * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
+        float maxForce = baseMaxForce * focus * PushStrength_vs_angle.Evaluate(handForceDirAngle) * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
 
         float areaUnderDistanceCurve = fallOffDistance * 2f;//!!temporary
         //volume dir towards Eye: is infitisimal small
