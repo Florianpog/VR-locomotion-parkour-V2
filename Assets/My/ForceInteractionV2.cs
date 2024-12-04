@@ -154,7 +154,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
         // Check for degenerate triangle
         if (area2 == 0f)
-            return (point - v0).magnitude;
+        {
             if (v0 == v1 && v0 == v2)
             {
                 // All vertices are the same point
