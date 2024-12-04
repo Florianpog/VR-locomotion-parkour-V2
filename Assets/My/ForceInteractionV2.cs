@@ -64,7 +64,7 @@ public class ForceInteractionV2 : MonoBehaviour
         if (rigidbodyHelper.linearVelocity.magnitude > 200f)
             DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
 
-    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.linearVelocity, handPos, lastHandPos, eyePos, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
 
         if (force.magnitude / rigidbody.mass >= minAcceleration)
         {
