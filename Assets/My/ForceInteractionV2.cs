@@ -155,6 +155,35 @@ public class ForceInteractionV2 : MonoBehaviour
         // Check for degenerate triangle
         if (area2 == 0f)
             return (point - v0).magnitude;
+            if (v0 == v1 && v0 == v2)
+            {
+                // All vertices are the same point
+                return (point - v0).magnitude;
+            }
+            else if (v0 == v1)
+            {
+                // Line segment from v0/v1 to v2
+                return DistancePointToSegment(point, v0, v2);
+            }
+            else if (v1 == v2)
+            {
+                // Line segment from v0 to v1/v2
+                return DistancePointToSegment(point, v0, v1);
+            }
+            else if (v0 == v2)
+            {
+                // Line segment from v0/v2 to v1
+                return DistancePointToSegment(point, v0, v1);
+            }
+            else
+            {
+                // All vertices are distinct but colinear
+                float dist0 = DistancePointToSegment(point, v0, v1);
+                float dist1 = DistancePointToSegment(point, v1, v2);
+                float dist2 = DistancePointToSegment(point, v2, v0);
+                return Mathf.Min(dist0, dist1, dist2);
+            }
+        }
 
         normal /= area2; // Normalize the normal
 
