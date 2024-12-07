@@ -35,7 +35,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
     private void Start()
     {
-        ActivatDebug.action.started += (_) => DebugLines(XREyes.transform.position, HandForceInteractionTransform.position, savedLastHandPos.Value);
+        //ActivatDebug.action.started += (_) => DebugLines(XREyes.transform.position, HandForceInteractionTransform.position, savedLastHandPos.Value);
 
         Rigidbody[] allRigidbodies = FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
         foreach (Rigidbody rigidbody in allRigidbodies)
