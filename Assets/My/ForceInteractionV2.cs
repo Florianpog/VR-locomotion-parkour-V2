@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting;
@@ -20,6 +21,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
     public float minAcceleration = 0.01f;
     public float baseMaxForce = 1.0f;
+    public float maxForceDelayTime = 0.5f;
 
     [Tooltip("basically the influence sphere radius per peter distance")]
     public float fallOffDistance = 0.1f;//!!temporary string cutoff after distance
@@ -28,7 +30,7 @@ public class ForceInteractionV2 : MonoBehaviour
     public AnimationCurve PushStrength_vs_angle;
 
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
-    Vector3? savedLastHandPos = null;
+    MyQueue<Tuple<Vector3, Vector3>> savedLastHandPos = new MyQueue<Tuple<Vector3, Vector3>>();
 
     public InputActionReference ActivatDebug;
     public GameObject debugLinePrefab;
@@ -48,31 +50,49 @@ public class ForceInteractionV2 : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (savedLastHandPos.HasValue && allRigidbodyHelpers != null)
+        savedLastHandPos.Enqueue(new Tuple<Vector3, Vector3>(HandForceInteractionTransform.position, HandForceInteractionTransform.forward));
+
+        if (savedLastHandPos.Count > 0 && allRigidbodyHelpers != null)
         {
             foreach (var rigidbodyHelper in allRigidbodyHelpers)
             {
-                AddForceInteractionForce(rigidbodyHelper, HandForceInteractionTransform.position, savedLastHandPos.Value, XREyes.transform.position, HandForceInteractionTransform.forward);
+                Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
+                Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
+
+                DebugTester.stringFloatLogger.CollectLog("linearVelocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
+                if (rigidbodyHelper.linearVelocity.magnitude > 200f)
+                    DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
+
+                Vector3 combinedForce = Vector3.zero;
+
+                for (int i = 0; i < savedLastHandPos.Count - 1; i++)
+                {
+                    Vector3 lastHandPos = savedLastHandPos[i].Item1;
+                    Vector3 currentHandPos = savedLastHandPos[i + 1].Item1;
+                    Vector3 handDir = savedLastHandPos[i + 1].Item2;
+
+                    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, XREyes.transform.position, handDir, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+
+                    combinedForce.x = Mathf.Abs(force.x) > Mathf.Abs(combinedForce.x) ? force.x : combinedForce.x;
+                    combinedForce.y = Mathf.Abs(force.y) > Mathf.Abs(combinedForce.y) ? force.y : combinedForce.y;
+                    combinedForce.z = Mathf.Abs(force.z) > Mathf.Abs(combinedForce.z) ? force.z : combinedForce.z;
+
+                    //combinedForce = force;
+                }
+
+
+                if (combinedForce.magnitude / rigidbody.mass >= minAcceleration)
+                {
+                    //DebugTester.stringFloatLogger.CollectLog("dragForce: ", force.magnitude.ToReadableFloat());
+                    rigidbody.AddForce(combinedForce);
+                }
             }
         }
 
-        savedLastHandPos = HandForceInteractionTransform.position;
-    }
-    public void AddForceInteractionForce(RigidbodyVelocityStabilizer rigidbodyHelper, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir/*, Vector3 eyeDir*/)
-    {
-        Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
-        Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
-
-        DebugTester.stringFloatLogger.CollectLog("linearVelocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
-        if (rigidbodyHelper.linearVelocity.magnitude > 200f)
-            DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
-
-    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
-
-        if (force.magnitude / rigidbody.mass >= minAcceleration)
+        int numberOfPointPos = Mathf.CeilToInt(maxForceDelayTime / Time.fixedDeltaTime);
+        if(savedLastHandPos.Count > numberOfPointPos)
         {
-            //DebugTester.stringFloatLogger.CollectLog("dragForce: ", force.magnitude.ToReadableFloat());
-            rigidbody.AddForce(force);
+            savedLastHandPos.Dequeue();
         }
     }
     public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectSphericalSize, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)

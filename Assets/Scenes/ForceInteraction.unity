@@ -18060,7 +18060,8 @@ MonoBehaviour:
   HandForceInteractionTransform: {fileID: 1423547849}
   XREyes: {fileID: 604769493}
   minAcceleration: 0.01
-  baseMaxForce: 300000
+  baseMaxForce: 40000
+  maxForceDelayTime: 0.1
   fallOffDistance: 0.2
   PushStrength_vs_angle:
     serializedVersion: 2
