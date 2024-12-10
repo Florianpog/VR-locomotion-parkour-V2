@@ -89,7 +89,7 @@ public class ForceInteractionV2 : MonoBehaviour
             }
         }
 
-        int numberOfPointPos = Mathf.CeilToInt(maxForceDelayTime / Time.fixedDeltaTime);
+        int numberOfPointPos = Mathf.Max(1, Mathf.CeilToInt(maxForceDelayTime / Time.fixedDeltaTime));
         if(savedLastHandPos.Count > numberOfPointPos)
         {
             savedLastHandPos.Dequeue();
