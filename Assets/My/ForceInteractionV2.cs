@@ -21,6 +21,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
     public float minAcceleration = 0.01f;
     public float baseMaxForce = 1.0f;
+    public float baseForce2 = 1.0f;
     public float maxForceDelayTime = 0.5f;
 
     [Tooltip("basically the influence sphere radius per peter distance")]
@@ -28,6 +29,16 @@ public class ForceInteractionV2 : MonoBehaviour
 
     [Tooltip("The percentage of push force strength in the movement direction dependent on the angle between the movement direction and the HandDirection (from 0 to 180°)")]
     public AnimationCurve PushStrength_vs_angle;
+
+    [Tooltip("The multiplication factor for push force strength dependet on how the hand movement speed")]
+    public AnimationCurve PushStrength_vs_handVelocity;
+
+    [Space(10)]
+    // HandVelocity Scaling factors based on your analysis
+    private const float LeftRightFactor = 1.0f;  // Baseline
+    private const float DownwardFactor = 1.5f;
+    private const float UpwardFactor = 2.0f;
+    private const float ForwardFactor = 1.5f;
 
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
     MyQueue<Tuple<Vector3, Vector3>> savedLastHandPos = new MyQueue<Tuple<Vector3, Vector3>>();
@@ -59,9 +70,9 @@ public class ForceInteractionV2 : MonoBehaviour
                 Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
                 Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
 
-                DebugTester.stringFloatLogger.CollectLog("linearVelocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
-                if (rigidbodyHelper.linearVelocity.magnitude > 200f)
-                    DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
+                //DebugTester.stringFloatLogger.CollectLog("linearVelocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
+                //if (rigidbodyHelper.linearVelocity.magnitude > 200f)
+                //    DebugTester.stringFloatLogger.CollectLog("!!!Warning Velocity: ", rigidbodyHelper.linearVelocity.magnitude.ToReadableFloat());
 
                 Vector3 combinedForce = Vector3.zero;
 
@@ -71,7 +82,7 @@ public class ForceInteractionV2 : MonoBehaviour
                     Vector3 currentHandPos = savedLastHandPos[i + 1].Item1;
                     Vector3 handDir = savedLastHandPos[i + 1].Item2;
 
-                    Vector3 force = CaculateForceInteractionForce(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, XREyes.transform.position, handDir, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                    Vector3 force = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, XREyes.transform.position, handDir, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
 
                     combinedForce.x = Mathf.Abs(force.x) > Mathf.Abs(combinedForce.x) ? force.x : combinedForce.x;
                     combinedForce.y = Mathf.Abs(force.y) > Mathf.Abs(combinedForce.y) ? force.y : combinedForce.y;
@@ -95,6 +106,89 @@ public class ForceInteractionV2 : MonoBehaviour
             savedLastHandPos.Dequeue();
         }
     }
+
+
+    public Vector3 CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectSphericalSize, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)
+    {
+
+        Vector3 eyeToHand = handPos - eyePos;
+        Vector3 eyeTolastHand = lastHandPos - eyePos;
+
+        Vector3 eyeToObject = eyePos - objectPos;
+
+        float handMovementScaleFactor = eyeToObject.magnitude / eyeToHand.magnitude;
+
+        Vector3 lastHandToHand = handPos - lastHandPos;
+        Vector3 targetVelocity = lastHandToHand / Time.fixedDeltaTime * handMovementScaleFactor;
+
+        //Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
+        Vector3 relativeTargetVelocity = targetVelocity - objectVelocity;
+        if (relativeTargetVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
+
+        float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, objectSphericalSize, handPos, lastHandPos, eyePos);
+        float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
+
+        if (focusFromDistance > 0.5)
+        {
+            debugGameObject.layer = 9;//debug Layer
+        }
+        else
+        {
+            debugGameObject.layer = 0;//default layer //!!! quick and dirty
+        }
+
+        float focus = focusFromDistance;//!!missing other components like eyeDir
+        if (focus <= 0.001) return Vector3.zero;
+
+        float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
+
+        float handVelocity = lastHandToHand.magnitude / Time.fixedDeltaTime;
+        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(handVelocity);
+        DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.ToReadableFloat());
+
+        float forceFactor = baseForce2 * focus * strengthFromHandSpeed * PushStrength_vs_angle.Evaluate(handForceDirAngle);
+
+        // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
+        Vector3 windDragForce = forceFactor  * /*relativeTargetVelocity.sqrMagnitude */ relativeTargetVelocity.normalized;
+
+        float maxForceForOneFixedFrame = relativeTargetVelocity.magnitude * objectMass / Time.fixedDeltaTime;
+        return Vector3.ClampMagnitude(windDragForce, maxForceForOneFixedFrame);
+    }
+
+    public Vector3 CalculateVirtualHandVelocity(Vector3 handVelocity, Vector3 eyeToHand)
+    {
+        // Normalize the eyeToHand vector for directional purposes
+        Vector3 forwardDir = eyeToHand.normalized;
+
+        // Compute the upward and downward directions (perpendicular to forwardDir, aligned with Vector3.up plane)
+        Vector3 upwardDir = Vector3.Cross(forwardDir, Vector3.Cross(Vector3.up, forwardDir)).normalized;
+        Vector3 downwardDir = -upwardDir;
+
+        // Compute the left/right direction (orthogonal to forward and up)
+        Vector3 rightDir = Vector3.Cross(forwardDir, upwardDir).normalized;
+        Vector3 leftDir = -rightDir;
+
+        // Decompose hand velocity into directional components
+        float forwardComponent = Vector3.Dot(handVelocity, forwardDir);
+        float upwardComponent = Vector3.Dot(handVelocity, upwardDir);
+        float downwardComponent = Vector3.Dot(handVelocity, downwardDir);
+        float lateralComponent = Vector3.Dot(handVelocity, rightDir);
+
+        // Apply scaling factors to each component
+        float scaledForward = forwardComponent * ForwardFactor;
+        float scaledUpward = upwardComponent * UpwardFactor;
+        float scaledDownward = downwardComponent * DownwardFactor;
+        float scaledLateral = lateralComponent * LeftRightFactor;
+
+        // Reconstruct the virtual velocity vector using scaled components
+        Vector3 virtualVelocity = (scaledForward * forwardDir) +
+                                  (scaledUpward * upwardDir) +
+                                  (scaledDownward * downwardDir) +
+                                  (scaledLateral * rightDir);
+
+        return virtualVelocity;
+    }
+
     public Vector3 CaculateForceInteractionForce(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectSphericalSize, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)
     {
 

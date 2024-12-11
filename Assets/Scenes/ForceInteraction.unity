@@ -18061,6 +18061,7 @@ MonoBehaviour:
   XREyes: {fileID: 604769493}
   minAcceleration: 0.01
   baseMaxForce: 40000
+  baseForce2: 400
   maxForceDelayTime: 0.1
   fallOffDistance: 0.2
   PushStrength_vs_angle:
@@ -18096,6 +18097,48 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 180
       value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  PushStrength_vs_handVelocity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3
+      value: 0.2
+      inSlope: -0.08333334
+      outSlope: -0.08333334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 5
+      value: 0.4
+      inSlope: 0.37000003
+      outSlope: 0.37000003
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 20
+      value: 10
       inSlope: 0
       outSlope: 0
       tangentMode: 0
