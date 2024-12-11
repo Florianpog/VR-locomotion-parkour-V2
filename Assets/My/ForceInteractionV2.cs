@@ -19,10 +19,12 @@ public class ForceInteractionV2 : MonoBehaviour
     public Transform HandForceInteractionTransform;
     public Camera XREyes;
 
-    public float minAcceleration = 0.01f;
-    public float baseMaxForce = 1.0f;
+    public float minAccelerationRequired = 0.001f;
+    public float baseMaxForce = 1.0f; //!!TODO remove, old version seems worse then the new one so far
     public float baseForce2 = 1.0f;
-    public float maxForceDelayTime = 0.5f;
+    public float maxForceDelayTime = 0.5f; //!!!TODO remove with corresponding code, I dont think this actually improves anything
+    public float minAccelerationForAnyMass = 0.1f;
+    public float minMassForAnyAcceleration = 0.1f;
 
     [Tooltip("basically the influence sphere radius per peter distance")]
     public float fallOffDistance = 0.1f;//!!temporary string cutoff after distance
@@ -92,7 +94,7 @@ public class ForceInteractionV2 : MonoBehaviour
                 }
 
 
-                if (combinedForce.magnitude / rigidbody.mass >= minAcceleration)
+                if (combinedForce.magnitude / rigidbody.mass >= minAccelerationRequired)
                 {
                     //DebugTester.stringFloatLogger.CollectLog("dragForce: ", force.magnitude.ToReadableFloat());
                     rigidbody.AddForce(combinedForce);
@@ -152,10 +154,17 @@ public class ForceInteractionV2 : MonoBehaviour
         float forceFactor = baseForce2 * focus * strengthFromHandSpeed * PushStrength_vs_angle.Evaluate(handForceDirAngle);
 
         // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
-        Vector3 windDragForce = forceFactor  * /*relativeTargetVelocity.sqrMagnitude */ relativeTargetVelocity.normalized;
+        Vector3 force = forceFactor  * /*relativeTargetVelocity.sqrMagnitude */ relativeTargetVelocity.normalized;
+
+        // Replacing Physically accurate "force / objectMass (F/m)" with pseudo physics to allow moving super havy objects and limiting speed of super light
+        // F * [(1/ (m + c2)) + c1]
+        // force * minAccelerationForAnyMass (F * c1) causes a acceleration for any mass, but only if a force exists
+        // 1 / (objectMass + minMassForAnyAcceleration) (1/ (m + c2)) causes objects to be treated like they have at least a minimum mass
+        Vector3 accelerationMassCorrected = force * (( 1f / (objectMass + minMassForAnyAcceleration)) + minAccelerationForAnyMass);
+        Vector3 forceMassCorrected = accelerationMassCorrected * objectMass;
 
         float maxForceForOneFixedFrame = relativeTargetVelocity.magnitude * objectMass / Time.fixedDeltaTime;
-        return Vector3.ClampMagnitude(windDragForce, maxForceForOneFixedFrame);
+        return Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame);
     }
 
     /// <summary>
