@@ -27,12 +27,18 @@ public class ForceInteractionV2 : MonoBehaviour
     public float minMassForAnyAcceleration = 0.1f;
 
     [Tooltip("basically the influence sphere radius per peter distance")]
-    public float fallOffDistance = 0.1f;//!!temporary string cutoff after distance
+    public float baseFallOffDistance = 0.01f;
+
+    [Tooltip("The fallOffDistance percentage (gets mulitplied with baseFallOffDistance) dependent on the hand movement speed (should never be 0)")]
+    public AnimationCurve FallOffDistancePercentage_vs_handVelocity;
+
+    [Tooltip("The percentage of push force strength dependent the percentage of distance / fallOffDistance (>100% is when the distance exceeds the fall of distance) \nShould be 100% at 0 and 0% at 100%")]
+    public AnimationCurve PushStrength_vs_fallOffDistance;
 
     [Tooltip("The percentage of push force strength in the movement direction dependent on the angle between the movement direction and the HandDirection (from 0 to 180°)")]
     public AnimationCurve PushStrength_vs_angle;
 
-    [Tooltip("The multiplication factor for push force strength dependet on how the hand movement speed")]
+    [Tooltip("The multiplication factor for push force strength dependet on the hand movement speed")]
     public AnimationCurve PushStrength_vs_handVelocity;
 
     [Space(10)]
@@ -109,7 +115,6 @@ public class ForceInteractionV2 : MonoBehaviour
         }
     }
 
-
     public Vector3 CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectSphericalSize, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)
     {
 
@@ -127,10 +132,19 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 relativeTargetVelocity = targetVelocity - objectVelocity;
         if (relativeTargetVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
 
-        float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, objectSphericalSize, handPos, lastHandPos, eyePos);
-        float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
 
-        if (focusFromDistance > 0.5)
+        Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
+        DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
+        Vector3 virtualHandVelocity = CalculateVirtualHandVelocity(handVelocity, eyeToHand);
+        DebugTester.stringFloatLogger.CollectLog("virtualHandVelocity: ", virtualHandVelocity.magnitude.ToReadableFloat());
+
+        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(virtualHandVelocity.magnitude);
+
+        float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, objectSphericalSize, handPos, lastHandPos, eyePos);
+        float objectFallOffDistance = FallOffDistancePercentage_vs_handVelocity.Evaluate(virtualHandVelocity.magnitude) * baseFallOffDistance * eyeToObject.magnitude;
+        float strengthFromDistance = PushStrength_vs_fallOffDistance.Evaluate(objectDistanceEyeToHandTriangle / objectFallOffDistance);
+
+        if (strengthFromDistance > 0.1)
         {
             debugGameObject.layer = 9;//debug Layer
         }
@@ -139,19 +153,9 @@ public class ForceInteractionV2 : MonoBehaviour
             debugGameObject.layer = 0;//default layer //!!! quick and dirty
         }
 
-        float focus = focusFromDistance;//!!missing other components like eyeDir
-        if (focus <= 0.001) return Vector3.zero;
-
         float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
 
-        Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
-        DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
-        Vector3 virtualHandVelocity = CalculateVirtualHandVelocity(handVelocity, eyeToHand);
-        DebugTester.stringFloatLogger.CollectLog("virtualHandVelocity: ", virtualHandVelocity.magnitude.ToReadableFloat());
-        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(virtualHandVelocity.magnitude);
-
-
-        float forceFactor = baseForce2 * focus * strengthFromHandSpeed * PushStrength_vs_angle.Evaluate(handForceDirAngle);
+        float forceFactor = baseForce2 * strengthFromDistance * strengthFromHandSpeed * PushStrength_vs_angle.Evaluate(handForceDirAngle);
 
         // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
         Vector3 force = forceFactor  * /*relativeTargetVelocity.sqrMagnitude */ relativeTargetVelocity.normalized;
@@ -221,7 +225,7 @@ public class ForceInteractionV2 : MonoBehaviour
         if (relativeVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
 
         float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, objectSphericalSize, handPos, lastHandPos, eyePos);
-        float focusFromDistance = objectDistanceEyeToHandTriangle < fallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
+        float focusFromDistance = objectDistanceEyeToHandTriangle < baseFallOffDistance * eyeToObject.magnitude ? 1f : 0f; //!!temporary implementation
 
         if(focusFromDistance > 0.5)
         {
@@ -239,7 +243,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
         float maxForce = baseMaxForce * focus * PushStrength_vs_angle.Evaluate(handForceDirAngle) * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
 
-        float areaUnderDistanceCurve = fallOffDistance * 2f;//!!temporary
+        float areaUnderDistanceCurve = baseFallOffDistance * 2f;//!!temporary
         //volume dir towards Eye: is infitisimal small
         float volumeX = 1f;
         //volume dir in windDir: is 1 for the entire length

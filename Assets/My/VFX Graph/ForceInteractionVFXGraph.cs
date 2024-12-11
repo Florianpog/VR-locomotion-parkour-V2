@@ -9,7 +9,7 @@ public class ForceInteractionVFXGraph : MonoBehaviour
     private Vector3 lastHandPos = Vector3.zero;
     private void Start()
     {
-        vfxGraph.SetFloat("fallOffDistance", forceInteraction.fallOffDistance);
+        vfxGraph.SetFloat("fallOffDistance", forceInteraction.baseFallOffDistance);
         vfxGraph.SetFloat("baseMaxForce", forceInteraction.baseMaxForce);
     }
 
