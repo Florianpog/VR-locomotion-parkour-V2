@@ -35,10 +35,10 @@ public class ForceInteractionV2 : MonoBehaviour
 
     [Space(10)]
     // HandVelocity Scaling factors based on your analysis
-    private const float LeftRightFactor = 1.0f;  // Baseline
-    private const float DownwardFactor = 1.5f;
-    private const float UpwardFactor = 2.0f;
-    private const float ForwardFactor = 1.5f;
+    private float LeftRightFactor = 1.0f;  // Baseline
+    public float DownwardFactor = 1.5f;
+    public float UpwardFactor = 2.0f;
+    public float ForwardFactor = 1.5f;
 
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
     MyQueue<Tuple<Vector3, Vector3>> savedLastHandPos = new MyQueue<Tuple<Vector3, Vector3>>();
@@ -142,9 +142,12 @@ public class ForceInteractionV2 : MonoBehaviour
 
         float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
 
-        float handVelocity = lastHandToHand.magnitude / Time.fixedDeltaTime;
-        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(handVelocity);
-        DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.ToReadableFloat());
+        Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
+        DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
+        Vector3 virtualHandVelocity = CalculateVirtualHandVelocity(handVelocity, eyeToHand);
+        DebugTester.stringFloatLogger.CollectLog("virtualHandVelocity: ", virtualHandVelocity.magnitude.ToReadableFloat());
+        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(virtualHandVelocity.magnitude);
+
 
         float forceFactor = baseForce2 * focus * strengthFromHandSpeed * PushStrength_vs_angle.Evaluate(handForceDirAngle);
 
@@ -155,35 +158,37 @@ public class ForceInteractionV2 : MonoBehaviour
         return Vector3.ClampMagnitude(windDragForce, maxForceForOneFixedFrame);
     }
 
+    /// <summary>
+    /// Adjusts hand velocity to reflect the varying physical effort needed for different directions, increasing legth in more difficult ones
+    /// </summary>
     public Vector3 CalculateVirtualHandVelocity(Vector3 handVelocity, Vector3 eyeToHand)
     {
         // Normalize the eyeToHand vector for directional purposes
         Vector3 forwardDir = eyeToHand.normalized;
 
-        // Compute the upward and downward directions (perpendicular to forwardDir, aligned with Vector3.up plane)
+        // Compute the upward direction (aligned with Vector3.up, perpendicular to forwardDir)
         Vector3 upwardDir = Vector3.Cross(forwardDir, Vector3.Cross(Vector3.up, forwardDir)).normalized;
-        Vector3 downwardDir = -upwardDir;
 
-        // Compute the left/right direction (orthogonal to forward and up)
+        // Compute the right direction (orthogonal to forward and upward)
         Vector3 rightDir = Vector3.Cross(forwardDir, upwardDir).normalized;
-        Vector3 leftDir = -rightDir;
 
         // Decompose hand velocity into directional components
         float forwardComponent = Vector3.Dot(handVelocity, forwardDir);
-        float upwardComponent = Vector3.Dot(handVelocity, upwardDir);
-        float downwardComponent = Vector3.Dot(handVelocity, downwardDir);
+        float verticalComponent = Vector3.Dot(handVelocity, upwardDir);
         float lateralComponent = Vector3.Dot(handVelocity, rightDir);
 
         // Apply scaling factors to each component
         float scaledForward = forwardComponent * ForwardFactor;
-        float scaledUpward = upwardComponent * UpwardFactor;
-        float scaledDownward = downwardComponent * DownwardFactor;
+
+        // Determine scaling factor based on the direction of vertical movement
+        float verticalFactor = verticalComponent > 0 ? UpwardFactor : DownwardFactor;
+        float scaledVertical = verticalComponent * verticalFactor;
+
         float scaledLateral = lateralComponent * LeftRightFactor;
 
         // Reconstruct the virtual velocity vector using scaled components
         Vector3 virtualVelocity = (scaledForward * forwardDir) +
-                                  (scaledUpward * upwardDir) +
-                                  (scaledDownward * downwardDir) +
+                                  (scaledVertical * upwardDir) +
                                   (scaledLateral * rightDir);
 
         return virtualVelocity;
