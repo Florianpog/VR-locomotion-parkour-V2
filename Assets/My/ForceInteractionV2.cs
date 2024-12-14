@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -57,6 +58,9 @@ public class ForceInteractionV2 : MonoBehaviour
     public InputActionReference ActivatDebug;
     public GameObject debugLinePrefab;
 
+    private MyQueue<float> vibrationIntensities = new MyQueue<float>();
+    public int numberOfMovingAvg = 5;
+
     private void Start()
     {
         //ActivatDebug.action.started += (_) => DebugLines(XREyes.transform.position, HandForceInteractionTransform.position, savedLastHandPos.Value);
@@ -88,24 +92,35 @@ public class ForceInteractionV2 : MonoBehaviour
             float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
             DebugTester.stringFloatLogger.CollectLog("effortBasedHandSpeed: ", effortBasedHandSpeed.ToReadableFloat());
 
-            HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed), duration: 1.0f, HapticsUtility.Controller.Right);
 
+            float largestStrengthTotal = 0f;
             foreach (var rigidbodyHelper in allRigidbodyHelpers)
             {
                 Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
                 Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
 
-                Vector3 force = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                Tuple<Vector3, float> result = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                Vector3 force = result.Item1;
+                float strengthTotal = result.Item2;
+
+                largestStrengthTotal = Mathf.Max(largestStrengthTotal, strengthTotal);
 
                 if (force.magnitude / rigidbody.mass >= minAccelerationRequired)
                     rigidbody.AddForce(force);
             }
+
+            //HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed), duration: 1.0f, HapticsUtility.Controller.Right);
+            vibrationIntensities.Enqueue(largestStrengthTotal);
+            if(vibrationIntensities.Count > numberOfMovingAvg)
+                vibrationIntensities.Dequeue();
+            float averageIntensity = vibrationIntensities.Count > 0 ? Enumerable.Range(0, vibrationIntensities.Count).Average(i => vibrationIntensities[i]) : 0;
+            HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed) * averageIntensity, duration: 1.0f, HapticsUtility.Controller.Right);
         }
 
         savedLastHandPos = HandForceInteractionTransform.position;
     }
 
-    public Vector3 CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
+    public Tuple<Vector3, float> CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
     {
         Vector3 eyeToHand = handPos - eyePos;
 
@@ -118,7 +133,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
         //Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
         Vector3 relativeTargetVelocity = targetVelocity - objectVelocity;
-        if (relativeTargetVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
+        if (relativeTargetVelocity.sqrMagnitude <= 0.001) return new Tuple<Vector3, float>(Vector3.zero, 0f);
 
         float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(effortBasedHandSpeed);
 
@@ -150,7 +165,7 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 forceMassCorrected = accelerationMassCorrected * objectMass;
 
         float maxForceForOneFixedFrame = relativeTargetVelocity.magnitude * objectMass / Time.fixedDeltaTime;
-        return Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame);
+        return new Tuple<Vector3, float>(Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame), strengthTotal);
     }
 
     /// <summary>

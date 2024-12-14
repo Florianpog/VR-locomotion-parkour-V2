@@ -18515,19 +18515,28 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0.033333335
-      outSlope: 0.033333335
-      tangentMode: 34
+      value: 0.1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
+      time: 21.945608
+      value: 0.9097066
+      inSlope: 0.037998937
+      outSlope: 0.037998937
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 30
       value: 1
-      inSlope: 0.033333335
-      outSlope: 0.033333335
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
@@ -18539,6 +18548,7 @@ MonoBehaviour:
   ForwardFactor: 3.5
   ActivatDebug: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   debugLinePrefab: {fileID: 8855542028366715798, guid: 75515d61f9a23504b9b33c83cec6944d, type: 3}
+  numberOfMovingAvg: 5
 --- !u!4 &1027359008
 Transform:
   m_ObjectHideFlags: 0
