@@ -21,8 +21,7 @@ public class ForceInteractionV2 : MonoBehaviour
     public Camera XREyes;
 
     public float minAccelerationRequired = 0.001f;
-    public float baseMaxForce = 1.0f; //!!TODO remove, old version seems worse then the new one so far
-    public float baseForce2 = 1.0f;
+    public float baseForce = 1.0f;
     public float maxForceDelayTime = 0.5f; //!!!TODO remove with corresponding code, I dont think this actually improves anything
     public float minAccelerationForAnyMass = 0.1f;
     public float minMassForAnyAcceleration = 0.1f;
@@ -138,10 +137,10 @@ public class ForceInteractionV2 : MonoBehaviour
         float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
         float strengthFromAngle = PushStrength_vs_angle.Evaluate(handForceDirAngle);
 
-        float forceFactor = baseForce2 * strengthFromDistance * strengthFromHandSpeed * strengthFromAngle;
+        float strengthTotal = strengthFromDistance * strengthFromHandSpeed * strengthFromAngle;
 
         // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
-        Vector3 force = forceFactor  * /*relativeTargetVelocity.sqrMagnitude */ relativeTargetVelocity.normalized;
+        Vector3 force = baseForce * strengthTotal * relativeTargetVelocity.normalized;
 
         // Replacing Physically accurate "force / objectMass (F/m)" with pseudo physics to allow moving super havy objects and limiting speed of super light
         // F * [(1/ (m + c2)) + c1]
@@ -224,7 +223,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
         float handForceDirAngle = Vector3.Angle(handDir, -relativeVelocity);
 
-        float maxForce = baseMaxForce * focus * PushStrength_vs_angle.Evaluate(handForceDirAngle) * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
+        float maxForce = baseForce * focus * PushStrength_vs_angle.Evaluate(handForceDirAngle) * eyeToObject.magnitude; //!!! testing compensating linear force decrease (with distance) based on the fomulas afterwards
 
         float areaUnderDistanceCurve = baseFallOffDistance * 2f;//!!temporary
         //volume dir towards Eye: is infitisimal small

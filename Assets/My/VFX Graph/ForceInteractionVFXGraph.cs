@@ -10,7 +10,7 @@ public class ForceInteractionVFXGraph : MonoBehaviour
     private void Start()
     {
         vfxGraph.SetFloat("fallOffDistance", forceInteraction.baseFallOffDistance);
-        vfxGraph.SetFloat("baseMaxForce", forceInteraction.baseMaxForce);
+        vfxGraph.SetFloat("baseMaxForce", forceInteraction.baseForce);
     }
 
     private void Update()
