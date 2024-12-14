@@ -131,13 +131,9 @@ public class ForceInteractionV2 : MonoBehaviour
         float strengthFromDistance = PushStrength_vs_fallOffDistance.Evaluate(objectDistanceEyeToHandTriangle / objectFallOffDistance);
 
         if (strengthFromDistance > 0.1)
-        {
             debugGameObject.layer = 9;//debug Layer
-        }
         else
-        {
             debugGameObject.layer = 0;//default layer //!!! quick and dirty
-        }
 
         float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
         float strengthFromAngle = PushStrength_vs_angle.Evaluate(handForceDirAngle);
