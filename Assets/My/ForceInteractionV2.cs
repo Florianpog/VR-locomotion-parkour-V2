@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
+using static ForceInteractionV2;
 
 /// <summary>
 /// Foce Interaction based on "the one formula to rule them all". Cutting out the middle man of Phsere trigger zones and instead applying force to ALL ridgidbodyies dependent on there relation to the rays
@@ -18,7 +19,8 @@ public class ForceInteractionV2 : MonoBehaviour
     /// <summary>
     /// This Transform should be a child of the force interaction hand. The forward direction should be the way the hand is facting and the position the hand center
     /// </summary>
-    public Transform HandForceInteractionTransform;
+    public Transform LeftHandForceInteractionTransform;
+    public Transform RightHandForceInteractionTransform;
     public Camera XREyes;
 
     public float minAccelerationRequired = 0.001f;
@@ -53,13 +55,27 @@ public class ForceInteractionV2 : MonoBehaviour
     public float ForwardFactor = 1.5f;
 
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
-    Vector3? savedLastHandPos = null;
 
     public InputActionReference ActivatDebug;
     public GameObject debugLinePrefab;
 
-    private MyQueue<float> vibrationIntensities = new MyQueue<float>();
+    private HandData<Vector3?> bothSavedLastHandPos = new HandData<Vector3?>(null, null);
+    private HandData<MyQueue<float>> bothVibrationIntensities = new HandData<MyQueue<float>>(new MyQueue<float>(), new MyQueue<float>());
+
     public int numberOfMovingAvg = 5;
+
+    public struct HandData<T>
+    {
+        public T Left;
+        public T Right;
+
+        public HandData(T left, T right)
+        {
+            Left = left;
+            Right = right;
+        }
+    }
+
 
     private void Start()
     {
@@ -76,48 +92,59 @@ public class ForceInteractionV2 : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (savedLastHandPos.HasValue)
+        for (int i = 0; i < 2; i++)
         {
-            Vector3 currentHandPos = HandForceInteractionTransform.position;
-            Vector3 lastHandPos = savedLastHandPos.Value;
-            Vector3 handDir = HandForceInteractionTransform.forward;
+            bool handIsLeft = i == 0 ? true : false;
 
-            Vector3 eyePos = XREyes.transform.position;
+            Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
+            HapticsUtility.Controller hapticsController = handIsLeft ? HapticsUtility.Controller.Left : HapticsUtility.Controller.Right;
 
-            Vector3 lastHandToHand = currentHandPos - lastHandPos;
-            Vector3 eyeToHand = currentHandPos - eyePos;
+            ref Vector3? savedLastHandPos = ref (handIsLeft ? ref bothSavedLastHandPos.Left : ref bothSavedLastHandPos.Right);
+            MyQueue<float> vibrationIntensities = handIsLeft ? bothVibrationIntensities.Left: bothVibrationIntensities.Right;
 
-            Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
-            DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
-            float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
-            DebugTester.stringFloatLogger.CollectLog("effortBasedHandSpeed: ", effortBasedHandSpeed.ToReadableFloat());
-
-
-            float largestStrengthTotal = 0f;
-            foreach (var rigidbodyHelper in allRigidbodyHelpers)
+            if (savedLastHandPos.HasValue)
             {
-                Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
-                Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
+                Vector3 currentHandPos = HandForceInteractionTransform.position;
+                Vector3 lastHandPos = savedLastHandPos.Value;
+                Vector3 handDir = HandForceInteractionTransform.forward;
 
-                Tuple<Vector3, float> result = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
-                Vector3 force = result.Item1;
-                float strengthTotal = result.Item2;
+                Vector3 eyePos = XREyes.transform.position;
 
-                largestStrengthTotal = Mathf.Max(largestStrengthTotal, strengthTotal);
+                Vector3 lastHandToHand = currentHandPos - lastHandPos;
+                Vector3 eyeToHand = currentHandPos - eyePos;
 
-                if (force.magnitude / rigidbody.mass >= minAccelerationRequired)
-                    rigidbody.AddForce(force);
+                Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
+                DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
+                float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
+                DebugTester.stringFloatLogger.CollectLog("effortBasedHandSpeed: ", effortBasedHandSpeed.ToReadableFloat());
+
+
+                float largestStrengthTotal = 0f;
+                foreach (var rigidbodyHelper in allRigidbodyHelpers)
+                {
+                    Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
+                    Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
+
+                    Tuple<Vector3, float> result = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                    Vector3 force = result.Item1;
+                    float strengthTotal = result.Item2;
+
+                    largestStrengthTotal = Mathf.Max(largestStrengthTotal, strengthTotal);
+
+                    if (force.magnitude / rigidbody.mass >= minAccelerationRequired)
+                        rigidbody.AddForce(force);
+                }
+
+                //HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed), duration: 1.0f, HapticsUtility.Controller.Right);
+                vibrationIntensities.Enqueue(largestStrengthTotal);
+                if (vibrationIntensities.Count > numberOfMovingAvg)
+                    vibrationIntensities.Dequeue();
+                float averageIntensity = vibrationIntensities.Count > 0 ? Enumerable.Range(0, vibrationIntensities.Count).Average(i => vibrationIntensities[i]) : 0;
+                HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed) * averageIntensity, duration: 1.0f, hapticsController);
             }
 
-            //HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed), duration: 1.0f, HapticsUtility.Controller.Right);
-            vibrationIntensities.Enqueue(largestStrengthTotal);
-            if(vibrationIntensities.Count > numberOfMovingAvg)
-                vibrationIntensities.Dequeue();
-            float averageIntensity = vibrationIntensities.Count > 0 ? Enumerable.Range(0, vibrationIntensities.Count).Average(i => vibrationIntensities[i]) : 0;
-            HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed) * averageIntensity, duration: 1.0f, HapticsUtility.Controller.Right);
+            savedLastHandPos = HandForceInteractionTransform.position;
         }
-
-        savedLastHandPos = HandForceInteractionTransform.position;
     }
 
     public Tuple<Vector3, float> CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)

@@ -15,7 +15,7 @@ public class ForceInteractionVFXGraph : MonoBehaviour
 
     private void Update()
     {
-        Vector3 handPos = forceInteraction.HandForceInteractionTransform.position;
+        Vector3 handPos = forceInteraction.LeftHandForceInteractionTransform.position;
 
         vfxGraph.SetVector3("eyePos", forceInteraction.XREyes.transform.position);
         vfxGraph.SetVector3("handPos", handPos);
