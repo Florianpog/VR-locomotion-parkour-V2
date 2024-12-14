@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 
 /// <summary>
 /// Foce Interaction based on "the one formula to rule them all". Cutting out the middle man of Phsere trigger zones and instead applying force to ALL ridgidbodyies dependent on there relation to the rays
@@ -90,7 +91,19 @@ public class ForceInteractionV2 : MonoBehaviour
                     Vector3 currentHandPos = savedLastHandPos[i + 1].Item1;
                     Vector3 handDir = savedLastHandPos[i + 1].Item2;
 
-                    Vector3 force = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, XREyes.transform.position, handDir, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, () => ApproximateDragCoefficient(rigidbody), (windDir) => ApproximateExposedArea(rigidbody, windDir), rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                    Vector3 eyePos = XREyes.transform.position;
+
+                    Vector3 lastHandToHand = currentHandPos - lastHandPos;
+                    Vector3 eyeToHand = currentHandPos - eyePos;
+
+                    Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
+                    DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
+                    float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
+                    DebugTester.stringFloatLogger.CollectLog("effortBasedHandSpeed: ", effortBasedHandSpeed.ToReadableFloat());
+
+                    //HapticsUtility.SendHapticImpulse(Mathf.Min(effortBasedHandSpeed / 30f, 1f), duration: 1.0f, HapticsUtility.Controller.Right);
+
+                    Vector3 force = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
 
                     combinedForce.x = Mathf.Abs(force.x) > Mathf.Abs(combinedForce.x) ? force.x : combinedForce.x;
                     combinedForce.y = Mathf.Abs(force.y) > Mathf.Abs(combinedForce.y) ? force.y : combinedForce.y;
@@ -115,11 +128,9 @@ public class ForceInteractionV2 : MonoBehaviour
         }
     }
 
-    public Vector3 CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float objectSphericalSize, float objectMass, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, GameObject debugGameObject/*, Vector3 eyeDir*/)
+    public Vector3 CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
     {
-
         Vector3 eyeToHand = handPos - eyePos;
-        Vector3 eyeTolastHand = lastHandPos - eyePos;
 
         Vector3 eyeToObject = eyePos - objectPos;
 
@@ -132,16 +143,13 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 relativeTargetVelocity = targetVelocity - objectVelocity;
         if (relativeTargetVelocity.sqrMagnitude <= 0.001) return Vector3.zero;
 
+        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(effortBasedHandSpeed);
 
-        Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
-        DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
-        Vector3 virtualHandVelocity = CalculateVirtualHandVelocity(handVelocity, eyeToHand);
-        DebugTester.stringFloatLogger.CollectLog("virtualHandVelocity: ", virtualHandVelocity.magnitude.ToReadableFloat());
+        float fallOffDistanceFromHandVelocity = FallOffDistancePercentage_vs_handVelocity.Evaluate(effortBasedHandSpeed);
 
-        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(virtualHandVelocity.magnitude);
+        float objectFallOffDistance = fallOffDistanceFromHandVelocity * baseFallOffDistance * eyeToObject.magnitude;
 
         float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, objectSphericalSize, handPos, lastHandPos, eyePos);
-        float objectFallOffDistance = FallOffDistancePercentage_vs_handVelocity.Evaluate(virtualHandVelocity.magnitude) * baseFallOffDistance * eyeToObject.magnitude;
         float strengthFromDistance = PushStrength_vs_fallOffDistance.Evaluate(objectDistanceEyeToHandTriangle / objectFallOffDistance);
 
         if (strengthFromDistance > 0.1)
@@ -174,7 +182,7 @@ public class ForceInteractionV2 : MonoBehaviour
     /// <summary>
     /// Adjusts hand velocity to reflect the varying physical effort needed for different directions, increasing legth in more difficult ones
     /// </summary>
-    public Vector3 CalculateVirtualHandVelocity(Vector3 handVelocity, Vector3 eyeToHand)
+    public Vector3 CalculateEffortBasedHandVelocity(Vector3 handVelocity, Vector3 eyeToHand)
     {
         // Normalize the eyeToHand vector for directional purposes
         Vector3 forwardDir = eyeToHand.normalized;
