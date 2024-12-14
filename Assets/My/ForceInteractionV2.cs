@@ -64,6 +64,8 @@ public class ForceInteractionV2 : MonoBehaviour
 
     public int numberOfMovingAvg = 5;
 
+    private bool useVibrations = true;
+
     public struct HandData<T>
     {
         public T Left;
@@ -80,6 +82,7 @@ public class ForceInteractionV2 : MonoBehaviour
     private void Start()
     {
         //ActivatDebug.action.started += (_) => DebugLines(XREyes.transform.position, HandForceInteractionTransform.position, savedLastHandPos.Value);
+        ActivatDebug.action.started += (_) => DebugToggleVibration();
 
         Rigidbody[] allRigidbodies = FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
         foreach (Rigidbody rigidbody in allRigidbodies)
@@ -90,6 +93,7 @@ public class ForceInteractionV2 : MonoBehaviour
             allRigidbodyHelpers.Add(newHelper);
         }
     }
+
     private void FixedUpdate()
     {
         for (int i = 0; i < 2; i++)
@@ -140,7 +144,8 @@ public class ForceInteractionV2 : MonoBehaviour
                 if (vibrationIntensities.Count > numberOfMovingAvg)
                     vibrationIntensities.Dequeue();
                 float averageIntensity = vibrationIntensities.Count > 0 ? Enumerable.Range(0, vibrationIntensities.Count).Average(i => vibrationIntensities[i]) : 0;
-                HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed) * averageIntensity, duration: 1.0f, hapticsController);
+                if(useVibrations)
+                    HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed) * averageIntensity, duration: 1.0f, hapticsController);
             }
 
             savedLastHandPos = HandForceInteractionTransform.position;
@@ -445,5 +450,10 @@ public class ForceInteractionV2 : MonoBehaviour
         //o1.transform.localScale = new Vector3(o1.transform.localScale.x, o1.transform.localScale.y, o1.transform.localScale.z);
         var o2 = Instantiate(debugLinePrefab, eyePos, Quaternion.LookRotation(eyeTolastHand));
         o1.transform.LookAt(lastHandPos);
+    }
+
+    private void DebugToggleVibration()
+    {
+        useVibrations = !useVibrations;
     }
 }
