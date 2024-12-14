@@ -42,6 +42,9 @@ public class ForceInteractionV2 : MonoBehaviour
     [Tooltip("The multiplication factor for push force strength dependet on the hand movement speed")]
     public AnimationCurve PushStrength_vs_handVelocity;
 
+    [Tooltip("the haptic feedback vibration intensity dependet on the hand movement speed")]
+    public AnimationCurve VibrationIntensity_vs_handVelocity;
+
     [Space(10)]
     // HandVelocity Scaling factors based on your analysis
     private float LeftRightFactor = 1.0f;  // Baseline
@@ -86,7 +89,7 @@ public class ForceInteractionV2 : MonoBehaviour
             float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
             DebugTester.stringFloatLogger.CollectLog("effortBasedHandSpeed: ", effortBasedHandSpeed.ToReadableFloat());
 
-            //HapticsUtility.SendHapticImpulse(Mathf.Min(effortBasedHandSpeed / 30f, 1f), duration: 1.0f, HapticsUtility.Controller.Right);
+            HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed), duration: 1.0f, HapticsUtility.Controller.Right);
 
             foreach (var rigidbodyHelper in allRigidbodyHelpers)
             {
