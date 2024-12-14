@@ -140,8 +140,9 @@ public class ForceInteractionV2 : MonoBehaviour
         }
 
         float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
+        float strengthFromAngle = PushStrength_vs_angle.Evaluate(handForceDirAngle);
 
-        float forceFactor = baseForce2 * strengthFromDistance * strengthFromHandSpeed * PushStrength_vs_angle.Evaluate(handForceDirAngle);
+        float forceFactor = baseForce2 * strengthFromDistance * strengthFromHandSpeed * strengthFromAngle;
 
         // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
         Vector3 force = forceFactor  * /*relativeTargetVelocity.sqrMagnitude */ relativeTargetVelocity.normalized;
