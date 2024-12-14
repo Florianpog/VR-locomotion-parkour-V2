@@ -13,6 +13,7 @@ public class VibrationTest1 : MonoBehaviour
 
     private void Update()
     {
-        HapticsUtility.SendHapticImpulse(amplitude, duration: 1.0f, HapticsUtility.Controller.Right, frequency);
+        if (isOn)
+            HapticsUtility.SendHapticImpulse(amplitude, duration: 1.0f, HapticsUtility.Controller.Right, frequency);
     }
 }
