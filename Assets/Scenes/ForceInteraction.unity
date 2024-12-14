@@ -18346,7 +18346,7 @@ MonoBehaviour:
   HandForceInteractionTransform: {fileID: 1423547849}
   XREyes: {fileID: 604769493}
   minAccelerationRequired: 0.01
-  baseForce: 400
+  baseForce: 800
   maxForceDelayTime: 0.1
   minAccelerationForAnyMass: 0.003
   minMassForAnyAcceleration: 6
@@ -18455,27 +18455,18 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 5
-      inSlope: -8.106236
-      outSlope: -8.106236
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.46088985
-    - serializedVersion: 3
-      time: 0.5
-      value: 1
-      inSlope: -1.378362
-      outSlope: -1.378362
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.41601634
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 3
       value: 0.2
-      inSlope: 0.06351128
-      outSlope: 0.06351128
+      inSlope: 0.09017794
+      outSlope: 0.09017794
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
