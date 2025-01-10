@@ -1,24 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static ForceInteractionV2;
 
 [RequireComponent(typeof(Rigidbody))]
-public class RigidbodyVelocityStabilizer : MonoBehaviour
+public class RigidbodyVelocityStabilizer : MonoBehaviour //!!!! rename to ____Helper
 {
-    [Tooltip("Number of frames to keep for velocity history")]
-    public int historySize = 10;
+    //[Tooltip("Number of frames to keep for velocity history")]
+    //public int historySize = 10;
 
-    private Queue<Vector3> velocityHistory;
+    //private Queue<Vector3> velocityHistory;
 
     public Rigidbody Rigidbody { get; private set; }
-    public Vector3 linearVelocity { get; private set; }
+
+    public HandData<float> strengthAtGrabTime = new HandData<float>(float.NaN, float.NaN);
+
+    //public Vector3 linearVelocity { get; private set; }
 
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody>();
-        velocityHistory = new Queue<Vector3>(historySize);
+        //velocityHistory = new Queue<Vector3>(historySize);
     }
-
+    /*
     void FixedUpdate()
     {
         // Record current velocity
@@ -39,5 +43,5 @@ public class RigidbodyVelocityStabilizer : MonoBehaviour
             velocities.Select(v => v.y).Median(),
             velocities.Select(v => v.z).Median()
         );
-    }
+    }*/
 }

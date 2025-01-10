@@ -25,6 +25,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
     public float minAccelerationRequired = 0.001f;
     public float baseForce = 1.0f;
+    public float baseGrabbedForce = 1.0f;
     public float maxForceDelayTime = 0.5f; //!!!TODO remove with corresponding code, I dont think this actually improves anything
     public float minAccelerationForAnyMass = 0.1f;
     public float minMassForAnyAcceleration = 0.1f;
@@ -56,11 +57,15 @@ public class ForceInteractionV2 : MonoBehaviour
 
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
 
-    public InputActionReference ActivatDebug;
+    //public InputActionReference ActivatDebug;
     public GameObject debugLinePrefab;
 
-    private HandData<Vector3?> bothSavedLastHandPos = new HandData<Vector3?>(null, null);
-    private HandData<MyQueue<float>> bothVibrationIntensities = new HandData<MyQueue<float>>(new MyQueue<float>(), new MyQueue<float>());
+    public InputActionReference LeftHandGrab;
+    public InputActionReference RightHandGrab;
+
+    private HandData<Vector3?> handsSavedLastHandPos = new HandData<Vector3?>(null, null);
+    private HandData<MyQueue<float>> handsVibrationIntensities = new HandData<MyQueue<float>>(new MyQueue<float>(), new MyQueue<float>());
+    private HandData<bool> handsGrabbing = new HandData<bool>(false, false);
 
     public int numberOfMovingAvg = 5;
 
@@ -82,14 +87,20 @@ public class ForceInteractionV2 : MonoBehaviour
     private void Start()
     {
         //ActivatDebug.action.started += (_) => DebugLines(XREyes.transform.position, HandForceInteractionTransform.position, savedLastHandPos.Value);
-        ActivatDebug.action.started += (_) => DebugToggleVibration();
+        //ActivatDebug.action.started += (_) => DebugToggleVibration();
+
+        LeftHandGrab.action.started += (_) => HandsStartGrabbing(true);
+        RightHandGrab.action.started += (_) => HandsStartGrabbing(false);
+
+        LeftHandGrab.action.canceled += (_) => HandsStopGrabbing(true);
+        RightHandGrab.action.canceled += (_) => HandsStopGrabbing(false);
 
         Rigidbody[] allRigidbodies = FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
         foreach (Rigidbody rigidbody in allRigidbodies)
         {
             rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
             RigidbodyVelocityStabilizer newHelper = (rigidbody.AddComponent<RigidbodyVelocityStabilizer>());
-            newHelper.historySize = 5;
+            //newHelper.historySize = 5;
             allRigidbodyHelpers.Add(newHelper);
         }
     }
@@ -100,22 +111,24 @@ public class ForceInteractionV2 : MonoBehaviour
         {
             bool handIsLeft = i == 0 ? true : false;
 
+            bool handIsGrabbing = handIsLeft ? handsGrabbing.Left : handsGrabbing.Right;
+
             Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
             HapticsUtility.Controller hapticsController = handIsLeft ? HapticsUtility.Controller.Left : HapticsUtility.Controller.Right;
 
-            ref Vector3? savedLastHandPos = ref (handIsLeft ? ref bothSavedLastHandPos.Left : ref bothSavedLastHandPos.Right);
-            MyQueue<float> vibrationIntensities = handIsLeft ? bothVibrationIntensities.Left: bothVibrationIntensities.Right;
+            ref Vector3? savedLastHandPos = ref (handIsLeft ? ref handsSavedLastHandPos.Left : ref handsSavedLastHandPos.Right);
+            MyQueue<float> vibrationIntensities = handIsLeft ? handsVibrationIntensities.Left: handsVibrationIntensities.Right;
 
             if (savedLastHandPos.HasValue)
             {
-                Vector3 currentHandPos = HandForceInteractionTransform.position;
+                Vector3 handPos = HandForceInteractionTransform.position;
                 Vector3 lastHandPos = savedLastHandPos.Value;
                 Vector3 handDir = HandForceInteractionTransform.forward;
 
                 Vector3 eyePos = XREyes.transform.position;
 
-                Vector3 lastHandToHand = currentHandPos - lastHandPos;
-                Vector3 eyeToHand = currentHandPos - eyePos;
+                Vector3 lastHandToHand = handPos - lastHandPos;
+                Vector3 eyeToHand = handPos - eyePos;
 
                 Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
                 DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
@@ -129,7 +142,9 @@ public class ForceInteractionV2 : MonoBehaviour
                     Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
                     Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
 
-                    Tuple<Vector3, float> result = CaculateForceInteractionForce2(objectPos, rigidbodyHelper.Rigidbody.linearVelocity, currentHandPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                    float strengthAtGrabTime = handIsLeft ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
+
+                    Tuple<Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
                     Vector3 force = result.Item1;
                     float strengthTotal = result.Item2;
 
@@ -152,10 +167,97 @@ public class ForceInteractionV2 : MonoBehaviour
         }
     }
 
-    public Tuple<Vector3, float> CaculateForceInteractionForce2(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
+    private void HandsStartGrabbing(bool handIsLeft)
+    {
+        if (handIsLeft)
+            handsGrabbing.Left = true;
+        else
+            handsGrabbing.Right = true;
+
+        Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
+        ref Vector3? savedLastHandPos = ref (handIsLeft ? ref handsSavedLastHandPos.Left : ref handsSavedLastHandPos.Right);
+
+        if (savedLastHandPos.HasValue)
+        {
+            Vector3 handPos = HandForceInteractionTransform.position;
+            Vector3 lastHandPos = savedLastHandPos.Value;
+            Vector3 handDir = HandForceInteractionTransform.forward;
+
+            Vector3 eyePos = XREyes.transform.position;
+
+            Vector3 lastHandToHand = handPos - lastHandPos;
+            Vector3 eyeToHand = handPos - eyePos;
+
+            Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
+            DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
+            float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
+
+            foreach (var rigidbodyHelper in allRigidbodyHelpers)
+            {
+                Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
+                Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
+                float strengthAtGrabTime = CalculateStrengthFromDistance(objectPos, handPos, handPos, eyePos, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody));
+
+                if(handIsLeft)
+                    rigidbodyHelper.strengthAtGrabTime.Left = strengthAtGrabTime;
+                else 
+                    rigidbodyHelper.strengthAtGrabTime.Right = strengthAtGrabTime;
+            }
+        }
+    }
+
+    private void HandsStopGrabbing(bool handIsLeft)
+    {
+        if (handIsLeft)
+            handsGrabbing.Left = false;
+        else
+            handsGrabbing.Right = false;
+    }
+
+    public Tuple<Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
+    {
+        Vector3 relativeTargetVelocity = CalculateRelativeTargetVelocity(objectPos, objectVelocity, handPos, lastHandPos, eyePos);
+        if (relativeTargetVelocity.sqrMagnitude <= 0.001) return new Tuple<Vector3, float>(Vector3.zero, 0f);
+
+        //Distance
+        float strengthFromDistance = CalculateStrengthFromDistance(objectPos, handPos, lastHandPos, eyePos, effortBasedHandSpeed, objectSphericalSize);
+        if (handIsGrabbing)
+            strengthFromDistance = Mathf.Min(strengthAtGrabTime, strengthFromDistance);
+
+        if (strengthFromDistance > 0.1)
+            debugGameObject.layer = 9;//debug Layer
+        else
+            debugGameObject.layer = 0;//default layer //!!! quick and dirty
+
+        //HandSpeed
+        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(effortBasedHandSpeed);
+        
+        //Angle
+        float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
+        float strengthFromAngle = PushStrength_vs_angle.Evaluate(handForceDirAngle);
+
+
+        float strengthTotal = strengthFromDistance * strengthFromHandSpeed * strengthFromAngle;
+
+
+        // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
+        float baseForceMultiplier = handIsGrabbing ? baseGrabbedForce : baseForce;
+        Vector3 force = baseForceMultiplier * strengthTotal * relativeTargetVelocity.normalized;
+
+        // Replacing Physically accurate "force / objectMass (F/m)" with pseudo physics to allow moving super havy objects and limiting speed of super light
+        // F * [(1/ (m + c2)) + c1]
+        // force * minAccelerationForAnyMass (F * c1) causes a acceleration for any mass, but only if a force exists
+        // 1 / (objectMass + minMassForAnyAcceleration) (1/ (m + c2)) causes objects to be treated like they have at least a minimum mass
+        Vector3 accelerationMassCorrected = force * ((1f / (objectMass + minMassForAnyAcceleration)) + minAccelerationForAnyMass);
+        Vector3 forceMassCorrected = accelerationMassCorrected * objectMass;
+
+        float maxForceForOneFixedFrame = relativeTargetVelocity.magnitude * objectMass / Time.fixedDeltaTime;
+        return new Tuple<Vector3, float>(Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame), strengthTotal);
+    }
+
+    private static Vector3 CalculateRelativeTargetVelocity(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos)
     {
         Vector3 eyeToHand = handPos - eyePos;
-
         Vector3 eyeToObject = eyePos - objectPos;
 
         float handMovementScaleFactor = eyeToObject.magnitude / eyeToHand.magnitude;
@@ -164,40 +266,21 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 targetVelocity = lastHandToHand / Time.fixedDeltaTime * handMovementScaleFactor;
 
         //Vector3 objectVelocity = Vector3.zero; //!!TODO stabalize rigidbody velocity so it becomes usable
+
         Vector3 relativeTargetVelocity = targetVelocity - objectVelocity;
-        if (relativeTargetVelocity.sqrMagnitude <= 0.001) return new Tuple<Vector3, float>(Vector3.zero, 0f);
+        return relativeTargetVelocity;
+    }
 
-        float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(effortBasedHandSpeed);
-
+    private float CalculateStrengthFromDistance(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, float effortBasedHandSpeed, float objectSphericalSize)
+    {
         float fallOffDistanceFromHandVelocity = FallOffDistancePercentage_vs_handVelocity.Evaluate(effortBasedHandSpeed);
 
+        Vector3 eyeToObject = eyePos - objectPos;
         float objectFallOffDistance = fallOffDistanceFromHandVelocity * baseFallOffDistance * eyeToObject.magnitude;
 
         float objectDistanceEyeToHandTriangle = DistanceToEyeToHandTriangle(objectPos, objectSphericalSize, handPos, lastHandPos, eyePos);
         float strengthFromDistance = PushStrength_vs_fallOffDistance.Evaluate(objectDistanceEyeToHandTriangle / objectFallOffDistance);
-
-        if (strengthFromDistance > 0.1)
-            debugGameObject.layer = 9;//debug Layer
-        else
-            debugGameObject.layer = 0;//default layer //!!! quick and dirty
-
-        float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
-        float strengthFromAngle = PushStrength_vs_angle.Evaluate(handForceDirAngle);
-
-        float strengthTotal = strengthFromDistance * strengthFromHandSpeed * strengthFromAngle;
-
-        // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
-        Vector3 force = baseForce * strengthTotal * relativeTargetVelocity.normalized;
-
-        // Replacing Physically accurate "force / objectMass (F/m)" with pseudo physics to allow moving super havy objects and limiting speed of super light
-        // F * [(1/ (m + c2)) + c1]
-        // force * minAccelerationForAnyMass (F * c1) causes a acceleration for any mass, but only if a force exists
-        // 1 / (objectMass + minMassForAnyAcceleration) (1/ (m + c2)) causes objects to be treated like they have at least a minimum mass
-        Vector3 accelerationMassCorrected = force * (( 1f / (objectMass + minMassForAnyAcceleration)) + minAccelerationForAnyMass);
-        Vector3 forceMassCorrected = accelerationMassCorrected * objectMass;
-
-        float maxForceForOneFixedFrame = relativeTargetVelocity.magnitude * objectMass / Time.fixedDeltaTime;
-        return new Tuple<Vector3, float>(Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame), strengthTotal);
+        return strengthFromDistance;
     }
 
     /// <summary>
