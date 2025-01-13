@@ -9,12 +9,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 using static ForceInteractionV2;
+using static UnityEngine.GraphicsBuffer;
 
 /// <summary>
 /// Foce Interaction based on "the one formula to rule them all". Cutting out the middle man of Phsere trigger zones and instead applying force to ALL ridgidbodyies dependent on there relation to the rays
 /// </summary>
 public class ForceInteractionV2 : MonoBehaviour
 {
+    public static ForceInteractionV2 instance;
+
     [Tooltip("This Transform should be a child of the force interaction hand. The forward direction should be the way the hand is facting and the position the hand center")]
     /// <summary>
     /// This Transform should be a child of the force interaction hand. The forward direction should be the way the hand is facting and the position the hand center
@@ -26,6 +29,7 @@ public class ForceInteractionV2 : MonoBehaviour
     public float minAccelerationRequired = 0.001f;
     public float baseForce = 1.0f;
     public float baseGrabbedForce = 1.0f;
+    public float baseStiffness = 50f;
     public float maxForceDelayTime = 0.5f; //!!!TODO remove with corresponding code, I dont think this actually improves anything
     public float minAccelerationForAnyMass = 0.1f;
     public float minMassForAnyAcceleration = 0.1f;
@@ -63,6 +67,8 @@ public class ForceInteractionV2 : MonoBehaviour
     public InputActionReference LeftHandGrab;
     public InputActionReference RightHandGrab;
 
+    public HandData<Transform> handsRayTransforms;
+
     private HandData<Vector3?> handsSavedLastHandPos = new HandData<Vector3?>(null, null);
     private HandData<MyQueue<float>> handsVibrationIntensities = new HandData<MyQueue<float>>(new MyQueue<float>(), new MyQueue<float>());
     private HandData<bool> handsGrabbing = new HandData<bool>(false, false);
@@ -71,6 +77,12 @@ public class ForceInteractionV2 : MonoBehaviour
 
     private bool useVibrations = true;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    [System.Serializable]
     public struct HandData<T>
     {
         public T Left;
@@ -127,6 +139,19 @@ public class ForceInteractionV2 : MonoBehaviour
 
                 Vector3 eyePos = XREyes.transform.position;
 
+                if (handIsLeft)
+                {
+                    handsRayTransforms.Left.position = eyePos;
+                    handsRayTransforms.Left.LookAt(handPos);
+                    handsRayTransforms.Left.localScale = Vector3.one * (eyePos - handPos).magnitude;
+                }
+                else
+                {
+                    handsRayTransforms.Right.position = eyePos;
+                    handsRayTransforms.Right.LookAt(handPos);
+                    handsRayTransforms.Right.localScale = Vector3.one * (eyePos - handPos).magnitude;
+                }
+
                 Vector3 lastHandToHand = handPos - lastHandPos;
                 Vector3 eyeToHand = handPos - eyePos;
 
@@ -139,19 +164,30 @@ public class ForceInteractionV2 : MonoBehaviour
                 float largestStrengthTotal = 0f;
                 foreach (var rigidbodyHelper in allRigidbodyHelpers)
                 {
-                    Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
-                    Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
+                    if (!handIsGrabbing)
+                    {
+                        Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
+                        Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
 
-                    float strengthAtGrabTime = handIsLeft ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
+                        float strengthAtGrabTime = handIsLeft ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
 
-                    Tuple<Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
-                    Vector3 force = result.Item1;
-                    float strengthTotal = result.Item2;
+                        Tuple<Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                        Vector3 force = result.Item1;
+                        float strengthTotal = result.Item2;
 
-                    largestStrengthTotal = Mathf.Max(largestStrengthTotal, strengthTotal);
+                        largestStrengthTotal = Mathf.Max(largestStrengthTotal, strengthTotal);
 
-                    if (force.magnitude / rigidbody.mass >= minAccelerationRequired)
-                        rigidbody.AddForce(force);
+                        if (force.magnitude / rigidbody.mass >= minAccelerationRequired)
+                            rigidbody.AddForce(force);
+                    }
+                    else
+                    {
+                        Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
+                        Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
+                        Vector3 targetObjectPos = rigidbodyHelper.GetTartgetPosition(handIsLeft, (handIsLeft ? handsRayTransforms.Left : handsRayTransforms.Right));
+
+                        rigidbody.AddForce(CaculateForceInteractionForceGrabbed(handIsLeft, objectPos, targetObjectPos, rigidbodyHelper));
+                    }
                 }
 
                 //HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed), duration: 1.0f, HapticsUtility.Controller.Right);
@@ -196,12 +232,15 @@ public class ForceInteractionV2 : MonoBehaviour
             {
                 Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
                 Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
-                float strengthAtGrabTime = CalculateStrengthFromDistance(objectPos, handPos, handPos, eyePos, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody));
 
+                rigidbodyHelper.StartGrab(handIsLeft, handPos, objectPos, eyePos, (handIsLeft ? handsRayTransforms.Left : handsRayTransforms.Right), effortBasedHandSpeed);
+                /*
+                float strengthAtGrabTime = CalculateStrengthFromDistance(objectPos, handPos, handPos, eyePos, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody));
+                
                 if(handIsLeft)
                     rigidbodyHelper.strengthAtGrabTime.Left = strengthAtGrabTime;
                 else 
-                    rigidbodyHelper.strengthAtGrabTime.Right = strengthAtGrabTime;
+                    rigidbodyHelper.strengthAtGrabTime.Right = strengthAtGrabTime;*/
             }
         }
     }
@@ -212,6 +251,11 @@ public class ForceInteractionV2 : MonoBehaviour
             handsGrabbing.Left = false;
         else
             handsGrabbing.Right = false;
+
+        foreach (var rigidbodyHelper in allRigidbodyHelpers)
+        {
+            rigidbodyHelper.StopGrab();
+        }
     }
 
     public Tuple<Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
@@ -255,6 +299,32 @@ public class ForceInteractionV2 : MonoBehaviour
         return new Tuple<Vector3, float>(Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame), strengthTotal);
     }
 
+    public Vector3 CaculateForceInteractionForceGrabbed(bool handIsGrabbing, Vector3 objectPos, Vector3 targetObejctPos, RigidbodyVelocityStabilizer rigidbodyHelper)
+    {
+        float strengthAtGrabTime = handIsGrabbing ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
+
+        float stiffness = baseStiffness * strengthAtGrabTime;  // Proportional gain (k_p)
+
+        Vector3 objectVelocity = rigidbodyHelper.Rigidbody.linearVelocity;
+        float objectMass = rigidbodyHelper.Rigidbody.mass;
+
+        // Calculate position error
+        Vector3 positionError = targetObejctPos - objectPos;
+
+        // Calculate damping coefficient for critical damping
+        float damping = 2 * Mathf.Sqrt(stiffness * objectMass);
+
+        // Calculate velocity error
+        Vector3 velocityError = -objectVelocity;
+
+        // Calculate the force to apply
+        Vector3 force = stiffness * positionError + damping * velocityError;
+
+        // Apply force to the Rigidbody
+
+        return force; //!!!! strength missing
+    }
+
     private static Vector3 CalculateRelativeTargetVelocity(Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos)
     {
         Vector3 eyeToHand = handPos - eyePos;
@@ -271,7 +341,7 @@ public class ForceInteractionV2 : MonoBehaviour
         return relativeTargetVelocity;
     }
 
-    private float CalculateStrengthFromDistance(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, float effortBasedHandSpeed, float objectSphericalSize)
+    public float CalculateStrengthFromDistance(Vector3 objectPos, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, float effortBasedHandSpeed, float objectSphericalSize)
     {
         float fallOffDistanceFromHandVelocity = FallOffDistancePercentage_vs_handVelocity.Evaluate(effortBasedHandSpeed);
 
@@ -379,7 +449,7 @@ public class ForceInteractionV2 : MonoBehaviour
         return Vector3.ClampMagnitude(windDragForce, maxForceForOneFixedFrame);
     }
 
-    private float DistanceToEyeToHandTriangle(Vector3 objectPos, float objectSphericalSize, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos) //!!should be static
+    private static float DistanceToEyeToHandTriangle(Vector3 objectPos, float objectSphericalSize, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos)
     {
         //cheapest implementeation I could think of.
         float maxDistance = 100f;
@@ -500,7 +570,7 @@ public class ForceInteractionV2 : MonoBehaviour
         }
     }
 
-    private static float ApproximateObjectSphericalSize(Rigidbody rigidbody)
+    public static float ApproximateObjectSphericalSize(Rigidbody rigidbody)
     {
         if (rigidbody.TryGetComponent<Collider>(out Collider collider))
         {

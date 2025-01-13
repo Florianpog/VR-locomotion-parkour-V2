@@ -14791,6 +14791,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000010915038424, guid: 6b9fef59fa39f0744ab9d260ec6266d0, type: 3}
   m_PrefabInstance: {fileID: 56974722}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &807912393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 807912394}
+  m_Layer: 0
+  m_Name: RayTransformLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &807912394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807912393}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1027359008}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &810156833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010053083938, guid: 3ba8722acc6ed407ba69d7d7d4d5f832, type: 3}
@@ -18165,6 +18196,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b75d513df2c5cdb408d4a022c98cf202, type: 3}
+--- !u!1 &1004771953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1004771954}
+  m_Layer: 0
+  m_Name: RayTransformRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1004771954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004771953}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1027359008}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1010213073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000012700152926, guid: 818821d8635b7754b97b69789a4a2d0f, type: 3}
@@ -18474,6 +18536,7 @@ MonoBehaviour:
   minAccelerationRequired: 0.01
   baseForce: 800
   baseGrabbedForce: 2400
+  baseStiffness: 300
   maxForceDelayTime: 0.1
   minAccelerationForAnyMass: 0.003
   minMassForAnyAcceleration: 6
@@ -18676,6 +18739,9 @@ MonoBehaviour:
   debugLinePrefab: {fileID: 8855542028366715798, guid: 75515d61f9a23504b9b33c83cec6944d, type: 3}
   LeftHandGrab: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   RightHandGrab: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  handsRayTransforms:
+    Left: {fileID: 807912394}
+    Right: {fileID: 1004771954}
   numberOfMovingAvg: 5
 --- !u!4 &1027359008
 Transform:
@@ -18689,7 +18755,9 @@ Transform:
   m_LocalPosition: {x: 9.186407, y: -5.734336, z: 11.698783}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 807912394}
+  - {fileID: 1004771954}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1028920111
