@@ -178,10 +178,6 @@ public class ForceInteractionV2 : MonoBehaviour
                 ref float currentFocus = ref (handIsLeft ? ref handsCurrentFocus.Left : ref handsCurrentFocus.Right);
                 //This function for changing the focus was chosen to cause rapid decreases in focus when moving while having a high focus
                 currentFocus = Mathf.Clamp01(currentFocus + changeInFocus * (changeInFocus < 0 ? currentFocus * (focusMaseRateOfChangeDecrease * Time.fixedDeltaTime) : (1f - currentFocus) * (focusMaseRateOfChangeIncrease * Time.fixedDeltaTime)));
-                /*if (handIsLeft)
-                    handsCurrentFocus.Left = currentFocus;
-                else
-                    handsCurrentFocus.Right = currentFocus;*/
 
                 if (!handIsLeft)
                 {
