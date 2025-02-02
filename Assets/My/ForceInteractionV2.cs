@@ -175,13 +175,13 @@ public class ForceInteractionV2 : MonoBehaviour
                 
                 float changeInFocus = FocusChange_vs_handVelocity.Evaluate(handVelocity.magnitude);
 
-                float currentFocus = Mathf.Clamp01(handIsLeft ? handsCurrentFocus.Left : handsCurrentFocus.Right);
+                ref float currentFocus = ref (handIsLeft ? ref handsCurrentFocus.Left : ref handsCurrentFocus.Right);
                 //This function for changing the focus was chosen to cause rapid decreases in focus when moving while having a high focus
-                currentFocus = currentFocus + changeInFocus * (changeInFocus < 0 ? currentFocus * (focusMaseRateOfChangeDecrease * Time.fixedDeltaTime) : (1f - currentFocus) * (focusMaseRateOfChangeIncrease * Time.fixedDeltaTime));
-                if (handIsLeft)
+                currentFocus = Mathf.Clamp01(currentFocus + changeInFocus * (changeInFocus < 0 ? currentFocus * (focusMaseRateOfChangeDecrease * Time.fixedDeltaTime) : (1f - currentFocus) * (focusMaseRateOfChangeIncrease * Time.fixedDeltaTime)));
+                /*if (handIsLeft)
                     handsCurrentFocus.Left = currentFocus;
                 else
-                    handsCurrentFocus.Right = currentFocus;
+                    handsCurrentFocus.Right = currentFocus;*/
 
                 if (!handIsLeft)
                 {
@@ -320,6 +320,8 @@ public class ForceInteractionV2 : MonoBehaviour
         // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
         float baseForceMultiplier = handIsGrabbing ? baseGrabbedForce : baseForce;
         Vector3 force = baseForceMultiplier * strengthTotal * relativeTargetVelocity.normalized;
+
+        //Rotation
 
 
         //Focus
