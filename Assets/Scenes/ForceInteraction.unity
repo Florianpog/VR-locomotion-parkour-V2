@@ -706,7 +706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &54525811
 Transform:
   m_ObjectHideFlags: 0
@@ -8477,7 +8477,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &495075356
 Transform:
   m_ObjectHideFlags: 0
@@ -18955,23 +18955,23 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.19821599
-      value: 0.6110764
-      inSlope: -1.4462274
-      outSlope: -1.4462274
+      time: 0.15657796
+      value: 0.2622772
+      inSlope: -2.6778576
+      outSlope: -2.6778576
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.5059505
-      outWeight: 0.7984361
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.59719247
-      value: 0.16670814
-      inSlope: -0.63240707
-      outSlope: -0.63240707
+      time: 0.60217446
+      value: -0.2271212
+      inSlope: -0.41201258
+      outSlope: -0.41201258
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.75762403
-      outWeight: 0.48928443
+      outWeight: 0.43773407
     - serializedVersion: 3
       time: 2.0435612
       value: -0.5858364
@@ -25076,7 +25076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1414127037
 Transform:
   m_ObjectHideFlags: 0
@@ -25570,7 +25570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 341643739658639137, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3285441957215410325, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -25722,9 +25722,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5690275729505056387, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1462881684}
-    - targetCorrespondingSourceObject: {fileID: 5690275729505056387, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 13decfe9aae7f30458bb3d450584efa6, type: 3}
 --- !u!224 &1443367591 stripped
 RectTransform:
@@ -33689,7 +33686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1974133932
 Transform:
   m_ObjectHideFlags: 0
