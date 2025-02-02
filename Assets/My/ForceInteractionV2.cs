@@ -276,9 +276,9 @@ public class ForceInteractionV2 : MonoBehaviour
         //HandSpeed
         float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(effortBasedHandSpeed);
         
-        //Angle
-        float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
-        float strengthFromAngle = PushStrength_vs_angle.Evaluate(handForceDirAngle);
+        //Angle - Disabled based on feedback (maybe a better solution in the future then disablaling)
+        //float handForceDirAngle = Vector3.Angle(handDir, relativeTargetVelocity);
+        float strengthFromAngle = 1f;// PushStrength_vs_angle.Evaluate(handForceDirAngle);
 
 
         float strengthTotal = strengthFromDistance * strengthFromHandSpeed * strengthFromAngle;
@@ -288,11 +288,15 @@ public class ForceInteractionV2 : MonoBehaviour
         float baseForceMultiplier = handIsGrabbing ? baseGrabbedForce : baseForce;
         Vector3 force = baseForceMultiplier * strengthTotal * relativeTargetVelocity.normalized;
 
+        
+        // focus will cause objects to be treated as if they where lighter
+        float objectMassFocusLightened = objectMass; //!!TODo
+
         // Replacing Physically accurate "force / objectMass (F/m)" with pseudo physics to allow moving super havy objects and limiting speed of super light
         // F * [(1/ (m + c2)) + c1]
         // force * minAccelerationForAnyMass (F * c1) causes a acceleration for any mass, but only if a force exists
         // 1 / (objectMass + minMassForAnyAcceleration) (1/ (m + c2)) causes objects to be treated like they have at least a minimum mass
-        Vector3 accelerationMassCorrected = force * ((1f / (objectMass + minMassForAnyAcceleration)) + minAccelerationForAnyMass);
+        Vector3 accelerationMassCorrected = force * ((1f / (objectMassFocusLightened + minMassForAnyAcceleration)) + minAccelerationForAnyMass);
         Vector3 forceMassCorrected = accelerationMassCorrected * objectMass;
 
         float maxForceForOneFixedFrame = relativeTargetVelocity.magnitude * objectMass / Time.fixedDeltaTime;
