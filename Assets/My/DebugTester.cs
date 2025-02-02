@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -16,6 +17,7 @@ public class DebugTester : MonoBehaviour
         while (true)
         {
             stringFloatLogger.SendDebug(values => Mathf.Max(values.ToArray()));
+            //stringFloatLogger.SendDebug(values => values.Average());
             yield return new WaitForSeconds(debugInterval);
         }
     }

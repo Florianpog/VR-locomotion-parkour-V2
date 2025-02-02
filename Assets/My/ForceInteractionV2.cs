@@ -26,6 +26,7 @@ public class ForceInteractionV2 : MonoBehaviour
     public Transform RightHandForceInteractionTransform;
     public Camera XREyes;
 
+    [Header("magic numbers chosen for good feeling")]
     public float minAccelerationRequired = 0.001f;
     public float baseForce = 1.0f;
     public float baseGrabbedForce = 1.0f;
@@ -33,7 +34,10 @@ public class ForceInteractionV2 : MonoBehaviour
     public float maxForceDelayTime = 0.5f; //!!!TODO remove with corresponding code, I dont think this actually improves anything
     public float minAccelerationForAnyMass = 0.1f;
     public float minMassForAnyAcceleration = 0.1f;
+    public float focusMaseRateOfChangeDecrease = 0.1f;
+    public float focusMaseRateOfChangeIncrease = 0.1f;
 
+    [Header("Curves")]
     [Tooltip("basically the influence sphere radius per peter distance")]
     public float baseFallOffDistance = 0.01f;
 
@@ -52,17 +56,24 @@ public class ForceInteractionV2 : MonoBehaviour
     [Tooltip("the haptic feedback vibration intensity dependet on the hand movement speed")]
     public AnimationCurve VibrationIntensity_vs_handVelocity;
 
+    [Tooltip("the rate of change in focus (-1 to 1) dependet on the hand movement speed")]
+    public AnimationCurve FocusChange_vs_handVelocity;
+
     [Space(10)]
-    // HandVelocity Scaling factors based on your analysis
-    private float LeftRightFactor = 1.0f;  // Baseline
+    [Header("HandVelocity Scaling factors based on analysis")]
+    private float LeftRightFactor = 1.0f; // Baseline
     public float DownwardFactor = 1.5f;
     public float UpwardFactor = 2.0f;
     public float ForwardFactor = 1.5f;
 
     List<RigidbodyVelocityStabilizer> allRigidbodyHelpers = new List<RigidbodyVelocityStabilizer>(); //!!!! stabalizer is probably not needed anymore!
 
+    [Header("References")]
     //public InputActionReference ActivatDebug;
     public GameObject debugLinePrefab;
+    public GameObject debugFocus;
+    public GameObject debugFocusChange;
+    public GameObject debugHandSpeed;
 
     public InputActionReference LeftHandGrab;
     public InputActionReference RightHandGrab;
@@ -72,6 +83,7 @@ public class ForceInteractionV2 : MonoBehaviour
     private HandData<Vector3?> handsSavedLastHandPos = new HandData<Vector3?>(null, null);
     private HandData<MyQueue<float>> handsVibrationIntensities = new HandData<MyQueue<float>>(new MyQueue<float>(), new MyQueue<float>());
     private HandData<bool> handsGrabbing = new HandData<bool>(false, false);
+    private HandData<float> handsCurrentFocus = new HandData<float>(0f, 0f); //represents how much the player is fucused on a specific spot. in percent. increses when remaining still, decreases when moving
 
     public int numberOfMovingAvg = 5;
 
@@ -155,10 +167,31 @@ public class ForceInteractionV2 : MonoBehaviour
                 Vector3 lastHandToHand = handPos - lastHandPos;
                 Vector3 eyeToHand = handPos - eyePos;
 
-                Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime;
+                Vector3 handVelocity = lastHandToHand / Time.fixedDeltaTime; //!! maybe this has to be real time because of lags in physics calulation while player real life movement continues
                 DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
                 float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
                 DebugTester.stringFloatLogger.CollectLog("effortBasedHandSpeed: ", effortBasedHandSpeed.ToReadableFloat());
+
+                
+                float changeInFocus = FocusChange_vs_handVelocity.Evaluate(handVelocity.magnitude);
+
+                float currentFocus = Mathf.Clamp01(handIsLeft ? handsCurrentFocus.Left : handsCurrentFocus.Right);
+                //This function for changing the focus was chosen to cause rapid decreases in focus when moving while having a high focus
+                currentFocus = currentFocus + changeInFocus * (changeInFocus < 0 ? currentFocus * (focusMaseRateOfChangeDecrease * Time.fixedDeltaTime) : (1f - currentFocus) * (focusMaseRateOfChangeIncrease * Time.fixedDeltaTime));
+                if (handIsLeft)
+                    handsCurrentFocus.Left = currentFocus;
+                else
+                    handsCurrentFocus.Right = currentFocus;
+
+                if (!handIsLeft)
+                {
+                    DebugTester.stringFloatLogger.CollectLog("currentFocus: ", currentFocus.ToReadableFloat());
+                    DebugTester.stringFloatLogger.CollectLog("changeInFocus: ", changeInFocus);
+
+                    debugFocus.transform.localPosition = new Vector3(debugFocus.transform.localPosition.x, currentFocus, debugFocus.transform.localPosition.z);
+                    debugFocusChange.transform.localPosition = new Vector3(debugFocusChange.transform.localPosition.x, changeInFocus + 1f, debugFocusChange.transform.localPosition.z);
+                    debugHandSpeed.transform.localPosition = new Vector3(debugHandSpeed.transform.localPosition.x, handVelocity.magnitude, debugHandSpeed.transform.localPosition.z);
+                }
 
 
                 float largestStrengthTotal = 0f;
@@ -171,7 +204,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
                         float strengthAtGrabTime = handIsLeft ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
 
-                        Tuple<Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                        Tuple<Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, currentFocus, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
                         Vector3 force = result.Item1;
                         float strengthTotal = result.Item2;
 
@@ -258,7 +291,7 @@ public class ForceInteractionV2 : MonoBehaviour
         }
     }
 
-    public Tuple<Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
+    public Tuple<Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, float currentFocus, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
     {
         Vector3 relativeTargetVelocity = CalculateRelativeTargetVelocity(objectPos, objectVelocity, handPos, lastHandPos, eyePos);
         if (relativeTargetVelocity.sqrMagnitude <= 0.001) return new Tuple<Vector3, float>(Vector3.zero, 0f);
@@ -288,9 +321,11 @@ public class ForceInteractionV2 : MonoBehaviour
         float baseForceMultiplier = handIsGrabbing ? baseGrabbedForce : baseForce;
         Vector3 force = baseForceMultiplier * strengthTotal * relativeTargetVelocity.normalized;
 
-        
+
+        //Focus
         // focus will cause objects to be treated as if they where lighter
-        float objectMassFocusLightened = objectMass; //!!TODo
+        float objectMassFocusLightened = objectMass * (1 - currentFocus); //!!TODO
+        Vector3 counteractingGravity = Physics.gravity * Time.fixedDeltaTime * -currentFocus;
 
         // Replacing Physically accurate "force / objectMass (F/m)" with pseudo physics to allow moving super havy objects and limiting speed of super light
         // F * [(1/ (m + c2)) + c1]
@@ -300,7 +335,10 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 forceMassCorrected = accelerationMassCorrected * objectMass;
 
         float maxForceForOneFixedFrame = relativeTargetVelocity.magnitude * objectMass / Time.fixedDeltaTime;
-        return new Tuple<Vector3, float>(Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame), strengthTotal);
+        Vector3 clapmedForce = Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame);
+
+        Vector3 combinedForece = clapmedForce + counteractingGravity;
+        return new Tuple<Vector3, float>(combinedForece, strengthTotal);
     }
 
     public Vector3 CaculateForceInteractionForceGrabbed(bool handIsGrabbing, Vector3 objectPos, Vector3 targetObejctPos, RigidbodyVelocityStabilizer rigidbodyHelper)
