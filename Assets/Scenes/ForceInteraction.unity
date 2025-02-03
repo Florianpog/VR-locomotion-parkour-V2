@@ -14291,7 +14291,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!114 &777728065
 MonoBehaviour:
@@ -14300,13 +14300,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777728062}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ff76830d03a08e41b57c51a87cdb892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1423547849}
-  factor: 0.5
+  factor: 1
   torqueGain: 10
 --- !u!65 &777728066
 BoxCollider:
@@ -18937,7 +18937,7 @@ MonoBehaviour:
   minAccelerationRequired: 0.01
   baseForce: 800
   baseGrabbedForce: 2400
-  baseTorque: 2
+  baseTorque: 0.1
   baseStiffness: 300
   maxForceDelayTime: 0.1
   minAccelerationForAnyMass: 0.003
