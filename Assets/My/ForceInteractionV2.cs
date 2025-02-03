@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 using static ForceInteractionV2;
+using static Unity.VisualScripting.Member;
 using static UnityEngine.GraphicsBuffer;
 
 /// <summary>
@@ -82,7 +83,7 @@ public class ForceInteractionV2 : MonoBehaviour
     public HandData<Transform> handsRayTransforms;
 
     private HandData<Vector3?> handsSavedLastHandPos = new HandData<Vector3?>(null, null);
-    private HandData<Quaternion?> handsSavedLastHandRot = new HandData<Quaternion?>(null, null);
+    private HandData<Matrix4x4?> handsSavedLastHandRotationM4 = new HandData<Matrix4x4?>(null, null);
     private HandData<MyQueue<float>> handsVibrationIntensities = new HandData<MyQueue<float>>(new MyQueue<float>(), new MyQueue<float>());
     private HandData<bool> handsGrabbing = new HandData<bool>(false, false);
     private HandData<float> handsCurrentFocus = new HandData<float>(0f, 0f); //represents how much the player is fucused on a specific spot. in percent. increses when remaining still, decreases when moving
@@ -137,22 +138,25 @@ public class ForceInteractionV2 : MonoBehaviour
         {
             bool handIsLeft = i == 0 ? true : false;
 
+            if (handIsLeft) continue; //!!!!TESTING ONLY. REMVOE
+
             bool handIsGrabbing = handIsLeft ? handsGrabbing.Left : handsGrabbing.Right;
 
             Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
             HapticsUtility.Controller hapticsController = handIsLeft ? HapticsUtility.Controller.Left : HapticsUtility.Controller.Right;
 
             ref Vector3? savedLastHandPos = ref (handIsLeft ? ref handsSavedLastHandPos.Left : ref handsSavedLastHandPos.Right);
-            ref Quaternion? savedLastHandRot = ref (handIsLeft ? ref handsSavedLastHandRot.Left : ref handsSavedLastHandRot.Right);
+            ref Matrix4x4? savedLastHandRotationM4 = ref (handIsLeft ? ref handsSavedLastHandRotationM4.Left : ref handsSavedLastHandRotationM4.Right);
             MyQueue<float> vibrationIntensities = handIsLeft ? handsVibrationIntensities.Left: handsVibrationIntensities.Right;
 
-            if (savedLastHandPos.HasValue && savedLastHandRot.HasValue)
+            Vector3 handPos = HandForceInteractionTransform.position;
+            Vector3 handDir = HandForceInteractionTransform.forward;
+            Matrix4x4 handRotationM4 = Matrix4x4.Rotate(HandForceInteractionTransform.rotation);
+
+            if (savedLastHandPos.HasValue && savedLastHandRotationM4.HasValue)
             {
-                Vector3 handPos = HandForceInteractionTransform.position;
                 Vector3 lastHandPos = savedLastHandPos.Value;
-                Vector3 handDir = HandForceInteractionTransform.forward;
-                Quaternion handRot = HandForceInteractionTransform.rotation;
-                Quaternion lastHandRot = savedLastHandRot.Value;
+                Matrix4x4 lastHandRotationM4 = savedLastHandRotationM4.Value;
 
                 Vector3 eyePos = XREyes.transform.position;
 
@@ -172,13 +176,14 @@ public class ForceInteractionV2 : MonoBehaviour
 
                 Vector3 deltaHandPos = handPos - lastHandPos;
                 Vector3 eyeToHand = handPos - eyePos;
-                Quaternion deltaHandRot = Quaternion.Inverse(lastHandRot) * handRot;
+                Matrix4x4 deltaHandRotationM4 = handRotationM4 * lastHandRotationM4.transpose;
+                deltaHandRotationM4.rotation.ToAngleAxis(out float deltaHandRotationAngle, out Vector3 deltaHandRotationAxis);
+
 
                 Vector3 handVelocity = deltaHandPos / Time.fixedDeltaTime; //!! maybe this has to be real time because of lags in physics calulation while player real life movement continues
                 DebugTester.stringFloatLogger.CollectLog("handVelocity: ", handVelocity.magnitude.ToReadableFloat());
                 float effortBasedHandSpeed = CalculateEffortBasedHandVelocity(handVelocity, eyeToHand).magnitude;
                 DebugTester.stringFloatLogger.CollectLog("effortBasedHandSpeed: ", effortBasedHandSpeed.ToReadableFloat());
-
                 
                 float changeInFocus = FocusChange_vs_handVelocity.Evaluate(handVelocity.magnitude);
 
@@ -207,7 +212,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
                         float strengthAtGrabTime = handIsLeft ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
 
-                        Tuple<Vector3, Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, deltaHandRot, rigidbodyHelper.Rigidbody.angularVelocity, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, currentFocus, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                        Tuple<Vector3, Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, deltaHandRotationAxis, deltaHandRotationAngle, rigidbodyHelper.Rigidbody.angularVelocity, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, currentFocus, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
                         Vector3 force = result.Item1;
                         Vector3 torque = result.Item2;
                         float strengthTotal = result.Item3;
@@ -218,6 +223,7 @@ public class ForceInteractionV2 : MonoBehaviour
                             rigidbody.AddForce(force);
                         //!!TODO add minTorque
                         rigidbody.AddTorque(torque);
+                        //rigidbody.transform.rotation = scaledDelta * rigidbody.transform.rotation;
                     }
                     else
                     {
@@ -238,8 +244,8 @@ public class ForceInteractionV2 : MonoBehaviour
                     HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed) * averageIntensity, duration: 1.0f, hapticsController);
             }
 
-            savedLastHandPos = HandForceInteractionTransform.position;
-            savedLastHandRot = HandForceInteractionTransform.rotation;
+            savedLastHandPos = handPos;
+            savedLastHandRotationM4 = handRotationM4;
         }
     }
 
@@ -298,7 +304,7 @@ public class ForceInteractionV2 : MonoBehaviour
         }
     }
 
-    public Tuple<Vector3, Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, Quaternion deltaHandRot, Vector3 objectAngularVelocity, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, float currentFocus, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
+    public Tuple<Vector3, Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, Vector3 deltaHandRotationAxis, float deltaHandRotationAngle, Vector3 objectAngularVelocity, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, float currentFocus, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
     {
         Vector3 relativeTargetVelocity = CalculateRelativeTargetVelocity(objectPos, objectVelocity, handPos, lastHandPos, eyePos);
         if (relativeTargetVelocity.sqrMagnitude <= 0.001) return new Tuple<Vector3, Vector3, float>(Vector3.zero, Vector3.zero, 0f);
@@ -345,14 +351,14 @@ public class ForceInteractionV2 : MonoBehaviour
 
         Vector3 combinedForce = clapmedForce + counteractingGravity;
 
+        //if (strengthTotal <= 0.001) return new Tuple<Vector3, Quaternion, float>(Vector3.zero, Quaternion.identity, 0f); //!!!!!TESTING ONLY. REMOVE
+
 
         //Rotation
-        Quaternion scaledDeltaHandRot = Quaternion.Slerp(Quaternion.identity, deltaHandRot, baseTorque * strengthTotal); // Scale the deltaHandRot by a factor
-        scaledDeltaHandRot.ToAngleAxis(out float angle, out Vector3 axis); // Convert the scaled delta to angle-axis representation.
-        if (angle > 180f) angle -= 360f;
-        float angleRad = angle * Mathf.Deg2Rad;
-        Vector3 desiredAngularVelocity = axis.normalized * (angleRad / Time.fixedDeltaTime); // Calculate the angular velocity required to achieve the scaled rotation in this FixedUpdate.
-        Vector3 torque = desiredAngularVelocity - objectAngularVelocity;
+        Vector3 desiredAngularVelocity = deltaHandRotationAxis * ((deltaHandRotationAngle * Mathf.Deg2Rad) / Time.fixedDeltaTime);
+        Vector3 relativeAngularVelocity = desiredAngularVelocity - objectAngularVelocity;
+        // Compute and apply torque (a simple proportional controller)
+        Vector3 torque = relativeAngularVelocity * baseTorque;
 
         return new Tuple<Vector3, Vector3, float>(combinedForce, torque, strengthTotal);
     }
