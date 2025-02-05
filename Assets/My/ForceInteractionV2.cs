@@ -26,6 +26,11 @@ public class ForceInteractionV2 : MonoBehaviour
     public Transform LeftHandForceInteractionTransform;
     public Transform RightHandForceInteractionTransform;
     public Camera XREyes;
+    [Tooltip("This is the transform that moves when the Player moves")]
+    /// <summary>
+    /// This is the transform that moves when the Player moves
+    /// </summary>
+    public Transform XROrigin;
 
     [Header("magic numbers chosen for good feeling")]
     public float minAccelerationRequired = 0.001f;
@@ -143,17 +148,17 @@ public class ForceInteractionV2 : MonoBehaviour
             Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
             HapticsUtility.Controller hapticsController = handIsLeft ? HapticsUtility.Controller.Left : HapticsUtility.Controller.Right;
 
-            ref Vector3? savedLastHandPos = ref (handIsLeft ? ref handsSavedLastHandPos.Left : ref handsSavedLastHandPos.Right);
-            ref Matrix4x4? savedLastHandRotationM4 = ref (handIsLeft ? ref handsSavedLastHandRotationM4.Left : ref handsSavedLastHandRotationM4.Right);
+            ref Vector3? savedLastHandLocalPos = ref (handIsLeft ? ref handsSavedLastHandPos.Left : ref handsSavedLastHandPos.Right);
+            ref Matrix4x4? savedLastHandRotationM4 = ref (handIsLeft ? ref handsSavedLastHandRotationM4.Left : ref handsSavedLastHandRotationM4.Right); //!!theoretically should also be local like the position, but this should not realy make a big difference and is not as trival to me
             MyQueue<float> vibrationIntensities = handIsLeft ? handsVibrationIntensities.Left: handsVibrationIntensities.Right;
 
             Vector3 handPos = HandForceInteractionTransform.position;
             Vector3 handDir = HandForceInteractionTransform.forward;
             Matrix4x4 handRotationM4 = Matrix4x4.Rotate(HandForceInteractionTransform.rotation);
 
-            if (savedLastHandPos.HasValue && savedLastHandRotationM4.HasValue)
+            if (savedLastHandLocalPos.HasValue && savedLastHandRotationM4.HasValue)
             {
-                Vector3 lastHandPos = savedLastHandPos.Value;
+                Vector3 lastHandPos = XROrigin.TransformPoint(savedLastHandLocalPos.Value);
                 Matrix4x4 lastHandRotationM4 = savedLastHandRotationM4.Value;
 
                 Vector3 eyePos = XREyes.transform.position;
@@ -242,7 +247,7 @@ public class ForceInteractionV2 : MonoBehaviour
                     HapticsUtility.SendHapticImpulse(VibrationIntensity_vs_handVelocity.Evaluate(effortBasedHandSpeed) * averageIntensity, duration: 1.0f, hapticsController);
             }
 
-            savedLastHandPos = handPos;
+            savedLastHandLocalPos = XROrigin.InverseTransformPoint(handPos);
             savedLastHandRotationM4 = handRotationM4;
         }
     }
