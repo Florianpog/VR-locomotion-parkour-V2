@@ -203,7 +203,7 @@ public class ForceInteractionV2 : MonoBehaviour
                 float largestStrengthTotal = 0f;
                 foreach (var rigidbodyHelper in allRigidbodyHelpers)
                 {
-                    if (!handIsGrabbing)
+                    if(true)//if (!handIsGrabbing) //!!!! testing no grab phsics
                     {
                         Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
                         Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
@@ -304,6 +304,8 @@ public class ForceInteractionV2 : MonoBehaviour
 
     public Tuple<Vector3, Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, Vector3 deltaHandRotationAxis, float deltaHandRotationAngle, Vector3 objectAngularVelocity, float effortBasedHandSpeed, float objectSphericalSize, Rigidbody objectRigidbody, float currentFocus, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
     {
+        handIsGrabbing = false; //!!!! testing no grabing physics
+
         float objectMass = objectRigidbody.mass;
 
         Vector3 relativeTargetVelocity = CalculateRelativeTargetVelocity(objectPos, objectVelocity, handPos, lastHandPos, eyePos);

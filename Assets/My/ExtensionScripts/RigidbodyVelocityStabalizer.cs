@@ -28,7 +28,7 @@ public class RigidbodyVelocityStabilizer : MonoBehaviour //!!!! rename to ____He
 
     public void StartGrab(bool handIsLeft, Vector3 handPos, Vector3 objectPos, Vector3 eyePos, Transform rayTransform, float effortBasedHandSpeed) //!!sending information twice
     {
-        Rigidbody.useGravity = false;
+        //Rigidbody.useGravity = false; //!!!! testing no grab phsics
 
         float strengthAtGrabTime = ForceInteractionV2.instance.CalculateStrengthFromDistance(objectPos, handPos, handPos, eyePos, effortBasedHandSpeed, ForceInteractionV2.ApproximateObjectSphericalSize(this.Rigidbody));
         Vector3 localPos = rayTransform.InverseTransformPoint(objectPos);//CalculateRelativePos(eyePos, handPos, objectPos);
@@ -47,7 +47,7 @@ public class RigidbodyVelocityStabilizer : MonoBehaviour //!!!! rename to ____He
 
     public void StopGrab()
     {
-        Rigidbody.useGravity = true;
+        //Rigidbody.useGravity = true; //!!!! testing no grab phsics
     }
 
     public Vector3 GetTartgetPosition(bool handIsLeft, Transform rayTransform)
