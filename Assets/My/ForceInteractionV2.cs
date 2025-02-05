@@ -31,7 +31,7 @@ public class ForceInteractionV2 : MonoBehaviour
     public float minAccelerationRequired = 0.001f;
     public float baseForce = 1.0f;
     public float baseGrabbedForce = 1.0f;
-    public float baseTorque = 1.0f;
+    public float baseAngularAcceleration = 1.0f;
     public float baseStiffness = 50f;
     public float maxForceDelayTime = 0.5f; //!!!TODO remove with corresponding code, I dont think this actually improves anything
     public float minAccelerationForAnyMass = 0.1f;
@@ -212,7 +212,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
                         float strengthAtGrabTime = handIsLeft ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
 
-                        Tuple<Vector3, Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, deltaHandRotationAxis, deltaHandRotationAngle, rigidbodyHelper.Rigidbody.angularVelocity, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody.mass, currentFocus, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                        Tuple<Vector3, Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, deltaHandRotationAxis, deltaHandRotationAngle, rigidbodyHelper.Rigidbody.angularVelocity, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody, currentFocus, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
                         Vector3 force = result.Item1;
                         Vector3 torque = result.Item2;
                         float strengthTotal = result.Item3;
@@ -304,8 +304,10 @@ public class ForceInteractionV2 : MonoBehaviour
         }
     }
 
-    public Tuple<Vector3, Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, Vector3 deltaHandRotationAxis, float deltaHandRotationAngle, Vector3 objectAngularVelocity, float effortBasedHandSpeed, float objectSphericalSize, float objectMass, float currentFocus, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
+    public Tuple<Vector3, Vector3, float> CaculateForceInteractionForce2(bool handIsGrabbing, Vector3 objectPos, Vector3 objectVelocity, Vector3 handPos, Vector3 lastHandPos, Vector3 eyePos, Vector3 handDir, Vector3 deltaHandRotationAxis, float deltaHandRotationAngle, Vector3 objectAngularVelocity, float effortBasedHandSpeed, float objectSphericalSize, Rigidbody objectRigidbody, float currentFocus, float strengthAtGrabTime, GameObject debugGameObject/*, Func<float> GetDragCoefficient, Func<Vector3, float> GetExposedArea, Vector3 eyeDir*/)
     {
+        float objectMass = objectRigidbody.mass;
+
         Vector3 relativeTargetVelocity = CalculateRelativeTargetVelocity(objectPos, objectVelocity, handPos, lastHandPos, eyePos);
         if (relativeTargetVelocity.sqrMagnitude <= 0.001) return new Tuple<Vector3, Vector3, float>(Vector3.zero, Vector3.zero, 0f);
 
@@ -336,7 +338,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
         //Focus
         // focus will cause objects to be treated as if they where lighter
-        float objectMassFocusLightened = objectMass * (1 - currentFocus); //!!TODO
+        float objectMassFocusLightened = objectRigidbody.mass * (1 - currentFocus);
         Vector3 counteractingGravity = Physics.gravity * Time.fixedDeltaTime * -currentFocus; //I dont know why this is not affecting all objects, but it seems to not do that so no problem i guess
 
         // Replacing Physically accurate "force / objectMass (F/m)" with pseudo physics to allow moving super havy objects and limiting speed of super light
@@ -354,11 +356,11 @@ public class ForceInteractionV2 : MonoBehaviour
         //if (strengthTotal <= 0.001) return new Tuple<Vector3, Quaternion, float>(Vector3.zero, Quaternion.identity, 0f); //!!!!!TESTING ONLY. REMOVE
 
 
-        //Rotation
+        //Rotation (torque does not teat mass like force because heavy objects should feel hard to push, but would require rotating your hand impossibly much)
         Vector3 desiredAngularVelocity = deltaHandRotationAxis * ((deltaHandRotationAngle * Mathf.Deg2Rad) / Time.fixedDeltaTime);
         Vector3 relativeAngularVelocity = desiredAngularVelocity - objectAngularVelocity;
-        // Compute and apply torque (a simple proportional controller)
-        Vector3 torque = relativeAngularVelocity * baseTorque;
+        Vector3 angularAcceleration = relativeAngularVelocity * baseAngularAcceleration * strengthTotal;
+        Vector3 torque = objectRigidbody.inertiaTensorRotation * (Vector3.Scale(objectRigidbody.inertiaTensor, Quaternion.Inverse(objectRigidbody.inertiaTensorRotation) * angularAcceleration));
 
         return new Tuple<Vector3, Vector3, float>(combinedForce, torque, strengthTotal);
     }

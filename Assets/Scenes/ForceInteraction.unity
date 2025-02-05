@@ -18937,7 +18937,7 @@ MonoBehaviour:
   minAccelerationRequired: 0.01
   baseForce: 800
   baseGrabbedForce: 2400
-  baseTorque: 0.1
+  baseAngularAcceleration: 2
   baseStiffness: 300
   maxForceDelayTime: 0.1
   minAccelerationForAnyMass: 0.003
