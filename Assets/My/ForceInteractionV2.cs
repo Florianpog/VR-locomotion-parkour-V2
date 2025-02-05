@@ -138,8 +138,6 @@ public class ForceInteractionV2 : MonoBehaviour
         {
             bool handIsLeft = i == 0 ? true : false;
 
-            if (handIsLeft) continue; //!!!!TESTING ONLY. REMVOE
-
             bool handIsGrabbing = handIsLeft ? handsGrabbing.Left : handsGrabbing.Right;
 
             Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
@@ -352,9 +350,6 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 clapmedForce = Vector3.ClampMagnitude(forceMassCorrected, maxForceForOneFixedFrame);
 
         Vector3 combinedForce = clapmedForce + counteractingGravity;
-
-        //if (strengthTotal <= 0.001) return new Tuple<Vector3, Quaternion, float>(Vector3.zero, Quaternion.identity, 0f); //!!!!!TESTING ONLY. REMOVE
-
 
         //Rotation (torque does not teat mass like force because heavy objects should feel hard to push, but would require rotating your hand impossibly much)
         Vector3 desiredAngularVelocity = deltaHandRotationAxis * ((deltaHandRotationAngle * Mathf.Deg2Rad) / Time.fixedDeltaTime);
