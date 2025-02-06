@@ -1,7 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
-public class MyQueue<T>
+public class MyQueue<T> : IEnumerable<T>
 {
     private List<T> _list = new List<T>();
 
@@ -54,4 +55,8 @@ public class MyQueue<T>
 
     // Contains checks if the queue contains a specific element
     public bool Contains(T item) => _list.Contains(item);
+
+    public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

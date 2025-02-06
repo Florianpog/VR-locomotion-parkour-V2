@@ -87,8 +87,8 @@ public class ForceInteractionV2 : MonoBehaviour
 
     public HandData<Transform> handsRayTransforms;
 
-    private HandData<Vector3?> handsSavedLastHandPos = new HandData<Vector3?>(null, null);
-    private HandData<Matrix4x4?> handsSavedLastHandRotationM4 = new HandData<Matrix4x4?>(null, null);
+    private HandData<Vector3?> handsSavedLastHandLocalPos = new HandData<Vector3?>(null, null); //last pos is saved as local postion, because the player can move after the frame which will require transforming the pos to the new parent pos
+    private HandData<Matrix4x4?> handsSavedLastHandRotationM4 = new HandData<Matrix4x4?>(null, null);  //!!theoretically should also be local like the position, but this should not realy make a big difference and is not as trival to me
     private HandData<MyQueue<float>> handsVibrationIntensities = new HandData<MyQueue<float>>(new MyQueue<float>(), new MyQueue<float>());
     private HandData<bool> handsGrabbing = new HandData<bool>(false, false);
     private HandData<float> handsCurrentFocus = new HandData<float>(0f, 0f); //represents how much the player is fucused on a specific spot. in percent. increses when remaining still, decreases when moving
@@ -101,20 +101,6 @@ public class ForceInteractionV2 : MonoBehaviour
     {
         instance = this;
     }
-
-    [System.Serializable]
-    public struct HandData<T>
-    {
-        public T Left;
-        public T Right;
-
-        public HandData(T left, T right)
-        {
-            Left = left;
-            Right = right;
-        }
-    }
-
 
     private void Start()
     {
@@ -148,8 +134,8 @@ public class ForceInteractionV2 : MonoBehaviour
             Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
             HapticsUtility.Controller hapticsController = handIsLeft ? HapticsUtility.Controller.Left : HapticsUtility.Controller.Right;
 
-            ref Vector3? savedLastHandLocalPos = ref (handIsLeft ? ref handsSavedLastHandPos.Left : ref handsSavedLastHandPos.Right); //last pos is saved as local postion, because the player can move after the frame which will require transforming the pos to the new parent pos
-            ref Matrix4x4? savedLastHandRotationM4 = ref (handIsLeft ? ref handsSavedLastHandRotationM4.Left : ref handsSavedLastHandRotationM4.Right); //!!theoretically should also be local like the position, but this should not realy make a big difference and is not as trival to me
+            ref Vector3? savedLastHandLocalPos = ref (handIsLeft ? ref handsSavedLastHandLocalPos.Left : ref handsSavedLastHandLocalPos.Right);
+            ref Matrix4x4? savedLastHandRotationM4 = ref (handIsLeft ? ref handsSavedLastHandRotationM4.Left : ref handsSavedLastHandRotationM4.Right);
             MyQueue<float> vibrationIntensities = handIsLeft ? handsVibrationIntensities.Left: handsVibrationIntensities.Right;
 
             Vector3 handPos = HandForceInteractionTransform.position;
@@ -260,7 +246,7 @@ public class ForceInteractionV2 : MonoBehaviour
             handsGrabbing.Right = true;
 
         Transform HandForceInteractionTransform = handIsLeft ? LeftHandForceInteractionTransform : RightHandForceInteractionTransform;
-        ref Vector3? savedLastHandPos = ref (handIsLeft ? ref handsSavedLastHandPos.Left : ref handsSavedLastHandPos.Right);
+        ref Vector3? savedLastHandPos = ref (handIsLeft ? ref handsSavedLastHandLocalPos.Left : ref handsSavedLastHandLocalPos.Right);
 
         if (savedLastHandPos.HasValue)
         {
