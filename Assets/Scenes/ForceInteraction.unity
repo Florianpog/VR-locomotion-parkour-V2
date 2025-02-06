@@ -11377,7 +11377,8 @@ MonoBehaviour:
     Left: {fileID: 33185698}
     Right: {fileID: 1423547849}
   XREyes: {fileID: 604769493}
-  MovementSpeed_vs_handSpeed:
+  baseMovementSpeed: 5
+  MovementFactor_vs_handSpeed:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -11400,7 +11401,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 5
-      value: 10
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -11453,7 +11454,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   durationOfRelevantPastHandMovement: 0.1
-  fallingSpeed: 1
+  fallingSpeed: 2
   DebugObject: {fileID: 1434990439}
 --- !u!1001 &619487196
 PrefabInstance:

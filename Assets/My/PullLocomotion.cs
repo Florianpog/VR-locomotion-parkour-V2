@@ -14,7 +14,8 @@ public class PullLocomotion : LocomotionProvider
     public HandData<Transform> HandsHandForceInteractionTransform;
     public Camera XREyes;
 
-    public AnimationCurve MovementSpeed_vs_handSpeed;
+    public float baseMovementSpeed = 5.0f;
+    public AnimationCurve MovementFactor_vs_handSpeed;
     public AnimationCurve MovementFactor_vs_alignmentAngle;
     [Tooltip("Only hand movement that has happend in the past number of seconds defined here is used for stabailing the current hand movement")]
     public float durationOfRelevantPastHandMovement;
@@ -52,6 +53,8 @@ public class PullLocomotion : LocomotionProvider
             return;
 
         //Actual Movment Caluclation
+        Vector3 eyesDir = XREyes.transform.forward;
+
         Vector3 movement = Vector3.zero;
         for (int i = 0; i < 2; i++)
         {
@@ -67,17 +70,18 @@ public class PullLocomotion : LocomotionProvider
 
             Vector3 stabalizedLocalHandVelocity = (savedLastHandLocalPos.Count > 0)? (savedLastHandLocalPos.Last().Item1 - savedLastHandLocalPos.First().Item1) / savedLastHandLocalPos.Sum(t => t.Item2) : Vector3.zero;
             Vector3 stabalizedHandVelocity = xrOrigin.transform.TransformDirection(stabalizedLocalHandVelocity).normalized * stabalizedLocalHandVelocity.magnitude;
+            float factorFromHandSpeed = MovementFactor_vs_handSpeed.Evaluate(stabalizedHandVelocity.magnitude);
 
             //if (!handIsLeft)
             //    DebugObject.localPosition = new Vector3(DebugObject.localPosition.x, stabalizedHandVelocity.magnitude, DebugObject.localPosition.z);
 
-            float handMovementAlignmentAngle = Vector3.Angle(-XREyes.transform.forward, stabalizedHandVelocity);
+            float handMovementAlignmentAngle = Vector3.Angle(-eyesDir, stabalizedHandVelocity);
             float factorFromAngle = MovementFactor_vs_alignmentAngle.Evaluate(handMovementAlignmentAngle);
 
             if (!handIsLeft)
                 DebugObject.localPosition = new Vector3(DebugObject.localPosition.x, handMovementAlignmentAngle / 90f, DebugObject.localPosition.z);
 
-            Vector3 newMovement = -stabalizedHandVelocity.normalized * MovementSpeed_vs_handSpeed.Evaluate(stabalizedHandVelocity.magnitude) * factorFromAngle;
+            Vector3 newMovement = eyesDir * (baseMovementSpeed * factorFromAngle * factorFromHandSpeed);
 
             movement += newMovement;
         }
