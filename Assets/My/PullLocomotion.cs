@@ -19,6 +19,8 @@ public class PullLocomotion : LocomotionProvider
     public AnimationCurve MovementFactor_vs_alignmentAngle;
     [Tooltip("Only hand movement that has happend in the past number of seconds defined here is used for stabailing the current hand movement")]
     public float durationOfRelevantPastHandMovement;
+    [Tooltip("the persentage of using a direction that alligns with the ground instead of the real movement direction based on the angle between the two (if we read very little movement into the air, we want to disregard that)")]
+    public AnimationCurve groundOverride_vs_groundAngle;
 
     public float fallingSpeed = 1f;
 
@@ -81,7 +83,12 @@ public class PullLocomotion : LocomotionProvider
             if (!handIsLeft)
                 DebugObject.localPosition = new Vector3(DebugObject.localPosition.x, handMovementAlignmentAngle / 90f, DebugObject.localPosition.z);
 
-            Vector3 newMovement = eyesDir * (baseMovementSpeed * factorFromAngle * factorFromHandSpeed);
+            Vector3 rawMovmentDir = eyesDir;
+            Vector3 groundAngle = (new Vector3(rawMovmentDir.x, 0, rawMovmentDir.z).normalized); //!!!should be improved by raycast ground checks
+            float groundAlignmentAngle = Vector3.Angle(rawMovmentDir, groundAngle);
+            Vector3 movmentDir = Vector3.Lerp(rawMovmentDir, groundAngle, groundOverride_vs_groundAngle.Evaluate(groundAlignmentAngle));
+
+            Vector3 newMovement = movmentDir * (baseMovementSpeed * factorFromAngle * factorFromHandSpeed);
 
             movement += newMovement;
         }
