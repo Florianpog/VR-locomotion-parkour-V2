@@ -49,7 +49,7 @@ public class ForceInteractionV2 : MonoBehaviour
     public float baseFallOffDistance = 0.01f;
 
     [Tooltip("The fallOffDistance percentage (gets mulitplied with baseFallOffDistance) dependent on the hand movement speed (should never be 0)")]
-    public AnimationCurve FallOffDistancePercentage_vs_handVelocity;
+    public AnimationCurve FallOffDistancePercentage_vs_handVelocity; //!! Should be called handSpeed, but renaming causes reset in inspector
 
     [Tooltip("The percentage of push force strength dependent the percentage of distance / fallOffDistance (>100% is when the distance exceeds the fall of distance) \nShould be 100% at 0 and 0% at 100%")]
     public AnimationCurve PushStrength_vs_fallOffDistance;
@@ -58,13 +58,13 @@ public class ForceInteractionV2 : MonoBehaviour
     public AnimationCurve PushStrength_vs_angle;
 
     [Tooltip("The multiplication factor for push force strength dependet on the hand movement speed")]
-    public AnimationCurve PushStrength_vs_handVelocity;
+    public AnimationCurve PushStrength_vs_handVelocity; //!! Should be called handSpeed, but renaming causes reset in inspector
 
     [Tooltip("the haptic feedback vibration intensity dependet on the hand movement speed")]
-    public AnimationCurve VibrationIntensity_vs_handVelocity;
+    public AnimationCurve VibrationIntensity_vs_handVelocity; //!! Should be called handSpeed, but renaming causes reset in inspector
 
     [Tooltip("the rate of change in focus (-1 to 1) dependet on the hand movement speed")]
-    public AnimationCurve FocusChange_vs_handVelocity;
+    public AnimationCurve FocusChange_vs_handVelocity; //!! Should be called handSpeed, but renaming causes reset in inspector
 
     [Space(10)]
     [Header("HandVelocity Scaling factors based on analysis")]
