@@ -82,7 +82,7 @@ public class PullLocomotion : LocomotionProvider
             movement += newMovement;
         }
 
-        Vector3 motion = (movement) + (verticalVelocity * Time.deltaTime);
+        Vector3 motion = movement + verticalVelocity;
         transformation.motion = motion;
         TryQueueTransformation(transformation);
 
