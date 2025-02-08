@@ -11424,7 +11424,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 35
+      time: 13
       value: 1
       inSlope: 0
       outSlope: 0
@@ -11433,7 +11433,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 55
+      time: 30
       value: 0
       inSlope: 0
       outSlope: 0
@@ -11453,7 +11453,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  durationOfRelevantPastHandMovement: 0.2
+  durationOfRelevantPastHandMovement: 0.3
   groundOverride_vs_groundAngle:
     serializedVersion: 2
     m_Curve:
