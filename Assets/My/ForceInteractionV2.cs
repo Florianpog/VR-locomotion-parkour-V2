@@ -43,6 +43,8 @@ public class ForceInteractionV2 : MonoBehaviour
     public float minMassForAnyAcceleration = 0.1f;
     public float focusMaseRateOfChangeDecrease = 0.1f;
     public float focusMaseRateOfChangeIncrease = 0.1f;
+    public float minMassForAnyRotation = 10;
+    public float maxMassForFullFocusRotation = 1000;
 
     [Header("Curves")]
     [Tooltip("basically the influence sphere radius per peter distance")]
@@ -347,7 +349,11 @@ public class ForceInteractionV2 : MonoBehaviour
         //Rotation (torque does not teat mass like force because heavy objects should feel hard to push, but would require rotating your hand impossibly much)
         Vector3 desiredAngularVelocity = deltaHandRotationAxis * ((deltaHandRotationAngle * Mathf.Deg2Rad) / Time.fixedDeltaTime);
         Vector3 relativeAngularVelocity = desiredAngularVelocity - objectAngularVelocity;
-        Vector3 angularAcceleration = relativeAngularVelocity * baseAngularAcceleration * strengthTotal;
+
+        float focusRequiredForRotation = Mathf.InverseLerp(minMassForAnyRotation, maxMassForFullFocusRotation, objectRigidbody.mass);
+        float focusRatioRotation = (focusRequiredForRotation > 0f) ? Mathf.Clamp01(currentFocus / focusRequiredForRotation) : 1f;
+
+        Vector3 angularAcceleration = relativeAngularVelocity * baseAngularAcceleration * strengthTotal * focusRatioRotation;
         Vector3 torque = objectRigidbody.inertiaTensorRotation * (Vector3.Scale(objectRigidbody.inertiaTensor, Quaternion.Inverse(objectRigidbody.inertiaTensorRotation) * angularAcceleration));
 
         return new Tuple<Vector3, Vector3, float>(combinedForce, torque, strengthTotal);
