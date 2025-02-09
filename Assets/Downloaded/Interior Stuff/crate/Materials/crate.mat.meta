@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 68cf276f7155052419921a97173c682d
+timeCreated: 1456407203
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 70278
+  packageName: Sci-fi crate
+  packageVersion: 1.0
+  assetPath: Assets/crate/Materials/crate.mat
+  uploadId: 134059

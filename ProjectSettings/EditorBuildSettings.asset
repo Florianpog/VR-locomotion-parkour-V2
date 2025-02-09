@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ScaleUpMovement.unity
     guid: 6387e034710e03e4e89c9ecd8de6c3af
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ForceInteraction.unity
     guid: 5a63b7cc2ed7a1d4db0a897baa8222f3
+  - enabled: 1
+    path: Assets/Scenes/ForceEnviroment.unity
+    guid: 77f7d3c6d63bb214b84d01eced1368da
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 258f115165d172f4abdc262435ff722d, type: 2}

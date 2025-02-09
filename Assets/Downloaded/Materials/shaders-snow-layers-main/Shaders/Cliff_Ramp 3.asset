@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f05a51f4cf024800962869cda1090f7, type: 3}
+  m_Name: Cliff_Ramp 3
+  m_EditorClassIdentifier: 
+  width: 64
+  gradients:
+  - serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 0.19215687}
+    key1: {r: 1, g: 1, b: 1, a: 0.6}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+--- !u!28 &1187203838617299282
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cliff_Ramp 3
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 3
+  m_Width: 64
+  m_Height: 1
+  m_CompleteImageSize: 508
+  m_MipsStripped: 0
+  m_TextureFormat: 4
+  m_MipCount: 7
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMipmapLimit: 1
+  m_MipmapLimitGroupName: 
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  m_PlatformBlob: 
+  image data: 508
+  _typelessdata: ffffff31ffffff33ffffff34ffffff36ffffff38ffffff39ffffff3bffffff3cffffff3effffff40ffffff41ffffff43ffffff45ffffff46ffffff48ffffff49ffffff4bffffff4dffffff4effffff50ffffff52ffffff53ffffff55ffffff56ffffff58ffffff5affffff5bffffff5dffffff5fffffff60ffffff62ffffff63ffffff65ffffff67ffffff68ffffff6affffff6cffffff6dffffff6fffffff70ffffff72ffffff74ffffff75ffffff77ffffff79ffffff7affffff7cffffff7dffffff7fffffff81ffffff82ffffff84ffffff86ffffff87ffffff89ffffff8affffff8cffffff8effffff8fffffff91ffffff93ffffff94ffffff96ffffff97ffffff32ffffff35ffffff38ffffff3bffffff3fffffff42ffffff45ffffff48ffffff4cffffff4fffffff52ffffff55ffffff59ffffff5cffffff5fffffff62ffffff66ffffff69ffffff6cffffff6fffffff73ffffff76ffffff79ffffff7cffffff80ffffff83ffffff86ffffff89ffffff8dffffff90ffffff93ffffff96ffffff33ffffff39ffffff40ffffff46ffffff4dffffff53ffffff5affffff60ffffff67ffffff6dffffff74ffffff7affffff81ffffff87ffffff8effffff94ffffff36ffffff43ffffff50ffffff5dffffff6affffff77ffffff84ffffff91ffffff3cffffff56ffffff70ffffff8affffff49ffffff7dffffff63
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
