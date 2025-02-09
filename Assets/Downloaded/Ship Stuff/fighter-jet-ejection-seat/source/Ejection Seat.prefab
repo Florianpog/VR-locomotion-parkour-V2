@@ -81,6 +81,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: daa2e6e52236a114782f8a47ee6099b0, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: daa2e6e52236a114782f8a47ee6099b0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 28299995c6d2ebd4797d3bb900c7e7ec, type: 2}
@@ -103,6 +107,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: daa2e6e52236a114782f8a47ee6099b0, type: 3}
       propertyPath: m_Name
       value: Ejection_seat
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: daa2e6e52236a114782f8a47ee6099b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -81,12 +81,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 07e41372a52b752419811441cea4672e, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 07e41372a52b752419811441cea4672e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5c2bc0a1175b10e4c82a0e83307744a9, type: 2}
     - target: {fileID: 919132149155446097, guid: 07e41372a52b752419811441cea4672e, type: 3}
       propertyPath: m_Name
       value: parashute (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 07e41372a52b752419811441cea4672e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
