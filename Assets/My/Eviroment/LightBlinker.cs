@@ -1,54 +1,42 @@
-using System.Collections;
 using UnityEngine;
 
-public class LightBlinker : MonoBehaviour
+public class BlinkLight : MonoBehaviour
 {
-    public Light lightSource;          // Light component to blink
-    public float blinkInterval = 0.5f; // Time between each blink in seconds
-    public float blinkDuration = 0.2f; // Duration of each blink
-    public bool startBlinkingOnAwake = true;
-    private bool isBlinking = false;
+    public float onDuration = 0.2f;  // Duration the light stays on
+    public float offDuration = 0.5f; // Duration the light stays off
+    public bool startOn = true;      // Should the light start as on
+
+    public Light Light;
+    private float timer;
 
     void Awake()
     {
-        if (lightSource == null)
+        if (Light == null)
         {
-            lightSource = GetComponent<Light>();
-        }
-
-        if (startBlinkingOnAwake)
-        {
-            StartBlinking();
+            Debug.LogError("No Light component found on this GameObject.");
+            enabled = false;
         }
     }
 
-    public void StartBlinking()
+    void Start()
     {
-        if (!isBlinking)
+        Light.enabled = startOn;
+        timer = 0f;
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (Light.enabled && timer >= onDuration)
         {
-            isBlinking = true;
-            StartCoroutine(Blink());
+            Light.enabled = false;
+            timer = 0f;
         }
-    }
-
-    public void StopBlinking()
-    {
-        isBlinking = false;
-        StopCoroutine(Blink());
-        if (lightSource != null) lightSource.enabled = true; // Ensure light stays on when stopped
-    }
-
-    IEnumerator Blink()
-    {
-        while (isBlinking)
+        else if (!Light.enabled && timer >= offDuration)
         {
-            if (lightSource != null)
-            {
-                lightSource.enabled = false;
-                yield return new WaitForSeconds(blinkDuration);
-                lightSource.enabled = true;
-            }
-            yield return new WaitForSeconds(blinkInterval);
+            Light.enabled = true;
+            timer = 0f;
         }
     }
 }
