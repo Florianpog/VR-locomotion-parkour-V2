@@ -1262,35 +1262,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.1697922
+      value: 3.338142
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.1697922
+      value: 3.338142
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.7959586
+      value: 2.7630134
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.3
+      value: 24.384617
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.78
+      value: 14.907692
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.99
+      value: -8.615385
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1302,7 +1306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1325,6 +1329,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &82887682 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 82887681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &83459620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2026,27 +2035,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4948
+      value: 2.2996924
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5384616
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5384614
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.54
+      value: 26.292309
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.83
+      value: 2.676923
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.25
+      value: -18.984615
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2081,6 +2102,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &127091916 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 127091915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &140907030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4683433997013962218, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
@@ -3338,35 +3364,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5309
+      value: 2.355231
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.3646
+      value: 2.0993845
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: -2.4158888
+      value: -3.7167523
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.41
+      value: -19.784615
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6
+      value: -2.6000001
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.36
+      value: -3.4307702
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3401,6 +3431,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &284248881 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 284248880}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &287271385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4178,35 +4213,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.7521251
+      value: 2.695577
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.7521251
+      value: 2.6955774
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.7521251
+      value: 2.695577
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.7
+      value: 12.692307
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.32
+      value: -23.707693
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.1
+      value: -25.676924
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4241,6 +4280,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+--- !u!4 &377854078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+  m_PrefabInstance: {fileID: 377854077}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &382271661
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,35 +4378,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 31.74796
+      value: 48.84302
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 27.069536
+      value: 41.64545
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 19.707
+      value: 30.318468
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.7
+      value: 20.384615
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -72
+      value: -110.90769
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -31.9
+      value: -68.44615
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4397,6 +4445,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &383950937 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 383950936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &386363369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5075,35 +5128,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.3548
+      value: 6.6996927
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4.3548
+      value: 6.6996927
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.7493057
+      value: 7.306624
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.59
+      value: -15.446154
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.9
+      value: 24.323076
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35.66
+      value: 35.49231
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5138,6 +5195,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &423907964 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 423907963}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &437434565
 GameObject:
   m_ObjectHideFlags: 0
@@ -6836,19 +6898,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.55
+      value: -7.59
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.167
+      value: -0.65
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.9
+      value: 7.8
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7366876
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6856,7 +6918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.6762333
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.z
@@ -6868,7 +6930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 85.1
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -10935,6 +10997,26 @@ Transform:
   - {fileID: 438634028}
   - {fileID: 1193319395}
   - {fileID: 709444123}
+  - {fileID: 1225624710}
+  - {fileID: 1964404450}
+  - {fileID: 1121183574}
+  - {fileID: 1628662273}
+  - {fileID: 423907964}
+  - {fileID: 1170158366}
+  - {fileID: 1041031827}
+  - {fileID: 82887682}
+  - {fileID: 127091916}
+  - {fileID: 1044131741}
+  - {fileID: 377854078}
+  - {fileID: 383950937}
+  - {fileID: 2106112731}
+  - {fileID: 284248881}
+  - {fileID: 1227787594}
+  - {fileID: 1822977655}
+  - {fileID: 1386642281}
+  - {fileID: 1127468790}
+  - {fileID: 1619384472}
+  - {fileID: 1116702694}
   - {fileID: 740555359}
   - {fileID: 785597112}
   - {fileID: 119704380}
@@ -12975,35 +13057,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.3548
+      value: 6.699693
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.5999565
+      value: 13.2307
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.8672197
+      value: 5.9495687
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.38
+      value: 24.507692
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.13
+      value: 16.984615
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.6
+      value: 0.015384967
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13038,41 +13124,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &1041031827 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 1041031826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1044131740
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.7521251
+      value: 2.695577
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.7521251
+      value: 2.695577
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.7521251
+      value: 2.6955771
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.69
+      value: 35.753845
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.008154
+      value: 6.0279293
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.95
+      value: -20.83077
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13107,6 +13202,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+--- !u!4 &1044131741 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+  m_PrefabInstance: {fileID: 1044131740}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1055676424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13755,35 +13855,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1462364
+      value: 1.763441
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.1462364
+      value: 1.7634407
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.85803825
+      value: 1.3200588
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.58
+      value: -16.96923
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.19
+      value: 7.8461537
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.61
+      value: 6.184616
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13822,41 +13926,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+--- !u!4 &1116702694 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+  m_PrefabInstance: {fileID: 1116702693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1121183573
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.167763
+      value: 12.565789
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.167763
+      value: 12.56579
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5099741
+      value: 2.323037
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.92
+      value: -37.49231
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.6
+      value: 14.63077
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.14
+      value: 17.76923
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13864,7 +13977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.46471426
+      value: -0.4647143
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.y
@@ -13872,7 +13985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.25522503
+      value: 0.25522506
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -13891,6 +14004,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &1121183574 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 1121183573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1125256968
 GameObject:
   m_ObjectHideFlags: 0
@@ -14050,31 +14168,35 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 3904830941187521785, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalScale.x
-      value: -3
+      value: -4.6153846
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 4.6153846
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 4.6153846
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.21
+      value: -14.861539
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9699998
+      value: 1.3538458
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.74
+      value: -7.4615393
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14116,11 +14238,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7687705343647684068, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+--- !u!4 &1127468790 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+  m_PrefabInstance: {fileID: 1127468789}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1129046516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14372,35 +14503,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.3548
+      value: 6.6996937
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.5999565
+      value: 13.230701
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.7493057
+      value: 7.306624
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.34
+      value: 9.061539
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.64
+      value: 16.23077
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.74
+      value: 18.692307
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14435,6 +14570,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &1170158366 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 1170158365}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1175273707
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15074,35 +15214,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.7371182
+      value: 4.2109513
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.0832527
+      value: 4.743466
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5699887
+      value: 2.4153671
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.44
+      value: -25.984617
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: -0.13846155
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.74
+      value: -1.3076929
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15141,37 +15285,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+--- !u!4 &1225624710 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+  m_PrefabInstance: {fileID: 1225624709}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1227787593
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.2269
+      value: 3.4259999
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.1355
+      value: 3.2853842
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5384616
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.03
+      value: -34.584618
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.473773
+      value: -22.405806
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.86
+      value: -16.507694
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15206,6 +15363,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &1227787594 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 1227787593}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1234005618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16211,31 +16373,35 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 3904830941187521785, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalScale.x
-      value: -3
+      value: -4.615385
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 4.615385
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 4.615385
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.03
+      value: -13.046153
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.87
+      value: -1.4769231
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.42
+      value: -7.9538465
       objectReference: {fileID: 0}
     - target: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16277,11 +16443,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7687705343647684068, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+--- !u!4 &1386642281 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7117739080791596959, guid: 29bfd3265af64294a9a5f8e4d9311752, type: 3}
+  m_PrefabInstance: {fileID: 1386642280}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1407426552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18968,31 +19143,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5384616
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.1640065
+      value: 3.3292408
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.89359593
+      value: 1.3747631
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.81
+      value: -18.86154
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.49
+      value: 8.307692
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.6
+      value: 0.015384967
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19031,6 +19214,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+--- !u!4 &1619384472 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+  m_PrefabInstance: {fileID: 1619384471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1625805744
 GameObject:
   m_ObjectHideFlags: 0
@@ -19070,35 +19258,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.167763
+      value: 12.565789
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.167763
+      value: 12.565789
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.2262108
+      value: 4.9634013
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33.01
+      value: -49.93846
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.44
+      value: -6.969231
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.29
+      value: -11.23077
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19133,6 +19325,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &1628662273 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 1628662272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1632101688
 GameObject:
   m_ObjectHideFlags: 0
@@ -21535,23 +21732,43 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 1290065058394155805, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 2400372558075886687, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
       propertyPath: m_Name
       value: Ejection Seat
       objectReference: {fileID: 0}
+    - target: {fileID: 2400372558075886687, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5384618
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5384614
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5384618
+      objectReference: {fileID: 0}
     - target: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.8
+      value: -12.692307
       objectReference: {fileID: 0}
     - target: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.69
+      value: -1.1999999
       objectReference: {fileID: 0}
     - target: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.11
+      value: -8.430769
       objectReference: {fileID: 0}
     - target: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21586,6 +21803,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
+--- !u!4 &1822977655 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2923149282090891965, guid: 62a01de2a869e1245806a2767e585f55, type: 3}
+  m_PrefabInstance: {fileID: 1822977654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1828053056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22716,35 +22938,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.0461953
+      value: 4.686454
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.0461953
+      value: 4.6864543
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.0327692
+      value: 1.5888755
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.68
+      value: -26.353848
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.16
+      value: 6.261538
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.72
+      value: 7.8923063
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22779,6 +23005,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &1964404450 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 1964404449}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1974133931
 GameObject:
   m_ObjectHideFlags: 0
@@ -24132,35 +24363,39 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 828608249}
     m_Modifications:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 62.991913
+      value: 96.91062
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 77.1105
+      value: 118.63154
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 56.13752
+      value: 86.365425
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -83.9
+      value: -128.23077
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -136.8
+      value: -210.6
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -36.5
+      value: -75.52308
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -24195,6 +24430,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+--- !u!4 &2106112731 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+  m_PrefabInstance: {fileID: 2106112730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2121955101
 GameObject:
   m_ObjectHideFlags: 0
@@ -24845,23 +25085,3 @@ SceneRoots:
   - {fileID: 1803507395}
   - {fileID: 828608249}
   - {fileID: 58978589}
-  - {fileID: 1225624709}
-  - {fileID: 1964404449}
-  - {fileID: 1121183573}
-  - {fileID: 1628662272}
-  - {fileID: 423907963}
-  - {fileID: 1170158365}
-  - {fileID: 1041031826}
-  - {fileID: 82887681}
-  - {fileID: 127091915}
-  - {fileID: 1044131740}
-  - {fileID: 377854077}
-  - {fileID: 383950936}
-  - {fileID: 2106112730}
-  - {fileID: 284248880}
-  - {fileID: 1227787593}
-  - {fileID: 1822977654}
-  - {fileID: 1386642280}
-  - {fileID: 1127468789}
-  - {fileID: 1619384471}
-  - {fileID: 1116702693}
