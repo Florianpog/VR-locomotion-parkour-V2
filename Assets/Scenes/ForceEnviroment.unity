@@ -591,6 +591,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 998119123717953074, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553740406856709433, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3656116793674977145, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -602,6 +610,10 @@ PrefabInstance:
     - target: {fileID: 8354524949365800270, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
       propertyPath: m_Name
       value: BigRock_01_Prefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354524949365800270, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -926,6 +938,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_2
       objectReference: {fileID: 0}
+    - target: {fileID: 7262598461520760664, guid: fe343a79a41ed5f4ba46f99d3b298d9b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -944,6 +960,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -955,6 +975,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1819,6 +1843,114 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119089879}
   m_Mesh: {fileID: 4300020, guid: 38656555ab73d214d9c09d662a0be482, type: 3}
+--- !u!1 &119704376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 119704380}
+  - component: {fileID: 119704379}
+  - component: {fileID: 119704378}
+  - component: {fileID: 119704377}
+  m_Layer: 0
+  m_Name: Occusion Cube (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!65 &119704377
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119704376}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &119704378
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119704376}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &119704379
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119704376}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &119704380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119704376}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.025815923, z: -0, w: 0.99966675}
+  m_LocalPosition: {x: 29.76923, y: 6.0153847, z: 57.69231}
+  m_LocalScale: {x: 116.00002, y: 76.92308, z: 1.5384618}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 828608249}
+  m_LocalEulerAnglesHint: {x: 0, y: -2.959, z: 0}
 --- !u!4 &140907030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4683433997013962218, guid: 52e73fb4c1868234a83ed5b55f65d8f7, type: 3}
@@ -2004,6 +2136,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5226219
@@ -2076,6 +2212,10 @@ PrefabInstance:
     - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_Name
       value: Ice Rock_6 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
@@ -2150,6 +2290,10 @@ PrefabInstance:
     - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_Name
       value: Ice Rock_6 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
@@ -2413,6 +2557,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.9132354
@@ -2487,6 +2635,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -2498,6 +2650,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -3140,6 +3296,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_6 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
       value: 11.8078165
@@ -3414,6 +3574,10 @@ PrefabInstance:
     - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_Name
       value: Ice Rock_6 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
@@ -4299,6 +4463,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_5 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2459078707682254506, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7439784107581670398, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
       propertyPath: m_LocalScale.x
       value: -1.0532889
@@ -4369,6 +4537,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -4380,6 +4552,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -4495,6 +4671,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5226219
@@ -4602,6 +4782,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_6 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.809033
@@ -4675,6 +4859,10 @@ PrefabInstance:
     - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_Name
       value: Ice Rock_6 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
@@ -5100,6 +5288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.4624152
@@ -5367,6 +5559,10 @@ PrefabInstance:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
@@ -5817,9 +6013,17 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 6319410290375436457, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8354524949365800270, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
       propertyPath: m_Name
       value: Rock_01_Prefab (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354524949365800270, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5931,6 +6135,10 @@ PrefabInstance:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
@@ -6859,6 +7067,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_6 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.7464
@@ -6985,6 +7197,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 998119123717953074, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553740406856709433, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3656116793674977145, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -6996,6 +7216,10 @@ PrefabInstance:
     - target: {fileID: 8354524949365800270, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
       propertyPath: m_Name
       value: BigRock_01_Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354524949365800270, guid: 6d3e30d12bb32d545b4735d5456a5597, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7692,6 +7916,10 @@ PrefabInstance:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
@@ -8540,6 +8768,114 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4688876440277602, guid: 624837179a4a2844285b91c190cb7d1b, type: 3}
   m_PrefabInstance: {fileID: 734791276}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &740555355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 740555359}
+  - component: {fileID: 740555358}
+  - component: {fileID: 740555357}
+  - component: {fileID: 740555356}
+  m_Layer: 0
+  m_Name: Occusion Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!65 &740555356
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740555355}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &740555357
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740555355}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &740555358
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740555355}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &740555359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740555355}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.28466374, z: -0, w: 0.95862746}
+  m_LocalPosition: {x: 21.923077, y: 6.0153847, z: 80.784615}
+  m_LocalScale: {x: 116, y: 76.92308, z: 1.5384614}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 828608249}
+  m_LocalEulerAnglesHint: {x: 0, y: -33.078, z: 0}
 --- !u!1001 &745884642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8551,6 +8887,10 @@ PrefabInstance:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
@@ -8791,6 +9131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -8802,6 +9146,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -8913,6 +9261,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -8924,6 +9276,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -9040,6 +9396,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -9051,6 +9411,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -9513,6 +9877,114 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1176457059780545177, guid: d7cc8bce39253474a84a1378495b9539, type: 3}
   m_PrefabInstance: {fileID: 785333984}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &785597108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785597112}
+  - component: {fileID: 785597111}
+  - component: {fileID: 785597110}
+  - component: {fileID: 785597109}
+  m_Layer: 0
+  m_Name: Occusion Cube (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!65 &785597109
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785597108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &785597110
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785597108}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &785597111
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785597108}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &785597112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785597108}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.025815923, z: -0, w: 0.99966675}
+  m_LocalPosition: {x: -99.307686, y: 6.0153847, z: 50.784615}
+  m_LocalScale: {x: 116.00002, y: 76.92308, z: 1.5384618}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 828608249}
+  m_LocalEulerAnglesHint: {x: 0, y: -2.959, z: 0}
 --- !u!1001 &788854540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9969,6 +10441,11 @@ Transform:
   - {fileID: 438634028}
   - {fileID: 1193319395}
   - {fileID: 709444123}
+  - {fileID: 740555359}
+  - {fileID: 785597112}
+  - {fileID: 119704380}
+  - {fileID: 1204783203}
+  - {fileID: 1938945930}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &835858722
@@ -10233,6 +10710,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.9726415
@@ -10385,6 +10866,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10396,6 +10881,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -10850,6 +11339,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 9.1474
@@ -11070,9 +11563,17 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 6319410290375436457, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8354524949365800270, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
       propertyPath: m_Name
       value: Rock_01_Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354524949365800270, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12874,6 +13375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_5
       objectReference: {fileID: 0}
+    - target: {fileID: 2459078707682254506, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7439784107581670398, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5645
@@ -13100,6 +13605,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_3 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.7530243
@@ -13173,6 +13682,10 @@ PrefabInstance:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
@@ -13323,6 +13836,114 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1176457059780545177, guid: d7cc8bce39253474a84a1378495b9539, type: 3}
   m_PrefabInstance: {fileID: 1204425503}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1204783199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1204783203}
+  - component: {fileID: 1204783202}
+  - component: {fileID: 1204783201}
+  - component: {fileID: 1204783200}
+  m_Layer: 0
+  m_Name: Occusion Cube (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!65 &1204783200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204783199}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1204783201
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204783199}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1204783202
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204783199}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1204783203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204783199}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.025815923, z: -0, w: 0.99966675}
+  m_LocalPosition: {x: -18.107693, y: 25.707691, z: 55.03077}
+  m_LocalScale: {x: 116.00002, y: 38.46154, z: 1.5384618}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 828608249}
+  m_LocalEulerAnglesHint: {x: 0, y: -2.959, z: 0}
 --- !u!1001 &1222572408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13331,6 +13952,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -13342,6 +13967,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -13452,6 +14081,10 @@ PrefabInstance:
     - target: {fileID: 2459078707682254506, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
       propertyPath: m_Name
       value: Ice Rock_5 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459078707682254506, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7439784107581670398, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
       propertyPath: m_LocalScale.x
@@ -14053,6 +14686,10 @@ PrefabInstance:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
@@ -14892,6 +15529,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 5.6819987
@@ -15137,7 +15778,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1433199220
 Transform:
@@ -15761,6 +16402,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_6
       objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.1030967
@@ -16133,6 +16778,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7493929960203889380, guid: 61a4b75b92ddafa4fbcddc4a5014818f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16413,6 +17062,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.1903002
@@ -16666,6 +17319,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.8962274
@@ -16796,6 +17453,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_1
       objectReference: {fileID: 0}
+    - target: {fileID: 7493929960203889380, guid: 61a4b75b92ddafa4fbcddc4a5014818f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16817,6 +17478,10 @@ PrefabInstance:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
@@ -17386,6 +18051,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -17397,6 +18066,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -17511,6 +18184,10 @@ PrefabInstance:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
@@ -18398,6 +19075,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.522622
@@ -18576,6 +19257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_0 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.0576
@@ -18728,6 +19413,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -18739,6 +19428,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -19608,9 +20301,17 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 6319410290375436457, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8354524949365800270, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
       propertyPath: m_Name
       value: Rock_01_Prefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354524949365800270, guid: 1829a7b4702730042bca3314bdcd0287, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19630,6 +20331,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -19641,6 +20346,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -19756,6 +20465,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_6 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
       value: 14.572026
@@ -19830,6 +20543,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
       value: 4.17288
@@ -19903,6 +20620,10 @@ PrefabInstance:
     - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_Name
       value: Ice Rock_0 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275744231977748267, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1595985885801143792, guid: bbfdf3df8898b8947baa8916614287f6, type: 3}
       propertyPath: m_LocalScale.x
@@ -20049,6 +20770,114 @@ MonoBehaviour:
     m_InputActionReference: {fileID: -8666952849799569744, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: {x: 0, y: 0}
+--- !u!1 &1938945926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1938945930}
+  - component: {fileID: 1938945929}
+  - component: {fileID: 1938945928}
+  - component: {fileID: 1938945927}
+  m_Layer: 0
+  m_Name: Occusion Cube (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!65 &1938945927
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938945926}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1938945928
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938945926}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1938945929
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938945926}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1938945930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938945926}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.025815923, z: -0, w: 0.99966675}
+  m_LocalPosition: {x: -18.107693, y: -18.26154, z: 55.03077}
+  m_LocalScale: {x: 116.00002, y: 38.46154, z: 1.5384618}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 828608249}
+  m_LocalEulerAnglesHint: {x: 0, y: -2.959, z: 0}
 --- !u!1001 &1945924382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20060,6 +20889,10 @@ PrefabInstance:
     - target: {fileID: 2459078707682254506, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
       propertyPath: m_Name
       value: Ice Rock_5 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459078707682254506, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7439784107581670398, guid: be6e8596227897a40bdf7bcd7cb7147b, type: 3}
       propertyPath: m_LocalScale.x
@@ -20242,6 +21075,10 @@ PrefabInstance:
     - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_Name
       value: Ice Rock_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917372788054627810, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5288796331954654220, guid: 4f1c2812e58227547aa8582a5c224c3a, type: 3}
       propertyPath: m_LocalScale.x
@@ -20452,6 +21289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice Rock_6 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4332236514868242011, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8262776778362149183, guid: aaa4a878d78538841aef655589f4c4b0, type: 3}
       propertyPath: m_LocalScale.x
       value: 14.572028
@@ -20522,6 +21363,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -20533,6 +21378,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x
@@ -21440,6 +22289,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 828608249}
     m_Modifications:
+    - target: {fileID: 148860470390629294, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 154246100222020240, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -21451,6 +22304,10 @@ PrefabInstance:
     - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_Name
       value: Cliff_02_Prefab (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 916330241097508036, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1537506672507463915, guid: 72ddd50cec3f4fc42b74469ba10f9b2a, type: 3}
       propertyPath: m_LocalScale.x

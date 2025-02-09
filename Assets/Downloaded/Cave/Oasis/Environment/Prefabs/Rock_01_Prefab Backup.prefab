@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 599465214307944399}
   m_Layer: 0
-  m_Name: Rock_01_Prefab
+  m_Name: Rock_01_Prefab Backup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,29 +113,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
-      propertyPath: m_LODs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4742473837712756890, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
       propertyPath: m_AnimateCrossFading
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.106386736
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
       propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.025959851
+      value: 0.15
       objectReference: {fileID: 0}
-    - target: {fileID: 4742473837712756890, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
-      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
-      value: 
-      objectReference: {fileID: 2541588934348119964}
-    - target: {fileID: 4742473837712756890, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
-      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
-      value: 
-      objectReference: {fileID: 2541588934348119964}
     - target: {fileID: 5812546078783948850, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 126
@@ -147,19 +135,12 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6724865724290056931, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
-    - {fileID: 5812546078783948850, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
-    - {fileID: -2089361269718138778, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1118423645299451153}
   m_SourcePrefab: {fileID: 100100000, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
---- !u!23 &2541588934348119964 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -560717567075186076, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
-  m_PrefabInstance: {fileID: 6589443539238360568}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6319410290375436457 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0eafbb6dfa210ad42867d8e1cf73edb1, type: 3}
