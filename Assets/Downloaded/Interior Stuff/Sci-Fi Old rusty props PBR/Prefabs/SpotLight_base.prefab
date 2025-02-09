@@ -249,8 +249,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.56, y: 0.56, z: 0.56}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4694815275488722}
   m_Father: {fileID: 0}
@@ -373,7 +373,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 0.9890799, b: 0.75576514, a: 1}
-  m_Intensity: 281.82
+  m_Intensity: 240
   m_Range: 50
   m_SpotAngle: 85.42301
   m_InnerSpotAngle: 0.7522795
