@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 35023016221600506}
   - component: {fileID: 8211009282082636448}
   - component: {fileID: 5912667988429351604}
-  - component: {fileID: 2185479187505876309}
+  - component: {fileID: 4452820768532340895}
   m_Layer: 0
-  m_Name: Ice Rock (1)
+  m_Name: Ice Rock_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2185479187505876309
-BoxCollider:
+--- !u!64 &4452820768532340895
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,6 +105,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7524393336316690886, guid: cc5427ae7fe1f7b41b1df176b7f95fef, type: 3}
