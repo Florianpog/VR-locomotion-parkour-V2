@@ -238,8 +238,8 @@ Material:
     - _Layer3_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Layer3_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _Moving_Dust_Offset_Speed: {r: 1.32, g: 0.78, b: 0, a: 0}
-    - _Sand_Dark_Color: {r: 0.4862745, g: 0.30349493, b: 0.14636862, a: 0.7843137}
-    - _Sand_Highlight_Color: {r: 0.936, g: 0.7524706, b: 0.5322353, a: 0.6862745}
+    - _Sand_Dark_Color: {r: 0.12368977, g: 0.12368977, b: 0.12368977, a: 0.7843137}
+    - _Sand_Highlight_Color: {r: 0.4004193, g: 0.4004193, b: 0.4004193, a: 0.6862745}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
