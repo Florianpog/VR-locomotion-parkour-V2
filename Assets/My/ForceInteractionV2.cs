@@ -56,6 +56,9 @@ public class ForceInteractionV2 : MonoBehaviour
     [Tooltip("The percentage of push force strength dependent the percentage of distance / fallOffDistance (>100% is when the distance exceeds the fall of distance) \nShould be 100% at 0 and 0% at 100%")]
     public AnimationCurve PushStrength_vs_fallOffDistance;
 
+    public AnimationCurve PushStrength_vs_range;
+
+
     [Tooltip("The percentage of push force strength in the movement direction dependent on the angle between the movement direction and the HandDirection (from 0 to 180�)")]
     public AnimationCurve PushStrength_vs_angle;
 
@@ -318,6 +321,9 @@ public class ForceInteractionV2 : MonoBehaviour
         else
             debugGameObject.layer = 0;//default layer //!!! quick and dirty
 
+        //Range
+        float strengthFromRange = PushStrength_vs_range.Evaluate(Vector3.Distance(eyePos, objectPos));
+
         //HandSpeed
         float strengthFromHandSpeed = PushStrength_vs_handVelocity.Evaluate(effortBasedHandSpeed);
         
@@ -326,7 +332,7 @@ public class ForceInteractionV2 : MonoBehaviour
         float strengthFromAngle = 1f;// PushStrength_vs_angle.Evaluate(handForceDirAngle);
 
 
-        float strengthTotal = strengthFromDistance * strengthFromHandSpeed * strengthFromAngle;
+        float strengthTotal = strengthFromDistance * strengthFromRange * strengthFromHandSpeed * strengthFromAngle;
 
 
         // DragForce = -0.5f * airDensity * dragCoefficient * exposedArea * relativeVelocity.magnitue^2 * relativeVelocity.normalized;
