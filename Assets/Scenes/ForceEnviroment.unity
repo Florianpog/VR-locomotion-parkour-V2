@@ -10024,6 +10024,10 @@ PrefabInstance:
       propertyPath: m_MoveFactor
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6232745470614056090, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8877177980677234388, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -18025,7 +18029,7 @@ MonoBehaviour:
   XREyes: {fileID: 604769493}
   XROrigin: {fileID: 604769490}
   minAccelerationRequired: 0.01
-  baseForce: 800
+  baseForce: 1200
   baseGrabbedForce: 2400
   baseAngularAcceleration: 2
   baseStiffness: 300
