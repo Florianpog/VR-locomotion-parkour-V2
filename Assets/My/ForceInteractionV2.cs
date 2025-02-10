@@ -67,6 +67,7 @@ public class ForceInteractionV2 : MonoBehaviour
 
     [Tooltip("the rate of change in focus (-1 to 1) dependet on the hand movement speed")]
     public AnimationCurve FocusChange_vs_handVelocity; //!! Should be called handSpeed, but renaming causes reset in inspector
+    public AnimationCurve Rotation_vs_mass;
 
     [Space(10)]
     [Header("HandVelocity Scaling factors based on analysis")]
@@ -353,7 +354,9 @@ public class ForceInteractionV2 : MonoBehaviour
         Vector3 desiredAngularVelocity = deltaHandRotationAxis * ((deltaHandRotationAngle * Mathf.Deg2Rad) / Time.fixedDeltaTime);
         Vector3 relativeAngularVelocity = desiredAngularVelocity - objectAngularVelocity;
 
-        float focusRequiredForRotation = Mathf.InverseLerp(minMassForAnyRotation, maxMassForFullFocusRotation, objectRigidbody.mass);
+        //float focusRequiredForRotation = Mathf.InverseLerp(minMassForAnyRotation, maxMassForFullFocusRotation, objectRigidbody.mass);
+        float inverseLerpMass = Mathf.InverseLerp(minMassForAnyRotation, maxMassForFullFocusRotation, objectRigidbody.mass);
+        float focusRequiredForRotation = Rotation_vs_mass.Evaluate(inverseLerpMass);
         float focusRatioRotation = (focusRequiredForRotation > 0f) ? Mathf.Clamp01(currentFocus / focusRequiredForRotation) : 1f;
 
         Vector3 angularAcceleration = relativeAngularVelocity * baseAngularAcceleration * strengthTotal * focusRatioRotation;
