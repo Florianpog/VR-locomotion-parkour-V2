@@ -200,7 +200,8 @@ public class ForceInteractionV2 : MonoBehaviour
                 float largestStrengthTotal = 0f;
                 foreach (var rigidbodyHelper in allRigidbodyHelpers)
                 {
-                    if(true)//if (!handIsGrabbing) //!!!! testing no grab phsics
+                    //if(true)
+                    if (!handIsGrabbing) //!!!! testing no grab phsics
                     {
                         Rigidbody rigidbody = rigidbodyHelper.Rigidbody;
                         Vector3 objectPos = rigidbody.position; //!! should use center of mass relative to position
