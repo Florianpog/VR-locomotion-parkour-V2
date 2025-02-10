@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 599465214307944399}
   - component: {fileID: 3119679462604055330}
+  - component: {fileID: 3861782425326953590}
   m_Layer: 0
   m_Name: DynamicBigRock_01_Prefab 1
   m_TagString: Untagged
@@ -60,6 +61,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3861782425326953590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8354524949365800270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939fcf29b5d1e8a4a849effc21805af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: 0.5
 --- !u!1001 &79765032584784739
 PrefabInstance:
   m_ObjectHideFlags: 0
