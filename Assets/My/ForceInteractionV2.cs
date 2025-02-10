@@ -56,7 +56,7 @@ public class ForceInteractionV2 : MonoBehaviour
     [Tooltip("The percentage of push force strength dependent the percentage of distance / fallOffDistance (>100% is when the distance exceeds the fall of distance) \nShould be 100% at 0 and 0% at 100%")]
     public AnimationCurve PushStrength_vs_fallOffDistance;
 
-    [Tooltip("The percentage of push force strength in the movement direction dependent on the angle between the movement direction and the HandDirection (from 0 to 180°)")]
+    [Tooltip("The percentage of push force strength in the movement direction dependent on the angle between the movement direction and the HandDirection (from 0 to 180ï¿½)")]
     public AnimationCurve PushStrength_vs_angle;
 
     [Tooltip("The multiplication factor for push force strength dependet on the hand movement speed")]
@@ -203,7 +203,10 @@ public class ForceInteractionV2 : MonoBehaviour
 
                         float strengthAtGrabTime = handIsLeft ? rigidbodyHelper.strengthAtGrabTime.Left : rigidbodyHelper.strengthAtGrabTime.Right;
 
-                        Tuple<Vector3, Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, deltaHandRotationAxis, deltaHandRotationAngle, rigidbodyHelper.Rigidbody.angularVelocity, effortBasedHandSpeed, ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody), rigidbodyHelper.Rigidbody, currentFocus, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
+                        ManualSpherSize mannualSpherSize = rigidbodyHelper.GetComponent<ManualSpherSize>();
+                        float objectSize = mannualSpherSize != null? mannualSpherSize.Size : ApproximateObjectSphericalSize(rigidbodyHelper.Rigidbody);
+
+                        Tuple<Vector3, Vector3, float> result = CaculateForceInteractionForce2(handIsGrabbing, objectPos, rigidbodyHelper.Rigidbody.linearVelocity, handPos, lastHandPos, eyePos, handDir, deltaHandRotationAxis, deltaHandRotationAngle, rigidbodyHelper.Rigidbody.angularVelocity, effortBasedHandSpeed, objectSize, rigidbodyHelper.Rigidbody, currentFocus, strengthAtGrabTime, rigidbodyHelper.gameObject/*, handDir*//*, eyeDir*/);
                         Vector3 force = result.Item1;
                         Vector3 torque = result.Item2;
                         float strengthTotal = result.Item3;
@@ -496,7 +499,7 @@ public class ForceInteractionV2 : MonoBehaviour
         float volume = volumeX * volumeY * volumeZ;
 
         //the target velocity is fixed but we dont want unliimed forces applied which is why we decrease the density
-        //Density = (Force × Time) / (Speed × Volume)
+        //Density = (Force ï¿½ Time) / (Speed ï¿½ Volume)
         float airDensity =  (maxForce * Time.fixedDeltaTime) / (windVelocity.magnitude * volume); //not shure if Time.fixedDeltaTime shouldn't be removed
         if (airDensity <= 0.001) return Vector3.zero;
 
