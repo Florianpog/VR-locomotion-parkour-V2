@@ -738,8 +738,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8075818537513581381}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9593297, y: 0.28110257, z: -0.004823233, w: 0.02539099}
-  m_LocalPosition: {x: -0.52, y: 0.39, z: -0.14}
+  m_LocalRotation: {x: -0.9979664, y: 0.058268722, z: -0.01040716, w: 0.023656968}
+  m_LocalPosition: {x: -0.56, y: 0.07, z: -0.16}
   m_LocalScale: {x: 10.71694, y: 1.0236, z: -7.852138}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -747,7 +747,7 @@ Transform:
   - {fileID: 6197953564778941636}
   - {fileID: 6678451255572026771}
   m_Father: {fileID: 4916913632946177093}
-  m_LocalEulerAnglesHint: {x: -177.363, y: -1.3500061, z: 32.694}
+  m_LocalEulerAnglesHint: {x: -177.363, y: -1.3500061, z: 6.7140045}
 --- !u!1 &8209123570102116838
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,8 +806,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8371663858394480582}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.019862633, y: 0.0022940987, z: -0.29974547, w: 0.9538097}
-  m_LocalPosition: {x: -0.12, y: 0.61, z: -0.08}
+  m_LocalRotation: {x: 0.0198009, y: -0.002777193, z: -0.050123133, w: 0.9985429}
+  m_LocalPosition: {x: -0.18, y: -0.06, z: -0.11}
   m_LocalScale: {x: 10.716939, y: 1.0236, z: 7.852138}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -815,7 +815,7 @@ Transform:
   - {fileID: 3601243132760928335}
   - {fileID: 116864991892832316}
   m_Father: {fileID: 1232126957066100486}
-  m_LocalEulerAnglesHint: {x: 2.25, y: -0.432, z: -34.9}
+  m_LocalEulerAnglesHint: {x: 2.25, y: -0.432, z: -5.756}
 --- !u!1 &8463931314162868891
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,6 +968,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 6.03
       objectReference: {fileID: 0}
+    - target: {fileID: -5098999054219032250, guid: b0f621345037f3348997f3a089f8f5ea, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -8331331172068406495, guid: dfdef2597523e1e499d9823eaf55e17d, type: 3}
+    - target: {fileID: -2284071075818982280, guid: b0f621345037f3348997f3a089f8f5ea, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8003901583806065505, guid: dfdef2597523e1e499d9823eaf55e17d, type: 3}
     - target: {fileID: 919132149155446097, guid: b0f621345037f3348997f3a089f8f5ea, type: 3}
       propertyPath: m_Name
       value: Spaceship_Fixed
