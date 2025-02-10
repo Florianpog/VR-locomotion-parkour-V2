@@ -4316,7 +4316,7 @@ MonoBehaviour:
   objectsToMove:
   - {fileID: 675307492}
   targetPositions:
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 103, z: 0}
   moveTime: 2
   colliderToDisable: {fileID: 675307493}
   meshRendererToChange: {fileID: 1225549983}
@@ -18029,7 +18029,7 @@ MonoBehaviour:
   focusMaseRateOfChangeDecrease: 10
   focusMaseRateOfChangeIncrease: 1
   minMassForAnyRotation: 10
-  maxMassForFullFocusRotation: 1000
+  maxMassForFullFocusRotation: 2000
   baseFallOffDistance: 0.1
   FallOffDistancePercentage_vs_handVelocity:
     serializedVersion: 2
@@ -34821,7 +34821,7 @@ Light:
   serializedVersion: 11
   m_Type: 3
   m_Color: {r: 0.031372547, g: 1, b: 0.13836649, a: 1}
-  m_Intensity: 40
+  m_Intensity: 60
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
