@@ -35716,12 +35716,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2059456221}
   m_Layer: 0
-  m_Name: Static Should be disabled
+  m_Name: Static Occlusion !DISABLE!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2059456221
 Transform:
   m_ObjectHideFlags: 0
